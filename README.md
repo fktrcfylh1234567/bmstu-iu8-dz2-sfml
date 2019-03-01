@@ -1,0 +1,1 @@
+# bmstu-iu8-dz2-sfml
