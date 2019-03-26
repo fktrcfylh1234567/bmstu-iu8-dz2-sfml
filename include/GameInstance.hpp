@@ -16,20 +16,20 @@
 
 class GameInstance {
 public:
-    GameInstance();
+    explicit GameInstance();
 
-    void loadLocation(std::string &filename);
+    void loadLocation(char* filename);
 
     void run();
+
     void stop();
 
 private:
     GameGraph gameGraph;
     std::vector<Entity> entities;
     std::atomic_bool isRunning;
-    size_t locationSize;
+    const size_t locationSize = 3;
     size_t time;
 };
-
 
 #endif //GAME_GAMEINSTANCE_HPP

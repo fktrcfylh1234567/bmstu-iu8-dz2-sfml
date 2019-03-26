@@ -17,10 +17,13 @@ public:
     explicit Entity(GameGraph* gameGraph);
 
     void spawn(Point& pos);
+
     void setLocation(Point& pos);
+
     void destroy();
 
     bool isAlive();
+
 private:
     Point pos;
     bool alive;

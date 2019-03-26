@@ -5,9 +5,8 @@
 #include <GameInstance.hpp>
 
 GameInstance::GameInstance() {
+    gameGraph = GameGraph(locationSize);
     isRunning = false;
-    gameGraph = GameGraph();
-    locationSize = 4;
 }
 
 void GameInstance::run() {
@@ -22,10 +21,10 @@ void GameInstance::stop() {
     isRunning = false;
 }
 
-void GameInstance::loadLocation(std::string &filename) {
-    int** location = new int*[locationSize];
+void GameInstance::loadLocation(char* filename) {
+    bool** location = new bool* [locationSize];
     for (size_t i = 0; i < locationSize; i++) {
-        location[i] = new int[locationSize];
+        location[i] = new bool[locationSize];
     }
 
     gameGraph.loadLocation(location);
