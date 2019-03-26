@@ -16,13 +16,12 @@ class Entity {
 public:
     explicit Entity(GameGraph* gameGraph);
 
-    void spawn(Point& pos);
-
-    void setLocation(Point& pos);
-
+    void spawn(const Point& pos);
+    void setPosition(const Point& pos);
     void destroy();
 
     bool isAlive();
+    const Point& getPos() const;
 
 private:
     Point pos;

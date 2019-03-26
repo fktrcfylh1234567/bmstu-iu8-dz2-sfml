@@ -142,7 +142,7 @@ size_t GameGraph::pointToIndex(const size_t x, const size_t y) {
     return locationSize * x + y;
 }
 
-Point GameGraph::indexToPoint(const size_t p) {
+Point GameGraph::indexToPoint(size_t p) {
     return {(p - p % locationSize) / locationSize, p % locationSize};
 }
 

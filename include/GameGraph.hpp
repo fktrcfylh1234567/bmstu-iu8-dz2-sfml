@@ -30,18 +30,14 @@ typedef boost::graph_traits<Graph>::vertex_descriptor vertex_descriptor;
 class GameGraph {
 public:
     GameGraph() = default;
-
     explicit GameGraph(size_t locationSize);
-
     void loadLocation(bool** location);
 
     void busyPoint(const Point& point);
-
     void releasePoint(const Point& point);
 
     bool isFree(const Point& point);
-
-    bool isFree(const size_t x, const size_t y);
+    bool isFree(size_t x, size_t y);
 
     Path makePath(const Point& origin, const Point& destination);
 
@@ -52,9 +48,7 @@ private:
     size_t locationSize;
 
     size_t pointToIndex(const Point& point);
-
     size_t pointToIndex(size_t x, size_t y);
-
     Point indexToPoint(size_t p);
 };
 

@@ -9,7 +9,11 @@ Entity::Entity(GameGraph* gameGraph) {
     alive = false;
 }
 
-void Entity::spawn(Point& pos) {
+void Entity::spawn(const Point& pos) {
+    if (!this->gameGraph->isFree(pos)) {
+        return;
+    }
+
     alive = true;
     this->pos = pos;
     gameGraph->busyPoint(this->pos);
@@ -20,7 +24,11 @@ void Entity::destroy() {
     gameGraph->releasePoint(this->pos);
 }
 
-void Entity::setLocation(Point& pos) {
+void Entity::setPosition(const Point& pos) {
+    if (!this->gameGraph->isFree(pos)) {
+        return;
+    }
+
     gameGraph->releasePoint(this->pos);
     this->pos = pos;
     gameGraph->busyPoint(this->pos);
@@ -28,4 +36,8 @@ void Entity::setLocation(Point& pos) {
 
 bool Entity::isAlive() {
     return alive;
+}
+
+const Point& Entity::getPos() const {
+    return pos;
 }

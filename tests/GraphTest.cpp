@@ -34,6 +34,7 @@ TEST(Graph, Create) {
     EXPECT_EQ(gameGraph.isFree({2, 1}), false);
     EXPECT_EQ(gameGraph.isFree({2, 2}), true);
 
+    // Point out of range
     EXPECT_EQ(gameGraph.isFree({20, 10}), false);
 
     for (size_t i = 0; i < locationSize; i++) {
@@ -157,14 +158,13 @@ TEST(Graph, Path) {
 
     gameGraph.loadLocation(location);
 
-    Path path;
-
-    path = gameGraph.makePath({1, 0}, {0, 2});
+    Path path = gameGraph.makePath({1, 0}, {0, 2});
     EXPECT_EQ(path[0], Point(1, 0));
     EXPECT_EQ(path[1], Point(0, 0));
     EXPECT_EQ(path[2], Point(0, 1));
     EXPECT_EQ(path[3], Point(0, 2));
 
+    // Paths not exists
     EXPECT_TRUE(gameGraph.makePath({1, 0}, {1, 0}).empty());
     EXPECT_TRUE(gameGraph.makePath({0, 0}, {2, 2}).empty());
     EXPECT_TRUE(gameGraph.makePath({2, 2}, {0, 0}).empty());

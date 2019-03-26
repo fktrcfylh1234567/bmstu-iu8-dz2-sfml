@@ -25,16 +25,15 @@ add_executable(game
         source/GameGraph.cpp
         )
 
-add_executable(graphTest
+add_executable(navigationTest
         source/GameGraph.cpp
-        tests/graphTest.cpp
+        source/Entity.cpp
+        tests/GraphTest.cpp
+        tests/EntityTest.cpp
         )
 
 target_include_directories(game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-target_include_directories(graphTest PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-        )
+target_include_directories(navigationTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 target_link_libraries(game Boost::graph)
-target_link_libraries(graphTest GTest::main Boost::boost)
+target_link_libraries(navigationTest GTest::main Boost::boost)
