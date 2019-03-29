@@ -8,13 +8,13 @@ Entity::Entity(GameGraph* gameGraph) {
     this->gameGraph = gameGraph;
 }
 
-void Entity::spawn(const Point& pos) {
-    if (!this->gameGraph->isFree(pos)) {
+void Entity::spawn(const Point& destination) {
+    if (!this->gameGraph->isFree(destination)) {
         return;
     }
 
     alive = true;
-    this->pos = pos;
+    this->pos = destination;
     gameGraph->busyPoint(this->pos);
 }
 
@@ -23,13 +23,13 @@ void Entity::destroy() {
     gameGraph->releasePoint(this->pos);
 }
 
-void Entity::setPosition(const Point& pos) {
-    if (!this->gameGraph->isFree(pos)) {
+void Entity::setPosition(const Point& destination) {
+    if (!this->gameGraph->isFree(destination)) {
         return;
     }
 
     gameGraph->releasePoint(this->pos);
-    this->pos = pos;
+    this->pos = destination;
     gameGraph->busyPoint(this->pos);
 }
 
@@ -39,4 +39,12 @@ bool Entity::isAlive() {
 
 const Point& Entity::getPos() const {
     return pos;
+}
+
+Path Entity::makePath(const Point& destination) {
+    gameGraph->releasePoint(this->pos);
+    Path path = gameGraph->makePath(this->pos, destination);
+    gameGraph->busyPoint(this->pos);
+
+    return path;
 }

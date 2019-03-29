@@ -17,16 +17,16 @@ class Entity {
 public:
     explicit Entity(GameGraph* gameGraph);
 
-    void spawn(const Point& pos);
-    void setPosition(const Point& pos);
+    void spawn(const Point& destination);
+    void setPosition(const Point& destination);
     void destroy();
 
     bool isAlive();
     const Point& getPos() const;
-    Path makePath(const Point& origin, const Point& destination);
+    Path makePath(const Point& destination);
 
 private:
-    Point pos = {0, 0};
+    Point pos = {-1, -1};
     bool alive = false;
     GameGraph* gameGraph;
 };

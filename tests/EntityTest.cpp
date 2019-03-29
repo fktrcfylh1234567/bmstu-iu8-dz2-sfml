@@ -3,6 +3,7 @@
 //
 
 #include <gtest/gtest.h>
+#include <iostream>
 
 #include "Entity.hpp"
 
@@ -88,6 +89,43 @@ TEST(Entity, Movement) {
     EXPECT_EQ(entity.getPos(), Point(0, 2));
     EXPECT_EQ(gameGraph.isFree(entity.getPos()), false);
     EXPECT_EQ(gameGraph.isFree(Point(0, 1)), true);
+
+    for (size_t i = 0; i < locationSize; i++) {
+        delete[] location[i];
+    }
+    delete[] location;
+}
+
+TEST(Entity, Path) {
+    size_t locationSize = 3;
+    GameGraph gameGraph(locationSize);
+
+    bool** location = new bool* [locationSize];
+    for (size_t i = 0; i < locationSize; i++) {
+        location[i] = new bool[locationSize];
+    }
+
+    location[0][0] = true;
+    location[0][1] = true;
+    location[0][2] = true;
+
+    location[1][0] = true;
+    location[1][1] = true;
+    location[1][2] = true;
+
+    location[2][0] = true;
+    location[2][1] = true;
+    location[2][2] = true;
+
+    gameGraph.loadLocation(location);
+    Entity entity(&gameGraph);
+    entity.spawn(Point(0, 0));
+    Path path = entity.makePath(Point(2, 2));
+
+    EXPECT_EQ(gameGraph.isFree(Point(0, 0)), false);
+    EXPECT_EQ(path[0], Point(0, 0));
+    EXPECT_EQ(path[2], Point(1, 1));
+    EXPECT_EQ(path[4], Point(2, 2));
 
     for (size_t i = 0; i < locationSize; i++) {
         delete[] location[i];

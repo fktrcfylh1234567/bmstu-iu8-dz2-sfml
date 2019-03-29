@@ -34,7 +34,7 @@ add_executable(navigationTest
         )
 
 target_include_directories(game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-#target_include_directories(navigationTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(navigationTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 target_link_libraries(game Boost::graph)
-#target_link_libraries(navigationTest GTest::main Boost::boost)
+target_link_libraries(navigationTest GTest::main Boost::boost)
