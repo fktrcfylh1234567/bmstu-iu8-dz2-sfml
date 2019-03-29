@@ -6,7 +6,6 @@
 
 Entity::Entity(GameGraph* gameGraph) {
     this->gameGraph = gameGraph;
-    alive = false;
 }
 
 void Entity::spawn(const Point& pos) {

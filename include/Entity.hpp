@@ -11,6 +11,7 @@
 #include "GameGraph.hpp"
 
 typedef std::pair<size_t, size_t> Point;
+typedef std::vector<Point> Path;
 
 class Entity {
 public:
@@ -22,12 +23,12 @@ public:
 
     bool isAlive();
     const Point& getPos() const;
+    Path makePath(const Point& origin, const Point& destination);
 
 private:
-    Point pos;
-    bool alive;
+    Point pos = {0, 0};
+    bool alive = false;
     GameGraph* gameGraph;
 };
-
 
 #endif //GAME_ENTITY_HPP

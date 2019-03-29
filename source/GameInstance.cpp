@@ -6,19 +6,41 @@
 
 GameInstance::GameInstance() {
     gameGraph = GameGraph(locationSize);
-    isRunning = false;
 }
 
 void GameInstance::run() {
     isRunning = true;
     time = 0;
-    while (isRunning) {
-        time++;
-    }
+
+    std::thread threadClocks([this]() {
+        while (isRunning) {
+            time++;
+            queue.push(time);
+            std::this_thread::sleep_for(std::chrono::milliseconds(timeUnitMs));
+        }
+        std::cout << "Clocks Stopped on " << time << std::endl;
+    });
+
+    std::thread threadSequences([this]() {
+        while (true) {
+            size_t currentTime = queue.wait_and_pop();
+            if (currentTime == 0) {
+                break;
+            }
+            std::cout << currentTime << std::endl;
+        }
+        std::cout << "Sequences Stopped on " << time << std::endl;
+    });
+
+    threadClocks.detach();
+    threadSequences.detach();
+
 }
 
 void GameInstance::stop() {
     isRunning = false;
+    queue.push(0); // Let wait_and_pop() stop waiting
+    std::cout << "Stopped on " << time << std::endl;
 }
 
 void GameInstance::loadLocation(char* filename) {

@@ -10,26 +10,33 @@
 #include <vector>
 #include <string>
 #include <atomic>
+#include <chrono>
+#include <thread>
 
 #include "GameGraph.hpp"
 #include "Entity.hpp"
+#include "ConcurrentQueue.hpp"
+
+#include <iostream>
 
 class GameInstance {
 public:
     explicit GameInstance();
-
     void loadLocation(char* filename);
 
     void run();
-
     void stop();
 
 private:
     GameGraph gameGraph;
     std::vector<Entity> entities;
-    std::atomic_bool isRunning;
+
+    ConcurrentQueue<size_t> queue;
+    std::atomic_bool isRunning = false;
+    std::atomic_size_t time = 0;
+
     const size_t locationSize = 3;
-    size_t time;
+    const size_t timeUnitMs = 500;
 };
 
 #endif //GAME_GAMEINSTANCE_HPP
