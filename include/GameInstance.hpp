@@ -16,13 +16,14 @@
 #include "GameGraph.hpp"
 #include "Entity.hpp"
 #include "ConcurrentQueue.hpp"
+#include "Sequence.hpp"
 
 #include <iostream>
 
 class GameInstance {
 public:
     explicit GameInstance();
-    void loadLocation(char* filename);
+    void loadLocation(std::string& filename);
 
     void run();
     void stop();
@@ -30,6 +31,7 @@ public:
 private:
     GameGraph gameGraph;
     std::vector<Entity> entities;
+    std::vector<Sequence*> sequences;
 
     ConcurrentQueue<size_t> queue;
     std::atomic_bool isRunning = false;

@@ -23,7 +23,6 @@ add_executable(game
         source/GameInstance.cpp
         source/Entity.cpp
         source/GameGraph.cpp
-        source/Sequence.cpp
         )
 
 add_executable(navigationTest

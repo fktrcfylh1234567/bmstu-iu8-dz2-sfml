@@ -10,14 +10,21 @@
 
 class Sequence {
 public:
-    Sequence() = default;
+    virtual void Update(size_t currentTime) = 0;
 
-    void Update();
+    void cancel() {
+        canceled = true;
+    }
 
-    bool isCanceled() const;
-    size_t getNextUpdateTime() const;
+    bool isCanceled() const {
+        return canceled;
+    }
 
-private:
+    size_t getNextUpdateTime() const {
+        return nextUpdateTimeMs;
+    }
+
+protected:
     bool canceled = false;
     size_t nextUpdateTimeMs = 0;
 };
