@@ -10,9 +10,11 @@
 
 class Sequence {
 public:
-    virtual void Update(size_t currentTime) = 0;
+    Sequence(const size_t id, size_t nextUpdateTimeMs) : Id(id), nextUpdateTimeMs(nextUpdateTimeMs) {}
 
-    void cancel() {
+    virtual void Update() = 0;
+
+    void Cancel() {
         canceled = true;
     }
 
@@ -24,9 +26,14 @@ public:
         return nextUpdateTimeMs;
     }
 
+    const size_t getId() const {
+        return Id;
+    }
+
 protected:
+    const size_t Id;
     bool canceled = false;
-    size_t nextUpdateTimeMs = 0;
+    size_t nextUpdateTimeMs;
 };
 
 #endif //GAME_SEQUENCE_HPP

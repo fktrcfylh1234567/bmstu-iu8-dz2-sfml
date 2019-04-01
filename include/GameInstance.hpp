@@ -5,40 +5,37 @@
 #ifndef GAME_GAMEINSTANCE_HPP
 #define GAME_GAMEINSTANCE_HPP
 
-#include <cstdio>
-#include <utility>
 #include <vector>
 #include <string>
-#include <atomic>
-#include <chrono>
-#include <thread>
+#include <map>
 
 #include "GameGraph.hpp"
 #include "Entity.hpp"
-#include "ConcurrentQueue.hpp"
 #include "Sequence.hpp"
-
-#include <iostream>
+#include "DebugSequence.hpp"
 
 class GameInstance {
 public:
-    explicit GameInstance();
-    void loadLocation(std::string& filename);
+    GameInstance();
 
-    void run();
-    void stop();
+    size_t addEntity(size_t entityType);
+    size_t addSequence(size_t sequenceType, size_t correntTime);
+    size_t addSequence(size_t sequenceType, size_t entityId, size_t correntTime);
+
+    void updateSequence(size_t sequenceId);
+    void cancelSequence(size_t sequenceId);
+    size_t getSequenceNexUpdateTime(size_t sequenceId);
+    bool isSequenceCanceled(size_t sequenceId);
 
 private:
     GameGraph gameGraph;
-    std::vector<Entity> entities;
-    std::vector<Sequence*> sequences;
+    std::map<size_t, Entity> entities;
+    std::map<size_t, Sequence*> sequences;
 
-    ConcurrentQueue<size_t> queue;
-    std::atomic_bool isRunning = false;
-    std::atomic_size_t time = 0;
+    size_t nextEntityId = 1;
+    size_t nextSequenceId = 1;
 
     const size_t locationSize = 3;
-    const size_t timeUnitMs = 500;
 };
 
 #endif //GAME_GAMEINSTANCE_HPP

@@ -15,17 +15,20 @@ typedef std::vector<Point> Path;
 
 class Entity {
 public:
-    explicit Entity(GameGraph* gameGraph);
+    Entity(size_t Id, GameGraph* gameGraph);
 
     void spawn(const Point& destination);
+    void kill();
+
     void setPosition(const Point& destination);
-    void destroy();
+    Path makePath(const Point& destination);
 
     bool isAlive();
     const Point& getPos() const;
-    Path makePath(const Point& destination);
+    const size_t getId() const;
 
 private:
+    const size_t Id;
     Point pos = {-1, -1};
     bool alive = false;
     GameGraph* gameGraph;

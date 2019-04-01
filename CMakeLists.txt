@@ -20,9 +20,10 @@ find_package(Boost 1.69.0 COMPONENTS graph REQUIRED)
 
 add_executable(game
         main.cpp
-        source/GameInstance.cpp
-        source/Entity.cpp
         source/GameGraph.cpp
+        source/Entity.cpp
+        source/GameInstance.cpp
+        source/GameServer.cpp
         )
 
 add_executable(navigationTest
@@ -33,7 +34,7 @@ add_executable(navigationTest
         )
 
 target_include_directories(game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_include_directories(navigationTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+#target_include_directories(navigationTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 target_link_libraries(game Boost::graph)
-target_link_libraries(navigationTest GTest::main Boost::boost)
+#target_link_libraries(navigationTest GTest::main Boost::boost)

@@ -8,55 +8,24 @@ GameInstance::GameInstance() {
     gameGraph = GameGraph(locationSize);
 }
 
-void GameInstance::run() {
-    isRunning = true;
-    time = 0;
-
-    std::thread([this]() {
-        while (isRunning) {
-            time++;
-            queue.push(time);
-            std::this_thread::sleep_for(std::chrono::milliseconds(timeUnitMs));
-        }
-    }).detach();
-
-    std::thread([this]() {
-        while (true) {
-            size_t currentTime = queue.wait_and_pop();
-            if (currentTime == 0) {
-                break;
-            }
-
-            for (auto it = sequences.begin(); it != sequences.end(); ++it) {
-                if ((*it)->isCanceled()) {
-                    it = sequences.erase(it);
-                    --it;
-                    continue;
-                }
-                if ((*it)->getNextUpdateTime() == currentTime) {
-                    (*it)->Update(currentTime);
-                }
-            }
-        }
-    }).detach();
+size_t GameInstance::addSequence(size_t sequenceType, size_t currentTime) {
+    sequences[nextSequenceId] = new DebugSequence(nextSequenceId, currentTime + 1);
+    ++nextSequenceId;
+    return nextSequenceId - 1;
 }
 
-void GameInstance::stop() {
-    isRunning = false;
-    queue.push(0); // Let wait_and_pop() stop waiting
-    std::cout << "Game was stopped on " << time << std::endl;
+void GameInstance::updateSequence(size_t sequenceId) {
+    sequences[sequenceId]->Update();
 }
 
-void GameInstance::loadLocation(std::string& filename) {
-    bool** location = new bool* [locationSize];
-    for (size_t i = 0; i < locationSize; i++) {
-        location[i] = new bool[locationSize];
-    }
+void GameInstance::cancelSequence(size_t sequenceId) {
+    sequences[sequenceId]->Cancel();
+}
 
-    gameGraph.loadLocation(location);
+size_t GameInstance::getSequenceNexUpdateTime(size_t sequenceId) {
+    return sequences[sequenceId]->getNextUpdateTime();
+}
 
-    for (size_t i = 0; i < locationSize; i++) {
-        delete[] location[i];
-    }
-    delete[] location;
+bool GameInstance::isSequenceCanceled(size_t sequenceId) {
+    return sequences[sequenceId]->isCanceled();
 }
