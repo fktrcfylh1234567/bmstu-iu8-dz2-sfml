@@ -3,38 +3,50 @@ cmake_minimum_required(VERSION 3.13)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-pthread")
 
+include("tools/gate/cmake/HunterGate.cmake")
+
+HunterGate(
+        URL "https://github.com/ruslo/hunter/archive/v0.23.31.tar.gz"
+        SHA1 "3d94b8522541c4c8eaac606f4c47d09322a8019c"
+)
+
 project(game)
 
 # GTest
-set(gtest_SOURCE_DIR /home/fktrc/Projects/googletest/googletest)
+hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
 # Boost
-set(BOOST_ROOT /home/fktrc/Projects/boost-libs)
-set(BOOST_LIBRARYDIR ${BOOST_ROOT}/lib)
-set(Boost_LIB_PREFIX "lib")
-set(Boost_USE_STATIC_LIBS ON)
-set(Boost_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.69.0 COMPONENTS graph REQUIRED)
+hunter_add_package(Boost COMPONENTS system graph)
+find_package(Boost CONFIG REQUIRED system graph)
 
-add_executable(game
-        main.cpp
+
+# Libraries
+add_library(navigation STATIC
         source/GameGraph.cpp
+        )
+add_library(gameInstance STATIC
         source/Entity.cpp
         source/GameInstance.cpp
-        source/GameServer.cpp
         )
 
+# Tests
 add_executable(navigationTest
-        source/GameGraph.cpp
-        source/Entity.cpp
         tests/GraphTest.cpp
+        )
+add_executable(gameLogicTest
         tests/EntityTest.cpp
+        tests/GameTest.cpp
         )
 
-target_include_directories(game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-#target_include_directories(navigationTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+# Libs include
+target_include_directories(navigation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(gameInstance PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-target_link_libraries(game Boost::graph)
-#target_link_libraries(navigationTest GTest::main Boost::boost)
+# Libs links
+target_link_libraries(navigation Boost::graph)
+target_link_libraries(gameInstance navigation)
+
+# Tests links
+target_link_libraries(navigationTest GTest::main navigation)
+target_link_libraries(gameLogicTest GTest::main gameInstance)

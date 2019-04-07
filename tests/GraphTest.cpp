@@ -3,7 +3,6 @@
 //
 
 #include <gtest/gtest.h>
-
 #include "GameGraph.hpp"
 
 TEST(Graph, Create) {

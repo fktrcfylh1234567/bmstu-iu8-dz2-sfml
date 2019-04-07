@@ -5,6 +5,6 @@
 #include <gtest/gtest.h>
 #include "Entity.hpp"
 
-TEST(EntityTest, Spawn) {
+TEST(GameTest, Spawn) {
     EXPECT_EQ(1 + 1, 2);
 }
