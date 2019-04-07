@@ -5,11 +5,9 @@
 #include <GameServer.hpp>
 
 void GameServer::run() {
-    std::cout << "Server was starded" << std::endl;
-    sequences.push_back(gameInstance.addSequence(0, 1));
-
     isRunning = true;
     timeCurrent = 0;
+    std::cout << "Server was starded" << std::endl;
 
     std::thread([this]() {
         while (isRunning) {
@@ -25,17 +23,7 @@ void GameServer::run() {
             if (timeUpdate == 0) {
                 break;
             }
-
-            for (auto it = sequences.begin(); it != sequences.end(); ++it) {
-                if (gameInstance.isSequenceCanceled(*it)) {
-                    it = sequences.erase(it);
-                    --it;
-                    continue;
-                }
-                if (gameInstance.getSequenceNexUpdateTime(*it) == timeUpdate) {
-                    gameInstance.updateSequence(*it);
-                }
-            }
+            gameInstance.updateSequences(timeUpdate);
         }
     }).detach();
 }

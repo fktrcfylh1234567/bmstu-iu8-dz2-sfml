@@ -21,8 +21,6 @@ public:
 
 private:
     GameInstance gameInstance;
-    std::vector<size_t> sequences;
-    std::vector<size_t> entityIds;
 
     ConcurrentQueue<size_t> queue;
     std::atomic_bool isRunning = false;

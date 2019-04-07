@@ -17,35 +17,43 @@ hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
 # Boost
-hunter_add_package(Boost COMPONENTS system graph)
-find_package(Boost CONFIG REQUIRED system graph)
+hunter_add_package(Boost COMPONENTS graph)
+find_package(Boost CONFIG REQUIRED graph)
 
 
 # Libraries
 add_library(navigation STATIC
         source/GameGraph.cpp
         )
+
 add_library(gameInstance STATIC
         source/Entity.cpp
         source/GameInstance.cpp
+        )
+
+add_library(server STATIC
+        source/GameServer.cpp
         )
 
 # Tests
 add_executable(navigationTest
         tests/GraphTest.cpp
         )
+
 add_executable(gameLogicTest
-        tests/EntityTest.cpp
-        tests/GameTest.cpp
+        tests/GameLogicTest.cpp
         )
+
 
 # Libs include
 target_include_directories(navigation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(gameInstance PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Libs links
 target_link_libraries(navigation Boost::graph)
 target_link_libraries(gameInstance navigation)
+target_link_libraries(server gameInstance)
 
 # Tests links
 target_link_libraries(navigationTest GTest::main navigation)

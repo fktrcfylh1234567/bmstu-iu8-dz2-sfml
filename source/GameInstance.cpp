@@ -14,18 +14,20 @@ size_t GameInstance::addSequence(size_t sequenceType, size_t currentTime) {
     return nextSequenceId - 1;
 }
 
-void GameInstance::updateSequence(size_t sequenceId) {
-    sequences[sequenceId]->Update();
-}
-
 void GameInstance::cancelSequence(size_t sequenceId) {
     sequences[sequenceId]->Cancel();
 }
 
-size_t GameInstance::getSequenceNexUpdateTime(size_t sequenceId) {
-    return sequences[sequenceId]->getNextUpdateTime();
-}
+void GameInstance::updateSequences(size_t currentTime) {
+    for (auto itr = sequences.begin(); itr != sequences.end(); ++itr) {
+        if (itr->second->isCanceled()) {
+            sequences.erase(itr);
+        }
+    }
 
-bool GameInstance::isSequenceCanceled(size_t sequenceId) {
-    return sequences[sequenceId]->isCanceled();
+    for (auto sequence : sequences) {
+        if (sequence.second->getNextUpdateTime() == currentTime) {
+            sequence.second->Update();
+        }
+    }
 }
