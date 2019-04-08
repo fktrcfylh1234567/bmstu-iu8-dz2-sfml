@@ -10,7 +10,7 @@
 #include <map>
 #include <algorithm>
 
-#include "GameGraph.hpp"
+#include "Graph.hpp"
 #include "Entity.hpp"
 #include "Sequence.hpp"
 #include "DebugSequence.hpp"
@@ -20,12 +20,14 @@ public:
     GameInstance();
 
     size_t addEntity(size_t entityType);
+    void removeEntity(size_t entityType);
+
+    void updateSequences(size_t currentTime);
     size_t addSequence(size_t sequenceType, size_t correntTime);
     void cancelSequence(size_t sequenceId);
-    void updateSequences(size_t currentTime);
 
 private:
-    GameGraph gameGraph;
+    Graph gameGraph;
     std::map<size_t, Entity> entities;
     std::map<size_t, Sequence*> sequences;
 

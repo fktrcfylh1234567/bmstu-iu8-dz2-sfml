@@ -3,25 +3,21 @@
 //
 
 #include <gtest/gtest.h>
-#include "GameGraph.hpp"
+#include "Graph.hpp"
 
-TEST(Graph, Create) {
+TEST(GraphTest, Create) {
     size_t locationSize = 3;
-    GameGraph gameGraph(locationSize);
-
+    Graph gameGraph(locationSize);
     bool** location = new bool* [locationSize];
     for (size_t i = 0; i < locationSize; i++) {
         location[i] = new bool[locationSize];
     }
-
     location[0][0] = true;
     location[0][1] = true;
     location[0][2] = true;
-
     location[1][0] = true;
     location[1][1] = false;
     location[1][2] = false;
-
     location[2][0] = false;
     location[2][1] = false;
     location[2][2] = true;
@@ -42,23 +38,19 @@ TEST(Graph, Create) {
     delete[] location;
 }
 
-TEST(Graph, Busy) {
+TEST(GraphTest, Busy) {
     size_t locationSize = 3;
-    GameGraph gameGraph(locationSize);
-
+    Graph gameGraph(locationSize);
     bool** location = new bool* [locationSize];
     for (size_t i = 0; i < locationSize; i++) {
         location[i] = new bool[locationSize];
     }
-
     location[0][0] = true;
     location[0][1] = true;
     location[0][2] = true;
-
     location[1][0] = true;
     location[1][1] = true;
     location[1][2] = true;
-
     location[2][0] = true;
     location[2][1] = true;
     location[2][2] = true;
@@ -73,11 +65,9 @@ TEST(Graph, Busy) {
     EXPECT_EQ(gameGraph.isFree({0, 0}), true);
     EXPECT_EQ(gameGraph.isFree({0, 1}), true);
     EXPECT_EQ(gameGraph.isFree({0, 2}), true);
-
     EXPECT_EQ(gameGraph.isFree({1, 0}), true);
     EXPECT_EQ(gameGraph.isFree({1, 1}), false);
     EXPECT_EQ(gameGraph.isFree({1, 2}), false);
-
     EXPECT_EQ(gameGraph.isFree({2, 0}), false);
     EXPECT_EQ(gameGraph.isFree({2, 1}), false);
     EXPECT_EQ(gameGraph.isFree({2, 2}), true);
@@ -88,9 +78,9 @@ TEST(Graph, Busy) {
     delete[] location;
 }
 
-TEST(Graph, Release) {
+TEST(GraphTest, Release) {
     size_t locationSize = 3;
-    GameGraph gameGraph(locationSize);
+    Graph gameGraph(locationSize);
 
     bool** location = new bool* [locationSize];
     for (size_t i = 0; i < locationSize; i++) {
@@ -100,11 +90,9 @@ TEST(Graph, Release) {
     location[0][0] = false;
     location[0][1] = false;
     location[0][2] = false;
-
     location[1][0] = false;
     location[1][1] = false;
     location[1][2] = false;
-
     location[2][0] = false;
     location[2][1] = false;
     location[2][2] = true;
@@ -119,11 +107,9 @@ TEST(Graph, Release) {
     EXPECT_EQ(gameGraph.isFree({0, 0}), false);
     EXPECT_EQ(gameGraph.isFree({0, 1}), false);
     EXPECT_EQ(gameGraph.isFree({0, 2}), false);
-
     EXPECT_EQ(gameGraph.isFree({1, 0}), false);
     EXPECT_EQ(gameGraph.isFree({1, 1}), true);
     EXPECT_EQ(gameGraph.isFree({1, 2}), true);
-
     EXPECT_EQ(gameGraph.isFree({2, 0}), true);
     EXPECT_EQ(gameGraph.isFree({2, 1}), true);
     EXPECT_EQ(gameGraph.isFree({2, 2}), true);
@@ -134,10 +120,9 @@ TEST(Graph, Release) {
     delete[] location;
 }
 
-TEST(Graph, Path) {
+TEST(GraphTest, Path) {
     size_t locationSize = 3;
-    GameGraph gameGraph(locationSize);
-
+    Graph gameGraph(locationSize);
     bool** location = new bool* [locationSize];
     for (size_t i = 0; i < locationSize; i++) {
         location[i] = new bool[locationSize];
@@ -146,11 +131,9 @@ TEST(Graph, Path) {
     location[0][0] = true;
     location[0][1] = true;
     location[0][2] = true;
-
     location[1][0] = true;
     location[1][1] = true;
     location[1][2] = false;
-
     location[2][0] = false;
     location[2][1] = false;
     location[2][2] = true;

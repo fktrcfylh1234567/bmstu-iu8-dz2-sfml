@@ -8,14 +8,14 @@
 #include <cstdio>
 #include <utility>
 
-#include "GameGraph.hpp"
+#include "Graph.hpp"
 
 typedef std::pair<size_t, size_t> Point;
 typedef std::vector<Point> Path;
 
 class Entity {
 public:
-    Entity(size_t Id, GameGraph* gameGraph);
+    Entity(size_t Id, Graph* gameGraph);
 
     void spawn(const Point& destination);
     void kill();
@@ -27,11 +27,11 @@ public:
     const Point& getPos() const;
     const size_t getId() const;
 
-private:
+protected:
+    bool alive = false;
     const size_t Id;
     Point pos = {-1, -1};
-    bool alive = false;
-    GameGraph* gameGraph;
+    Graph* gameGraph;
 };
 
 #endif //GAME_ENTITY_HPP

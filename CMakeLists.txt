@@ -23,38 +23,41 @@ find_package(Boost CONFIG REQUIRED graph)
 
 # Libraries
 add_library(navigation STATIC
-        source/GameGraph.cpp
+        source/Graph.cpp
+        )
+
+add_library(actor STATIC
+        source/Entity.cpp
+        source/Actor.cpp
         )
 
 add_library(gameInstance STATIC
-        source/Entity.cpp
         source/GameInstance.cpp
+        source/MovementSequence.cpp
         )
 
 add_library(server STATIC
         source/GameServer.cpp
         )
 
-# Tests
-add_executable(navigationTest
-        tests/GraphTest.cpp
-        )
-
-add_executable(gameLogicTest
-        tests/GameLogicTest.cpp
-        )
-
-
 # Libs include
 target_include_directories(navigation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(actor PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(gameInstance PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Libs links
 target_link_libraries(navigation Boost::graph)
-target_link_libraries(gameInstance navigation)
+target_link_libraries(actor navigation)
+target_link_libraries(gameInstance actor)
 target_link_libraries(server gameInstance)
+
+# Tests
+add_executable(navigationTest tests/GraphTest.cpp)
+add_executable(actorTest tests/ActorTest.cpp)
+add_executable(gameLogicTest tests/GameLogicTest.cpp)
 
 # Tests links
 target_link_libraries(navigationTest GTest::main navigation)
+target_link_libraries(actorTest GTest::main actor)
 target_link_libraries(gameLogicTest GTest::main gameInstance)

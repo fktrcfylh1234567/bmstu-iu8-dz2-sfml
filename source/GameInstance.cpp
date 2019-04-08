@@ -5,7 +5,7 @@
 #include <GameInstance.hpp>
 
 GameInstance::GameInstance() {
-    gameGraph = GameGraph(locationSize);
+    gameGraph = Graph(locationSize);
 }
 
 size_t GameInstance::addSequence(size_t sequenceType, size_t currentTime) {

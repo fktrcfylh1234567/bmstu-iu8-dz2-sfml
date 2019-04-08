@@ -4,7 +4,7 @@
 
 #include <Entity.hpp>
 
-Entity::Entity(size_t Id, GameGraph* gameGraph) : Id(Id), gameGraph(gameGraph) {}
+Entity::Entity(size_t Id, Graph* gameGraph) : Id(Id), gameGraph(gameGraph) {}
 
 void Entity::spawn(const Point& destination) {
     if (!this->gameGraph->isFree(destination)) {

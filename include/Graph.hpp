@@ -2,8 +2,8 @@
 // Created by fktrc on 25.03.19.
 //
 
-#ifndef GAME_GAMEGRAPH_HPP
-#define GAME_GAMEGRAPH_HPP
+#ifndef GAME_GRAPH_HPP
+#define GAME_GRAPH_HPP
 
 #include <cstdio>
 #include <utility>
@@ -23,14 +23,16 @@ typedef std::pair<size_t, size_t> Point;
 typedef std::vector<Point> Path;
 
 typedef boost::property<boost::edge_weight_t, int> EdgeWeightProperty;
-typedef boost::adjacency_list<boost::listS, boost::vecS, boost::undirectedS, boost::no_property, EdgeWeightProperty> Graph;
-typedef boost::graph_traits<Graph>::edge_iterator edge_iterator;
-typedef boost::graph_traits<Graph>::vertex_descriptor vertex_descriptor;
+typedef boost::adjacency_list<boost::listS, boost::vecS, boost::undirectedS, boost::no_property, EdgeWeightProperty> BoostGraph;
+typedef boost::graph_traits<BoostGraph>::edge_iterator edge_iterator;
+typedef boost::graph_traits<BoostGraph>::vertex_descriptor vertex_descriptor;
 
-class GameGraph {
+class Graph {
 public:
-    GameGraph() = default;
-    explicit GameGraph(size_t locationSize);
+    Graph() {
+    }
+
+    explicit Graph(size_t locationSize);
     void loadLocation(bool** location);
 
     void busyPoint(const Point& point);
@@ -44,7 +46,7 @@ public:
     void debug_print_edges();
 
 private:
-    Graph graph;
+    BoostGraph graph;
     size_t locationSize;
 
     size_t pointToIndex(const Point& point);
@@ -52,4 +54,4 @@ private:
     Point indexToPoint(size_t p);
 };
 
-#endif //GAME_GAMEGRAPH_HPP
+#endif //GAME_GRAPH_HPP
