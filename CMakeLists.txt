@@ -33,7 +33,6 @@ add_library(actor STATIC
 
 add_library(gameInstance STATIC
         source/GameInstance.cpp
-        source/MovementSequence.cpp
         )
 
 add_library(server STATIC

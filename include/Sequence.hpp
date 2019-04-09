@@ -7,10 +7,15 @@
 
 #include <cstdio>
 #include <chrono>
+#include "GameInstance.hpp"
+
+class GameInstance;
 
 class Sequence {
 public:
-    Sequence(const size_t id, size_t nextUpdateTimeMs) : Id(id), nextUpdateTimeMs(nextUpdateTimeMs) {}
+    Sequence(const size_t id, size_t nextUpdateTimeMs, GameInstance* instance) : Id(id),
+                                                                                 nextUpdateTimeMs(nextUpdateTimeMs),
+                                                                                 instance(instance) {}
 
     virtual void Update() = 0;
 
@@ -34,6 +39,7 @@ protected:
     const size_t Id;
     bool canceled = false;
     size_t nextUpdateTimeMs;
+    GameInstance* instance;
 };
 
 #endif //GAME_SEQUENCE_HPP

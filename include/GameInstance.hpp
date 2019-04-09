@@ -11,19 +11,20 @@
 #include <algorithm>
 
 #include "Graph.hpp"
-#include "Entity.hpp"
+#include "Actor.hpp"
 #include "Sequence.hpp"
-#include "DebugSequence.hpp"
 
 class GameInstance {
 public:
     GameInstance();
-
-    size_t addEntity(size_t entityType);
-    void removeEntity(size_t entityType);
-
     void updateSequences(size_t currentTime);
-    size_t addSequence(size_t sequenceType, size_t correntTime);
+
+    size_t addEntity();
+    void removeEntity(size_t entityId);
+    Entity* getEntityById(size_t entityId);
+
+    size_t addMoveSequence(size_t entityId, Point& pos, size_t correntTime);
+    size_t addAttackSequence(size_t entityId, size_t targetId, size_t correntTime);
     void cancelSequence(size_t sequenceId);
 
 private:
