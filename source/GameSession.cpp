@@ -1,13 +1,13 @@
 //
-// Created by fktrc on 01.04.19.
+// Created by fktrc on 12.04.19.
 //
 
-#include <GameServer.hpp>
+#include "GameSession.hpp"
 
-void GameServer::run() {
+void GameSession::run() {
     isRunning = true;
     timeCurrent = 0;
-    std::cout << "Server was starded" << std::endl;
+    std::cout << "Game was starded" << std::endl;
 
     std::thread([this]() {
         while (isRunning) {
@@ -28,8 +28,8 @@ void GameServer::run() {
     }).detach();
 }
 
-void GameServer::stop() {
+void GameSession::stop() {
     isRunning = false;
     queue.push(0); // Let wait_and_pop() stop waiting
-    std::cout << "Server was stopped on " << timeCurrent << std::endl;
+    std::cout << "Game was stopped on " << timeCurrent << std::endl;
 }

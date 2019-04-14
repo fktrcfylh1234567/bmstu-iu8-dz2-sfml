@@ -2,7 +2,7 @@
 // Created by fktrc on 25.03.19.
 //
 
-#include "GameServer.hpp"
+#include "TestServer.hpp"
 
 int main() {
     GameServer gameServer;

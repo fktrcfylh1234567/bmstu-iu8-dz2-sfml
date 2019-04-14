@@ -1,5 +1,5 @@
 //
-// Created by fktrc on 08.04.19.
+// Created by fktrc on 11.04.19.
 //
 
 #ifndef GAME_BUFF_HPP
@@ -10,19 +10,18 @@
 class Buff {
 public:
     // Numerical
-    int heal = 0;
-    size_t damage = 0;
-    size_t attackRange = 0;
+    virtual int getHealModifier() = 0;
+    virtual size_t getAttackDamageModifier() = 0;
+    virtual size_t getAttackRangeModifier() = 0;
 
     // Coefficents
-    float moveSpeed = 1;
-    float attackSpeed = 1;
+    virtual float getMoveSpeedModifier() = 0;
+    virtual float getAttackSpeedModifier() = 0;
 
     // Flags
-    bool stunned = false;
-    bool immunityFromBasicAttack = false;
-    bool immunityFromSpells = false;
+    virtual bool isStunned() = 0;
+    virtual bool isImmunityFromBasicAttack() = 0;
+    virtual bool isImmunityFromSpells() = 0;
 };
-
 
 #endif //GAME_BUFF_HPP

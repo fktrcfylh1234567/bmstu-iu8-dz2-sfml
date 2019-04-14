@@ -145,9 +145,3 @@ size_t Graph::pointToIndex(const size_t x, const size_t y) {
 Point Graph::indexToPoint(size_t p) {
     return {(p - p % locationSize) / locationSize, p % locationSize};
 }
-
-void Graph::debug_print_edges() {
-    std::pair<BoostGraph::vertex_iterator, BoostGraph::vertex_iterator> vertices = boost::vertices(graph);
-    std::pair<BoostGraph::edge_iterator, BoostGraph::edge_iterator> edges = boost::edges(graph);
-    std::copy(edges.first, edges.second, std::ostream_iterator<BoostGraph::edge_descriptor>{std::cout, "\n"});
-}

@@ -8,10 +8,8 @@
 #include <cstdio>
 #include <utility>
 #include <vector>
-
 #include <algorithm>
 #include <iterator>
-#include <iostream>
 #include <set>
 
 #include <boost/graph/adjacency_list.hpp>
@@ -42,8 +40,6 @@ public:
     bool isFree(size_t x, size_t y);
 
     Path makePath(const Point& origin, const Point& destination);
-
-    void debug_print_edges();
 
 private:
     BoostGraph graph;

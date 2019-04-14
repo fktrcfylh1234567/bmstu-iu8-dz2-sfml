@@ -1,10 +1,11 @@
 //
-// Created by fktrc on 01.04.19.
+// Created by fktrc on 12.04.19.
 //
 
-#ifndef GAME_GAMESERVER_HPP
-#define GAME_GAMESERVER_HPP
+#ifndef GAME_GAMESESSION_HPP
+#define GAME_GAMESESSION_HPP
 
+#include <Session.hpp>
 #include <iostream>
 
 #include <atomic>
@@ -14,14 +15,12 @@
 #include "GameInstance.hpp"
 #include "ConcurrentQueue.hpp"
 
-class GameServer {
-public:
-    void run();
-    void stop();
+class GameSession : public Session {
+    void run() override;
+    void stop() override;
+    void handleAction(UserAction action) override;
 
 private:
-    GameInstance gameInstance;
-
     ConcurrentQueue<size_t> queue;
     std::atomic_bool isRunning = false;
     std::atomic_size_t timeCurrent = 0;
@@ -30,4 +29,4 @@ private:
     const size_t timeUnitMs = 500;
 };
 
-#endif //GAME_GAMESERVER_HPP
+#endif //GAME_GAMESESSION_HPP

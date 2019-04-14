@@ -13,33 +13,10 @@ class GameInstance;
 
 class Sequence {
 public:
-    Sequence(const size_t id, size_t nextUpdateTimeMs, GameInstance* instance) : Id(id),
-                                                                                 nextUpdateTimeMs(nextUpdateTimeMs),
-                                                                                 instance(instance) {}
-
     virtual void Update() = 0;
-
-    void Cancel() {
-        canceled = true;
-    }
-
-    bool isCanceled() const {
-        return canceled;
-    }
-
-    size_t getNextUpdateTime() const {
-        return nextUpdateTimeMs;
-    }
-
-    const size_t getId() const {
-        return Id;
-    }
-
-protected:
-    const size_t Id;
-    bool canceled = false;
-    size_t nextUpdateTimeMs;
-    GameInstance* instance;
+    virtual void Cancel() = 0;
+    virtual bool isCanceled() = 0;
+    virtual size_t getNextUpdateTime() = 0;
 };
 
 #endif //GAME_SEQUENCE_HPP
