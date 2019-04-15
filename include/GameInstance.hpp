@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <memory>
 
-#include "Graph.hpp"
+#include "GameGraph.hpp"
 #include "Character.hpp"
 #include "Sequence.hpp"
 
@@ -23,7 +23,7 @@ public:
     size_t spawnPlayer(size_t)
 
 private:
-    Graph gameGraph;
+    GameGraph gameGraph;
     std::map<size_t, Character> entities;
     std::map<size_t, std::unique_ptr<Sequence>> sequences;
 

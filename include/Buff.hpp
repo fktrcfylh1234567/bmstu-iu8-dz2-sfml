@@ -9,19 +9,34 @@
 
 class Buff {
 public:
+    bool operator==(const Buff& rhs) const {
+        return getHealModifier() == rhs.getHealModifier() &&
+               getAttackDamageModifier() == rhs.getAttackDamageModifier() &&
+               getAttackRangeModifier() == rhs.getAttackRangeModifier() &&
+               getMoveSpeedModifier() == rhs.getMoveSpeedModifier() &&
+               getAttackSpeedModifier() == rhs.getAttackSpeedModifier() &&
+               isStunned() == rhs.isStunned() &&
+               isImmunityFromBasicAttack() == rhs.isImmunityFromBasicAttack() &&
+               isImmunityFromSpells() == rhs.isImmunityFromSpells();
+    }
+
+    bool operator!=(const Buff& rhs) const {
+        return !(rhs == *this);
+    }
+
     // Numerical
-    virtual int getHealModifier() = 0;
-    virtual size_t getAttackDamageModifier() = 0;
-    virtual size_t getAttackRangeModifier() = 0;
+    virtual const int getHealModifier() const = 0;
+    virtual const int getAttackDamageModifier() const = 0;
+    virtual const int getAttackRangeModifier() const = 0;
 
     // Coefficents
-    virtual float getMoveSpeedModifier() = 0;
-    virtual float getAttackSpeedModifier() = 0;
+    virtual const float getMoveSpeedModifier() const = 0;
+    virtual const float getAttackSpeedModifier() const = 0;
 
     // Flags
-    virtual bool isStunned() = 0;
-    virtual bool isImmunityFromBasicAttack() = 0;
-    virtual bool isImmunityFromSpells() = 0;
+    virtual const bool isStunned() const = 0;
+    virtual const bool isImmunityFromBasicAttack() const = 0;
+    virtual const bool isImmunityFromSpells() const = 0;
 };
 
 #endif //GAME_BUFF_HPP

@@ -4,9 +4,10 @@
 
 #include "Character.hpp"
 
-Character::Character(const size_t id, Graph* gameGraph, const CharacterStats& defaulStats)
-        : Id(id), gameGraph(gameGraph), defaulStats(defaulStats) {
-    resetAllStatsToDefault();
+Character::Character(size_t id, std::shared_ptr<Graph> gameGraph, const std::shared_ptr<CharacterStats> defaulStats)
+        : id(id) {
+    this->gameGraph = gameGraph;
+    this->defaulStats = defaulStats;
 }
 
 void Character::spawn(const Point& destination) {
@@ -18,6 +19,7 @@ void Character::spawn(const Point& destination) {
     this->pos = destination;
     gameGraph->busyPoint(this->pos);
     resetAllStatsToDefault();
+    activeBuffs.clear();
 }
 
 void Character::kill() {
@@ -52,7 +54,7 @@ const Point& Character::getPos() const {
 }
 
 const size_t Character::getId() const {
-    return Id;
+    return id;
 }
 
 void Character::doDamage(size_t damage) {
@@ -64,43 +66,23 @@ void Character::doDamage(size_t damage) {
     currentStats.hp -= damage;
 }
 
-void Character::addBuff(Buff* buff) {
+void Character::addBuff(std::shared_ptr<Buff> buff) {
     activeBuffs.push_back(buff);
+    updateBuffs();
 }
 
-void Character::removeBuff(Buff* buff) {
+void Character::removeBuff(std::shared_ptr<Buff> buff) {
     for (auto it = activeBuffs.begin(); it != activeBuffs.end(); ++it) {
         if (*it == buff) {
             activeBuffs.erase(it);
+            updateBuffs();
             return;
         }
     }
 }
 
-void Character::updateBuffs() {
-    resetAllStatsToDefault();
-    for (const Buff* buff : activeBuffs) {
-        // Numerical
-        currentStats.heal += buff->healModifier;
-        currentStats.attackDamage += buff->attackDamageModifier;
-
-        // Coefficents
-        currentStats.moveSpeed *= buff->moveSpeedModifier;
-        currentStats.attackSpeed *= buff->attackSpeedModifier;
-        currentStats.attackRange *= buff->attackRangeModifier;
-
-        // Flags
-        if (buff->stunned) {
-            stunned = true;
-        }
-        if (buff->immunityFromBasicAttack) {
-            immunityFromBasicAttack = true;
-        }
-        if (buff->immunityFromSpells) {
-            immunityFromSpells = true;
-        }
-
-    }
+const LocalCharacterStats& Character::getCurrentStats() const {
+    return currentStats;
 }
 
 bool Character::isStunned() const {
@@ -116,13 +98,39 @@ bool Character::isImmunityFromSpells() const {
 }
 
 void Character::resetAllStatsToDefault() {
-    currentStats = defaulStats;
+    currentStats.hp = defaulStats->getHp();
+    currentStats.heal = defaulStats->getHeal();
+    currentStats.moveSpeed = defaulStats->getMoveSpeed();
+    currentStats.attackDamage = defaulStats->getAttackDamage();
+    currentStats.attackSpeed = defaulStats->getAttackSpeed();
+    currentStats.attackRange = defaulStats->getAttackRange();
 
     stunned = false;
     immunityFromBasicAttack = false;
     immunityFromSpells = false;
 }
 
-const CharacterStats& Character::getCurrentStats() const {
-    return currentStats;
+void Character::updateBuffs() {
+    resetAllStatsToDefault();
+    for (const auto buff : activeBuffs) {
+        // Numerical
+        currentStats.heal += buff->getHealModifier();
+        currentStats.attackDamage += buff->getAttackDamageModifier();
+        currentStats.attackRange += buff->getAttackRangeModifier();
+
+        // Coefficents
+        currentStats.moveSpeed *= buff->getMoveSpeedModifier();
+        currentStats.attackSpeed *= buff->getAttackSpeedModifier();
+
+        // Flags
+        if (buff->isStunned()) {
+            stunned = true;
+        }
+        if (buff->isImmunityFromBasicAttack()) {
+            immunityFromBasicAttack = true;
+        }
+        if (buff->isImmunityFromSpells()) {
+            immunityFromSpells = true;
+        }
+    }
 }

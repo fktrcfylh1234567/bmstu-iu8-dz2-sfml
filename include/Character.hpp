@@ -11,11 +11,11 @@
 
 #include "Graph.hpp"
 #include "Buff.hpp"
-#include "CharacterStats.hpp"
+#include "LocalCharacterStats.hpp"
 
 class Character {
 public:
-    Character(const size_t id, std::shared_ptr<Graph> gameGraph, const std::shared_ptr<CharacterStats> defaulStats);
+    Character(size_t id, std::shared_ptr<Graph> gameGraph, const std::shared_ptr<CharacterStats> defaulStats);
 
     void spawn(const Point& destination);
     void kill();
@@ -30,29 +30,30 @@ public:
     void doDamage(size_t damage);
     void addBuff(std::shared_ptr<Buff> buff);
     void removeBuff(std::shared_ptr<Buff> buff);
-    void updateBuffs();
 
-    const CharacterStats& getCurrentStats() const;
+    const LocalCharacterStats& getCurrentStats() const;
     bool isStunned() const;
     bool isImmunityFromBasicAttack() const;
     bool isImmunityFromSpells() const;
 
+    std::vector<std::shared_ptr<Buff>> activeBuffs;
+
 private:
-    const size_t Id;
-    std::shared_ptr<Graph> gameGraph;
+    const size_t id;
+    std::shared_ptr<Graph> gameGraph = nullptr;
 
     bool alive = false;
     Point pos = {-1, -1};
 
-    std::shared_ptr<CharacterStats> defaulStats;
-    std::unique_ptr<CharacterStats> currentStats;
-    std::vector<std::shared_ptr<Buff>> activeBuffs;
+    std::shared_ptr<CharacterStats> defaulStats = nullptr;
+    LocalCharacterStats currentStats;
 
     bool stunned = false;
     bool immunityFromBasicAttack = false;
     bool immunityFromSpells = false;
 
     void resetAllStatsToDefault();
+    void updateBuffs();
 };
 
 #endif //GAME_CHARACTER_HPP

@@ -2,14 +2,14 @@
 // Created by fktrc on 25.03.19.
 //
 
-#include <Graph.hpp>
+#include <GameGraph.hpp>
 
-Graph::Graph(size_t locationSize) {
+GameGraph::GameGraph(size_t locationSize) {
     this->locationSize = locationSize;
     graph = BoostGraph();
 }
 
-void Graph::loadLocation(bool** location) {
+void GameGraph::loadLocation(std::vector<std::vector<bool>>& location) {
     for (size_t i = 0; i < locationSize; i++) {
         for (size_t j = 0; j < locationSize; j++) {
             if (location[i][j]) {
@@ -36,7 +36,7 @@ void Graph::loadLocation(bool** location) {
     }
 }
 
-void Graph::busyPoint(const Point& point) {
+void GameGraph::busyPoint(const Point& point) {
     if (!isFree(point)) {
         return;
     }
@@ -58,7 +58,7 @@ void Graph::busyPoint(const Point& point) {
     }
 }
 
-void Graph::releasePoint(const Point& point) {
+void GameGraph::releasePoint(const Point& point) {
     if (isFree(point)) {
         return;
     }
@@ -94,16 +94,16 @@ void Graph::releasePoint(const Point& point) {
         }
 }
 
-bool Graph::isFree(const Point& point) {
+bool GameGraph::isFree(const Point& point) {
     size_t id = pointToIndex(point);
     return (boost::in_degree(id, graph) != 0) && (boost::in_degree(id, graph) < 11);
 }
 
-bool Graph::isFree(const size_t x, const size_t y) {
+bool GameGraph::isFree(const size_t x, const size_t y) {
     return isFree({x, y});
 }
 
-Path Graph::makePath(const Point& origin, const Point& destination) {
+Path GameGraph::makePath(const Point& origin, const Point& destination) {
     size_t originId = pointToIndex(origin);
     size_t destId = pointToIndex(destination);
 
@@ -134,14 +134,14 @@ Path Graph::makePath(const Point& origin, const Point& destination) {
     return path;
 }
 
-size_t Graph::pointToIndex(const Point& point) {
+size_t GameGraph::pointToIndex(const Point& point) {
     return locationSize * point.first + point.second;
 }
 
-size_t Graph::pointToIndex(const size_t x, const size_t y) {
+size_t GameGraph::pointToIndex(const size_t x, const size_t y) {
     return locationSize * x + y;
 }
 
-Point Graph::indexToPoint(size_t p) {
+Point GameGraph::indexToPoint(size_t p) {
     return {(p - p % locationSize) / locationSize, p % locationSize};
 }
