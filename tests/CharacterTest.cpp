@@ -15,9 +15,9 @@ TEST(ActorTest, Spawn) {
                                                {false, false, true}};
     graph->loadLocation(location);
 
-    std::shared_ptr<LocalCharacterStats> stats = std::make_shared<LocalCharacterStats>();
-    stats->hp = 1000;
-    stats->moveSpeed = 10;
+    std::shared_ptr<InstanceCharacterStats> stats = std::make_shared<InstanceCharacterStats>();
+    stats->setHp(1000);
+    stats->setMoveSpeed(10);
 
     Character character(1, graph, stats);
     EXPECT_EQ(character.getId(), 1);
@@ -26,14 +26,14 @@ TEST(ActorTest, Spawn) {
     character.spawn(Point(0, 0));
     EXPECT_EQ(character.isAlive(), true);
     EXPECT_EQ(character.getPos(), Point(0, 0));
-    EXPECT_EQ(character.getCurrentStats().hp, 1000);
-    EXPECT_EQ(character.getCurrentStats().moveSpeed, 10);
+    EXPECT_EQ(character.getCurrentStats().getHp(), 1000);
+    EXPECT_EQ(character.getCurrentStats().getMoveSpeed(), 10);
 
     character.doDamage(250);
-    EXPECT_EQ(character.getCurrentStats().hp, 750);
+    EXPECT_EQ(character.getCurrentStats().getHp(), 750);
 
     character.doDamage(2500);
-    EXPECT_EQ(character.getCurrentStats().hp, 0);
+    EXPECT_EQ(character.getCurrentStats().getHp(), 0);
     EXPECT_EQ(character.isAlive(), false);
 }
 
@@ -44,7 +44,7 @@ TEST(ActorTest, Move) {
                                                {true, true}};
     graph->loadLocation(location);
 
-    std::shared_ptr<LocalCharacterStats> stats = std::make_shared<LocalCharacterStats>();
+    std::shared_ptr<InstanceCharacterStats> stats = std::make_shared<InstanceCharacterStats>();
     Character character(1, graph, stats);
     character.spawn(Point(0, 0));
     EXPECT_FALSE(graph->isFree(0, 0));
@@ -62,7 +62,7 @@ TEST(ActorTest, Path) {
                                                {true, true, true}};
     graph->loadLocation(location);
 
-    std::shared_ptr<LocalCharacterStats> stats = std::make_shared<LocalCharacterStats>();
+    std::shared_ptr<InstanceCharacterStats> stats = std::make_shared<InstanceCharacterStats>();
     Character character(1, graph, stats);
     character.spawn(Point(0, 0));
     Path path = character.makePath(Point(2, 2));
@@ -71,56 +71,34 @@ TEST(ActorTest, Path) {
     EXPECT_EQ(path[4], Point(2, 2));
 }
 
-TEST(ActorTest, BuffStun) {
-    size_t locationSize = 1;
-    std::shared_ptr<Graph> graph = std::make_shared<GameGraph>(locationSize);
-    std::vector<std::vector<bool>> location = {{true}};
-    graph->loadLocation(location);
-    std::shared_ptr<LocalCharacterStats> stats = std::make_shared<LocalCharacterStats>();
-    Character character(1, graph, stats);
-    character.spawn(Point(0, 0));
-
-    std::shared_ptr<InstanceBuff> buffStun = std::make_shared<InstanceBuff>();
-    buffStun->stunned = true;
-    character.addBuff(buffStun);
-    EXPECT_EQ(character.activeBuffs.size(), 1);
-    EXPECT_TRUE(character.isStunned());
-
-    character.removeBuff(buffStun);
-    EXPECT_EQ(character.activeBuffs.size(), 0);
-
-    EXPECT_FALSE(character.isStunned());
-}
-
 TEST(ActorTest, BuffSlowDown) {
     size_t locationSize = 1;
     std::shared_ptr<Graph> graph = std::make_shared<GameGraph>(locationSize);
     std::vector<std::vector<bool>> location = {{true}};
     graph->loadLocation(location);
 
-    std::shared_ptr<LocalCharacterStats> stats = std::make_shared<LocalCharacterStats>();
-    stats->moveSpeed = 10;
+    std::shared_ptr<InstanceCharacterStats> stats = std::make_shared<InstanceCharacterStats>();
+    stats->setMoveSpeed(10);
 
     Character character(1, graph, stats);
     character.spawn(Point(0, 0));
 
     std::shared_ptr<InstanceBuff> buffSlowDown = std::make_shared<InstanceBuff>();
-    buffSlowDown->moveSpeedModifier = 0.9;
+    buffSlowDown->setMoveSpeedModifier(0.9);
 
     character.addBuff(buffSlowDown);
-    EXPECT_EQ(character.getCurrentStats().moveSpeed, 9);
-    EXPECT_FALSE(character.isStunned());
+    EXPECT_EQ(character.getCurrentStats().getMoveSpeed(), 9);
 
     character.removeBuff(buffSlowDown);
-    EXPECT_EQ(character.getCurrentStats().moveSpeed, 10);
+    EXPECT_EQ(character.getCurrentStats().getMoveSpeed(), 10);
 
     // Multiple buffs
     character.addBuff(buffSlowDown);
     character.addBuff(buffSlowDown);
     character.addBuff(buffSlowDown);
     character.addBuff(buffSlowDown);
-    EXPECT_EQ(character.getCurrentStats().moveSpeed, 6);
+    EXPECT_EQ(character.getCurrentStats().getMoveSpeed(), 6);
 
     character.removeBuff(buffSlowDown);
-    EXPECT_EQ(character.getCurrentStats().moveSpeed, 7);
+    EXPECT_EQ(character.getCurrentStats().getMoveSpeed(), 7);
 }

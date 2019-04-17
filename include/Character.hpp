@@ -11,7 +11,7 @@
 
 #include "Graph.hpp"
 #include "Buff.hpp"
-#include "LocalCharacterStats.hpp"
+#include "InstanceCharacterStats.hpp"
 
 class Character {
 public:
@@ -31,12 +31,7 @@ public:
     void addBuff(std::shared_ptr<Buff> buff);
     void removeBuff(std::shared_ptr<Buff> buff);
 
-    const LocalCharacterStats& getCurrentStats() const;
-    bool isStunned() const;
-    bool isImmunityFromBasicAttack() const;
-    bool isImmunityFromSpells() const;
-
-    std::vector<std::shared_ptr<Buff>> activeBuffs;
+    const InstanceCharacterStats& getCurrentStats() const;
 
 private:
     const size_t id;
@@ -46,11 +41,8 @@ private:
     Point pos = {-1, -1};
 
     std::shared_ptr<CharacterStats> defaulStats = nullptr;
-    LocalCharacterStats currentStats;
-
-    bool stunned = false;
-    bool immunityFromBasicAttack = false;
-    bool immunityFromSpells = false;
+    InstanceCharacterStats currentStats;
+    std::vector<std::shared_ptr<Buff>> activeBuffs;
 
     void resetAllStatsToDefault();
     void updateBuffs();

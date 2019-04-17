@@ -8,23 +8,36 @@
 #include <vector>
 #include <string>
 #include <map>
-#include <algorithm>
 #include <memory>
+
+#include "Instance.hpp"
+#include "ActionSpace.hpp"
 
 #include "GameGraph.hpp"
 #include "Character.hpp"
-#include "Sequence.hpp"
 
-class GameInstance {
+#include "MovementSequence.hpp"
+#include "AttackSequence.hpp"
+
+class GameInstance : public Instance, public ActionSpace {
 public:
     GameInstance();
-    void updateSequences(size_t currentTime);
 
-    size_t spawnPlayer(size_t)
+    // Instance
+    void update(size_t currentTime) override;
+    size_t spawnCharacter(std::shared_ptr<CharacterStats> characterStats) override;
+    void removeCharacter(size_t characterId) override;
+    void addMoveSequence(size_t characterId, Point& point) override;
+    void addAttackSequence(size_t characterId, size_t targetId) override;
+    void removeCharacterActiveSequence(size_t characterId) override;
+
+    // ActionSpace
+    std::shared_ptr<Graph> getGraph() override;
+    std::map<size_t, Character>& getCharacters() override;
 
 private:
-    GameGraph gameGraph;
-    std::map<size_t, Character> entities;
+    std::shared_ptr<Graph> graph;
+    std::map<size_t, Character> characters;
     std::map<size_t, std::unique_ptr<Sequence>> sequences;
 
     size_t nextEntityId = 1;

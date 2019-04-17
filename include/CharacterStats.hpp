@@ -9,12 +9,12 @@
 
 class CharacterStats {
 public:
-    virtual size_t getHp() = 0;
-    virtual int getHeal() = 0;
-    virtual size_t getMoveSpeed() = 0;
-    virtual size_t getAttackDamage() = 0;
-    virtual size_t getAttackSpeed() = 0;
-    virtual size_t getAttackRange() = 0;
+    virtual size_t getHp() const = 0;
+    virtual int getHeal() const = 0;
+    virtual size_t getMoveSpeed() const = 0;
+    virtual size_t getAttackDamage() const = 0;
+    virtual size_t getAttackSpeed() const = 0;
+    virtual size_t getAttackRange() const = 0;
 };
 
 #endif //GAME_CHARACTERSTATS_HPP

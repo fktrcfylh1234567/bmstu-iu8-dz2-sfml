@@ -17,7 +17,7 @@ hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
 # Boost
-hunter_add_package(Boost COMPONENTS graph system)
+hunter_add_package(Boost COMPONENTS graph)
 find_package(Boost CONFIG REQUIRED graph)
 
 
@@ -26,22 +26,25 @@ add_library(graph STATIC
         source/GameGraph.cpp
         )
 
-add_library(gameLogic STATIC
+add_library(instance STATIC
         source/Character.cpp
+        source/MovementSequence.cpp
+        source/AttackSequence.cpp
+        source/GameInstance.cpp
         )
 
 # Libs include
 target_include_directories(graph PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_include_directories(gameLogic PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(instance PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Libs links
 target_link_libraries(graph Boost::graph)
-target_link_libraries(gameLogic graph)
+target_link_libraries(instance graph)
 
 # Tests
 add_executable(graphTest tests/GraphTest.cpp)
-add_executable(gameLogicTest tests/CharacterTest.cpp)
+add_executable(instanceTest tests/CharacterTest.cpp)
 
 # Tests links
 target_link_libraries(graphTest GTest::main graph)
-target_link_libraries(gameLogicTest GTest::main gameLogic)
+target_link_libraries(instanceTest GTest::main instance)

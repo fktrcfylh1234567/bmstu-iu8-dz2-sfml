@@ -5,19 +5,37 @@
 #include <GameInstance.hpp>
 
 GameInstance::GameInstance() {
-    gameGraph = GameGraph(locationSize);
+    graph = std::make_shared<GameGraph>(locationSize);
 }
 
-void GameInstance::updateSequences(size_t currentTime) {
-    for (auto itr = sequences.begin(); itr != sequences.end(); ++itr) {
-        if (itr->second->isCanceled()) {
-            sequences.erase(itr);
-        }
-    }
+void GameInstance::update(size_t currentTime) {
+}
 
-    for (auto sequence : sequences) {
-        if (sequence.second->getNextUpdateTime() == currentTime) {
-            sequence.second->Update();
-        }
-    }
+size_t GameInstance::spawnCharacter(std::shared_ptr<CharacterStats> characterStats) {
+    return 0;
+}
+
+void GameInstance::removeCharacter(size_t characterId) {
+
+}
+
+void GameInstance::addMoveSequence(size_t characterId, Point& point) {
+    sequences[nextSequenceId] = std::make_unique<MovementSequence>(characterId, point, this);
+    nextSequenceId++;
+}
+
+void GameInstance::addAttackSequence(size_t characterId, size_t targetId) {
+
+}
+
+void GameInstance::removeCharacterActiveSequence(size_t characterId) {
+
+}
+
+std::shared_ptr<Graph> GameInstance::getGraph() {
+    return graph;
+}
+
+std::map<size_t, Character>& GameInstance::getCharacters() {
+    return characters;
 }

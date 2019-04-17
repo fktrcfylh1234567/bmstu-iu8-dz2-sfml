@@ -6,10 +6,6 @@
 #define GAME_SEQUENCE_HPP
 
 #include <cstdio>
-#include <chrono>
-#include "GameInstance.hpp"
-
-class GameInstance;
 
 class Sequence {
 public:

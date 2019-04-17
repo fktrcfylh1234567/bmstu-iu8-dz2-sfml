@@ -9,17 +9,6 @@
 
 class InstanceBuff : public Buff {
 public:
-    int healModifier = 0;
-    int attackDamageModifier = 0;
-    int attackRangeModifier = 0;
-
-    float moveSpeedModifier = 1;
-    float attackSpeedModifier = 1;
-
-    bool stunned = false;
-    bool immunityFromBasicAttack = false;
-    bool immunityFromSpells = false;
-
     const int getHealModifier() const override {
         return healModifier;
     }
@@ -40,17 +29,33 @@ public:
         return attackSpeedModifier;
     }
 
-    const bool isStunned() const override {
-        return stunned;
+    void setHealModifier(int healModifier) {
+        this->healModifier = healModifier;
     }
 
-    const bool isImmunityFromBasicAttack() const override {
-        return immunityFromBasicAttack;
+    void setAttackDamageModifier(int attackDamageModifier) {
+        this->attackDamageModifier = attackDamageModifier;
     }
 
-    const bool isImmunityFromSpells() const override {
-        return immunityFromSpells;
+    void setAttackRangeModifier(int attackRangeModifier) {
+        this->attackRangeModifier = attackRangeModifier;
     }
+
+    void setMoveSpeedModifier(float moveSpeedModifier) {
+        this->moveSpeedModifier = moveSpeedModifier;
+    }
+
+    void setAttackSpeedModifier(float attackSpeedModifier) {
+        this->attackSpeedModifier = attackSpeedModifier;
+    }
+
+private:
+    int healModifier = 0;
+    int attackDamageModifier = 0;
+    int attackRangeModifier = 0;
+
+    float moveSpeedModifier = 1;
+    float attackSpeedModifier = 1;
 };
 
 #endif //GAME_INSTANCEBUFF_HPP
