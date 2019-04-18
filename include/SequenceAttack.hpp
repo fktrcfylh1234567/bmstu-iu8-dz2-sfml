@@ -2,12 +2,12 @@
 // Created by fktrc on 18.04.19.
 //
 
-#ifndef GAME_ATTACKSEQUENCE_HPP
-#define GAME_ATTACKSEQUENCE_HPP
+#ifndef GAME_SEQUENCEATTACK_HPP
+#define GAME_SEQUENCEATTACK_HPP
 
 #include "Sequence.hpp"
 
-class AttackSequence : public Sequence {
+class SequenceAttack : public Sequence {
 public:
     void Update() override;
     void Cancel() override;
@@ -16,4 +16,4 @@ public:
 };
 
 
-#endif //GAME_ATTACKSEQUENCE_HPP
+#endif //GAME_SEQUENCEATTACK_HPP

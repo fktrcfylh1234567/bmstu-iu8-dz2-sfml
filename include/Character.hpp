@@ -11,7 +11,7 @@
 
 #include "Graph.hpp"
 #include "Buff.hpp"
-#include "InstanceCharacterStats.hpp"
+#include "CharacterStatsInstance.hpp"
 
 class Character {
 public:
@@ -31,7 +31,7 @@ public:
     void addBuff(std::shared_ptr<Buff> buff);
     void removeBuff(std::shared_ptr<Buff> buff);
 
-    const InstanceCharacterStats& getCurrentStats() const;
+    const CharacterStatsInstance& getCurrentStats() const;
 
 private:
     const size_t id;
@@ -41,7 +41,7 @@ private:
     Point pos = {-1, -1};
 
     std::shared_ptr<CharacterStats> defaulStats = nullptr;
-    InstanceCharacterStats currentStats;
+    CharacterStatsInstance currentStats;
     std::vector<std::shared_ptr<Buff>> activeBuffs;
 
     void resetAllStatsToDefault();

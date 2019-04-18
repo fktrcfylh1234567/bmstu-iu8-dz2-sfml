@@ -28,9 +28,9 @@ add_library(graph STATIC
 
 add_library(instance STATIC
         source/Character.cpp
-        source/MovementSequence.cpp
-        source/AttackSequence.cpp
-        source/GameInstance.cpp
+        source/SequenceMovement.cpp
+        source/SequenceAttack.cpp
+        source/GameLevelInstance.cpp
         )
 
 # Libs include

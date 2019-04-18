@@ -2,12 +2,12 @@
 // Created by fktrc on 15.04.19.
 //
 
-#ifndef GAME_INSTANCEBUFF_HPP
-#define GAME_INSTANCEBUFF_HPP
+#ifndef GAME_BUFFINSTANCE_HPP
+#define GAME_BUFFINSTANCE_HPP
 
 #include "Buff.hpp"
 
-class InstanceBuff : public Buff {
+class BuffInstance : public Buff {
 public:
     const int getHealModifier() const override {
         return healModifier;
@@ -58,4 +58,4 @@ private:
     float attackSpeedModifier = 1;
 };
 
-#endif //GAME_INSTANCEBUFF_HPP
+#endif //GAME_BUFFINSTANCE_HPP

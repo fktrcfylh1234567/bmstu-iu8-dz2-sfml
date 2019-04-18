@@ -2,12 +2,12 @@
 // Created by fktrc on 15.04.19.
 //
 
-#ifndef GAME_INSTANCECHARACTERSTATS_HPP
-#define GAME_INSTANCECHARACTERSTATS_HPP
+#ifndef GAME_CHARACTERSTATSINSTANCE_HPP
+#define GAME_CHARACTERSTATSINSTANCE_HPP
 
 #include "CharacterStats.hpp"
 
-class InstanceCharacterStats : public CharacterStats {
+class CharacterStatsInstance : public CharacterStats {
 public:
     size_t getHp() const override {
         return hp;
@@ -66,4 +66,4 @@ private:
     size_t attackRange = 0;
 };
 
-#endif //GAME_INSTANCECHARACTERSTATS_HPP
+#endif //GAME_CHARACTERSTATSINSTANCE_HPP

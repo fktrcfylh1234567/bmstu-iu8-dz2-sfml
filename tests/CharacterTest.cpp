@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <GameGraph.hpp>
-#include <InstanceBuff.hpp>
+#include <BuffInstance.hpp>
 #include "Character.hpp"
 
 TEST(ActorTest, Spawn) {
@@ -15,7 +15,7 @@ TEST(ActorTest, Spawn) {
                                                {false, false, true}};
     graph->loadLocation(location);
 
-    std::shared_ptr<InstanceCharacterStats> stats = std::make_shared<InstanceCharacterStats>();
+    std::shared_ptr<CharacterStatsInstance> stats = std::make_shared<CharacterStatsInstance>();
     stats->setHp(1000);
     stats->setMoveSpeed(10);
 
@@ -44,7 +44,7 @@ TEST(ActorTest, Move) {
                                                {true, true}};
     graph->loadLocation(location);
 
-    std::shared_ptr<InstanceCharacterStats> stats = std::make_shared<InstanceCharacterStats>();
+    std::shared_ptr<CharacterStatsInstance> stats = std::make_shared<CharacterStatsInstance>();
     Character character(1, graph, stats);
     character.spawn(Point(0, 0));
     EXPECT_FALSE(graph->isFree(0, 0));
@@ -62,7 +62,7 @@ TEST(ActorTest, Path) {
                                                {true, true, true}};
     graph->loadLocation(location);
 
-    std::shared_ptr<InstanceCharacterStats> stats = std::make_shared<InstanceCharacterStats>();
+    std::shared_ptr<CharacterStatsInstance> stats = std::make_shared<CharacterStatsInstance>();
     Character character(1, graph, stats);
     character.spawn(Point(0, 0));
     Path path = character.makePath(Point(2, 2));
@@ -77,13 +77,13 @@ TEST(ActorTest, BuffSlowDown) {
     std::vector<std::vector<bool>> location = {{true}};
     graph->loadLocation(location);
 
-    std::shared_ptr<InstanceCharacterStats> stats = std::make_shared<InstanceCharacterStats>();
+    std::shared_ptr<CharacterStatsInstance> stats = std::make_shared<CharacterStatsInstance>();
     stats->setMoveSpeed(10);
 
     Character character(1, graph, stats);
     character.spawn(Point(0, 0));
 
-    std::shared_ptr<InstanceBuff> buffSlowDown = std::make_shared<InstanceBuff>();
+    std::shared_ptr<BuffInstance> buffSlowDown = std::make_shared<BuffInstance>();
     buffSlowDown->setMoveSpeedModifier(0.9);
 
     character.addBuff(buffSlowDown);

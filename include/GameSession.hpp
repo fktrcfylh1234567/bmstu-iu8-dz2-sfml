@@ -12,7 +12,7 @@
 #include <chrono>
 #include <thread>
 
-#include "GameInstance.hpp"
+#include "GameLevelInstance.hpp"
 #include "ConcurrentQueue.hpp"
 
 class GameSession : public Session {

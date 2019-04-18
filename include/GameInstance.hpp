@@ -1,49 +1,23 @@
 //
-// Created by fktrc on 25.03.19.
+// Created by fktrc on 11.04.19.
 //
 
 #ifndef GAME_GAMEINSTANCE_HPP
 #define GAME_GAMEINSTANCE_HPP
 
-#include <vector>
-#include <string>
-#include <map>
-#include <memory>
+#include "CharacterStats.hpp"
 
-#include "Instance.hpp"
-#include "ActionSpace.hpp"
+typedef std::pair<size_t, size_t> Point;
 
-#include "GameGraph.hpp"
-#include "Character.hpp"
+class GameInstance {
+    virtual void update(size_t currentTime) = 0;
 
-#include "MovementSequence.hpp"
-#include "AttackSequence.hpp"
+    virtual size_t spawnCharacter(std::shared_ptr<CharacterStats> characterStats) = 0;
+    virtual void removeCharacter(size_t characterId) = 0;
 
-class GameInstance : public Instance, public ActionSpace {
-public:
-    GameInstance();
-
-    // Instance
-    void update(size_t currentTime) override;
-    size_t spawnCharacter(std::shared_ptr<CharacterStats> characterStats) override;
-    void removeCharacter(size_t characterId) override;
-    void addMoveSequence(size_t characterId, Point& point) override;
-    void addAttackSequence(size_t characterId, size_t targetId) override;
-    void removeCharacterActiveSequence(size_t characterId) override;
-
-    // ActionSpace
-    std::shared_ptr<Graph> getGraph() override;
-    std::map<size_t, Character>& getCharacters() override;
-
-private:
-    std::shared_ptr<Graph> graph;
-    std::map<size_t, Character> characters;
-    std::map<size_t, std::unique_ptr<Sequence>> sequences;
-
-    size_t nextEntityId = 1;
-    size_t nextSequenceId = 1;
-
-    const size_t locationSize = 3;
+    virtual void addMoveSequence(size_t characterId, Point& point) = 0;
+    virtual void addAttackSequence(size_t characterId, size_t targetId) = 0;
+    virtual void removeCharacterActiveSequence(size_t characterId) = 0;
 };
 
 #endif //GAME_GAMEINSTANCE_HPP

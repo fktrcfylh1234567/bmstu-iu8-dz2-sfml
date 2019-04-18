@@ -78,7 +78,7 @@ void Character::removeBuff(std::shared_ptr<Buff> buff) {
     }
 }
 
-const InstanceCharacterStats& Character::getCurrentStats() const {
+const CharacterStatsInstance& Character::getCurrentStats() const {
     return currentStats;
 }
 
