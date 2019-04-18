@@ -3,13 +3,13 @@
 //
 
 #include <gtest/gtest.h>
-#include <GameGraph.hpp>
+#include <Graph.hpp>
 #include <BuffInstance.hpp>
 #include "Character.hpp"
 
 TEST(ActorTest, Spawn) {
     size_t locationSize = 3;
-    std::shared_ptr<Graph> graph = std::make_shared<GameGraph>(locationSize);
+    std::shared_ptr<IGraph> graph = std::make_shared<Graph>(locationSize);
     std::vector<std::vector<bool>> location = {{true,  true,  true},
                                                {true,  false, false},
                                                {false, false, true}};
@@ -39,7 +39,7 @@ TEST(ActorTest, Spawn) {
 
 TEST(ActorTest, Move) {
     size_t locationSize = 2;
-    std::shared_ptr<Graph> graph = std::make_shared<GameGraph>(locationSize);
+    std::shared_ptr<IGraph> graph = std::make_shared<Graph>(locationSize);
     std::vector<std::vector<bool>> location = {{true, true},
                                                {true, true}};
     graph->loadLocation(location);
@@ -56,7 +56,7 @@ TEST(ActorTest, Move) {
 
 TEST(ActorTest, Path) {
     size_t locationSize = 3;
-    std::shared_ptr<Graph> graph = std::make_shared<GameGraph>(locationSize);
+    std::shared_ptr<IGraph> graph = std::make_shared<Graph>(locationSize);
     std::vector<std::vector<bool>> location = {{true, true, true},
                                                {true, true, false},
                                                {true, true, true}};
@@ -73,7 +73,7 @@ TEST(ActorTest, Path) {
 
 TEST(ActorTest, BuffSlowDown) {
     size_t locationSize = 1;
-    std::shared_ptr<Graph> graph = std::make_shared<GameGraph>(locationSize);
+    std::shared_ptr<IGraph> graph = std::make_shared<Graph>(locationSize);
     std::vector<std::vector<bool>> location = {{true}};
     graph->loadLocation(location);
 

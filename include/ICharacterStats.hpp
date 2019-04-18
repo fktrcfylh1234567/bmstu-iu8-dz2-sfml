@@ -2,12 +2,12 @@
 // Created by fktrc on 11.04.19.
 //
 
-#ifndef GAME_CHARACTERSTATS_HPP
-#define GAME_CHARACTERSTATS_HPP
+#ifndef GAME_ICHARACTERSTATS_HPP
+#define GAME_ICHARACTERSTATS_HPP
 
 #include <cstdio>
 
-class CharacterStats {
+class ICharacterStats {
 public:
     virtual size_t getHp() const = 0;
     virtual int getHeal() const = 0;
@@ -17,4 +17,4 @@ public:
     virtual size_t getAttackRange() const = 0;
 };
 
-#endif //GAME_CHARACTERSTATS_HPP
+#endif //GAME_ICHARACTERSTATS_HPP

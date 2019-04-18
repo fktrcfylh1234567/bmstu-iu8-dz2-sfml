@@ -5,9 +5,9 @@
 #ifndef GAME_CHARACTERSTATSINSTANCE_HPP
 #define GAME_CHARACTERSTATSINSTANCE_HPP
 
-#include "CharacterStats.hpp"
+#include "ICharacterStats.hpp"
 
-class CharacterStatsInstance : public CharacterStats {
+class CharacterStatsInstance : public ICharacterStats {
 public:
     size_t getHp() const override {
         return hp;

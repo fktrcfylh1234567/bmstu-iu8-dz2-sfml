@@ -5,12 +5,12 @@
 #ifndef GAME_SEQUENCEMOVEMENT_HPP
 #define GAME_SEQUENCEMOVEMENT_HPP
 
-#include "Sequence.hpp"
-#include "LevelInstance.hpp"
+#include "ISequence.hpp"
+#include "ILevelInstance.hpp"
 
-class SequenceMovement : public Sequence {
+class SequenceMovement : public ISequence {
 public:
-    SequenceMovement(size_t characterId, Point& point, LevelInstance* actionSpace);
+    SequenceMovement(size_t characterId, Point& point, ILevelInstance* actionSpace);
 
     void Update() override;
     void Cancel() override;
@@ -20,7 +20,7 @@ public:
 private:
     size_t characterId = 0;
     Point& point;
-    LevelInstance* actionSpace = nullptr;
+    ILevelInstance* actionSpace = nullptr;
 };
 
 #endif //GAME_SEQUENCEMOVEMENT_HPP

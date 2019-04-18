@@ -4,7 +4,7 @@
 
 #include "Character.hpp"
 
-Character::Character(size_t id, std::shared_ptr<Graph> gameGraph, const std::shared_ptr<CharacterStats> defaulStats)
+Character::Character(size_t id, std::shared_ptr<IGraph> gameGraph, const std::shared_ptr<ICharacterStats> defaulStats)
         : id(id) {
     this->gameGraph = gameGraph;
     this->defaulStats = defaulStats;
@@ -63,12 +63,12 @@ void Character::doDamage(size_t damage) {
     currentStats.setHp(currentStats.getHp() - damage);
 }
 
-void Character::addBuff(std::shared_ptr<Buff> buff) {
+void Character::addBuff(std::shared_ptr<IBuff> buff) {
     activeBuffs.push_back(buff);
     updateBuffs();
 }
 
-void Character::removeBuff(std::shared_ptr<Buff> buff) {
+void Character::removeBuff(std::shared_ptr<IBuff> buff) {
     for (auto it = activeBuffs.begin(); it != activeBuffs.end(); ++it) {
         if (*it == buff) {
             activeBuffs.erase(it);

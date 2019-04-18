@@ -9,13 +9,13 @@
 #include <memory>
 #include <utility>
 
-#include "Graph.hpp"
-#include "Buff.hpp"
+#include "IGraph.hpp"
+#include "IBuff.hpp"
 #include "CharacterStatsInstance.hpp"
 
 class Character {
 public:
-    Character(size_t id, std::shared_ptr<Graph> gameGraph, const std::shared_ptr<CharacterStats> defaulStats);
+    Character(size_t id, std::shared_ptr<IGraph> gameGraph, const std::shared_ptr<ICharacterStats> defaulStats);
 
     void spawn(const Point& destination);
     void kill();
@@ -28,21 +28,21 @@ public:
     const size_t getId() const;
 
     void doDamage(size_t damage);
-    void addBuff(std::shared_ptr<Buff> buff);
-    void removeBuff(std::shared_ptr<Buff> buff);
+    void addBuff(std::shared_ptr<IBuff> buff);
+    void removeBuff(std::shared_ptr<IBuff> buff);
 
     const CharacterStatsInstance& getCurrentStats() const;
 
 private:
     const size_t id;
-    std::shared_ptr<Graph> gameGraph = nullptr;
+    std::shared_ptr<IGraph> gameGraph = nullptr;
 
     bool alive = false;
     Point pos = {-1, -1};
 
-    std::shared_ptr<CharacterStats> defaulStats = nullptr;
+    std::shared_ptr<ICharacterStats> defaulStats = nullptr;
     CharacterStatsInstance currentStats;
-    std::vector<std::shared_ptr<Buff>> activeBuffs;
+    std::vector<std::shared_ptr<IBuff>> activeBuffs;
 
     void resetAllStatsToDefault();
     void updateBuffs();

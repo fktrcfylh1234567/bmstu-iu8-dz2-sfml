@@ -4,7 +4,7 @@
 
 #include "SequenceMovement.hpp"
 
-SequenceMovement::SequenceMovement(size_t characterId, Point& point, LevelInstance* actionSpace) : characterId(
+SequenceMovement::SequenceMovement(size_t characterId, Point& point, ILevelInstance* actionSpace) : characterId(
         characterId), point(point), actionSpace(actionSpace) {}
 
 void SequenceMovement::Update() {

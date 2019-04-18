@@ -4,11 +4,11 @@
 
 #include <gtest/gtest.h>
 #include <memory>
-#include "GameGraph.hpp"
+#include "Graph.hpp"
 
 TEST(GraphTest, Create) {
     size_t locationSize = 3;
-    std::unique_ptr<Graph> graph(new GameGraph(locationSize));
+    std::unique_ptr<IGraph> graph(new Graph(locationSize));
     std::vector<std::vector<bool>> location = {{true,  true,  true},
                                                {true,  false, false},
                                                {false, false, true}};
@@ -25,7 +25,7 @@ TEST(GraphTest, Create) {
 
 TEST(GraphTest, Busy) {
     size_t locationSize = 3;
-    GameGraph gameGraph(locationSize);
+    Graph gameGraph(locationSize);
     std::vector<std::vector<bool>> location = {{true, true, true},
                                                {true, true, true},
                                                {true, true, true}};
@@ -40,7 +40,7 @@ TEST(GraphTest, Busy) {
 
 TEST(GraphTest, Release) {
     size_t locationSize = 3;
-    GameGraph gameGraph(locationSize);
+    Graph gameGraph(locationSize);
     std::vector<std::vector<bool>> location = {{false, false, false},
                                                {false, false, false},
                                                {false, false, true}};
@@ -55,7 +55,7 @@ TEST(GraphTest, Release) {
 
 TEST(GraphTest, Path) {
     size_t locationSize = 3;
-    GameGraph gameGraph(locationSize);
+    Graph gameGraph(locationSize);
     std::vector<std::vector<bool>> location = {{true,  true,  true},
                                                {true,  true,  false},
                                                {false, false, true}};

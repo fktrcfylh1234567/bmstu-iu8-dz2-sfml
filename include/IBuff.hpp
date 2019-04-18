@@ -2,12 +2,12 @@
 // Created by fktrc on 11.04.19.
 //
 
-#ifndef GAME_BUFF_HPP
-#define GAME_BUFF_HPP
+#ifndef GAME_IBUFF_HPP
+#define GAME_IBUFF_HPP
 
 #include <cstdio>
 
-class Buff {
+class IBuff {
 public:
     // Numerical
     virtual const int getHealModifier() const = 0;
@@ -19,4 +19,4 @@ public:
     virtual const float getAttackSpeedModifier() const = 0;
 };
 
-#endif //GAME_BUFF_HPP
+#endif //GAME_IBUFF_HPP

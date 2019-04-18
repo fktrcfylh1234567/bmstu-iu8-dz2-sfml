@@ -5,9 +5,9 @@
 #ifndef GAME_BUFFINSTANCE_HPP
 #define GAME_BUFFINSTANCE_HPP
 
-#include "Buff.hpp"
+#include "IBuff.hpp"
 
-class BuffInstance : public Buff {
+class BuffInstance : public IBuff {
 public:
     const int getHealModifier() const override {
         return healModifier;

@@ -5,22 +5,23 @@
 #ifndef GAME_GAMESESSION_HPP
 #define GAME_GAMESESSION_HPP
 
-#include <Session.hpp>
-#include <iostream>
-
 #include <atomic>
 #include <chrono>
 #include <thread>
+#include <iostream>
 
-#include "GameLevelInstance.hpp"
+#include "ISession.hpp"
+#include "IGameInstance.hpp"
 #include "ConcurrentQueue.hpp"
 
-class GameSession : public Session {
+class GameSession : public ISession {
+public:
     void run() override;
     void stop() override;
-    void handleAction(UserAction action) override;
+    void handleAction(std::shared_ptr<IPlayerAction> action) override;
 
 private:
+    std::shared_ptr<IGameInstance> gameInstance;
     ConcurrentQueue<size_t> queue;
     std::atomic_bool isRunning = false;
     std::atomic_size_t timeCurrent = 0;

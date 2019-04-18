@@ -1,23 +1,49 @@
 //
-// Created by fktrc on 11.04.19.
+// Created by fktrc on 25.03.19.
 //
 
 #ifndef GAME_GAMEINSTANCE_HPP
 #define GAME_GAMEINSTANCE_HPP
 
-#include "CharacterStats.hpp"
+#include <vector>
+#include <string>
+#include <map>
+#include <memory>
 
-typedef std::pair<size_t, size_t> Point;
+#include "IGameInstance.hpp"
+#include "ILevelInstance.hpp"
 
-class GameInstance {
-    virtual void update(size_t currentTime) = 0;
+#include "Graph.hpp"
+#include "Character.hpp"
 
-    virtual size_t spawnCharacter(std::shared_ptr<CharacterStats> characterStats) = 0;
-    virtual void removeCharacter(size_t characterId) = 0;
+#include "SequenceMovement.hpp"
+#include "SequenceAttack.hpp"
 
-    virtual void addMoveSequence(size_t characterId, Point& point) = 0;
-    virtual void addAttackSequence(size_t characterId, size_t targetId) = 0;
-    virtual void removeCharacterActiveSequence(size_t characterId) = 0;
+class GameInstance : public IGameInstance, public ILevelInstance {
+public:
+    GameInstance();
+
+    // IGameInstance
+    void update(size_t currentTime) override;
+    size_t spawnCharacter(std::shared_ptr<ICharacterStats> characterStats) override;
+    void removeCharacter(size_t characterId) override;
+    void addMoveSequence(size_t characterId, Point& point) override;
+    void addAttackSequence(size_t characterId, size_t targetId) override;
+    void removeCharacterActiveSequence(size_t characterId) override;
+
+    // ILevelInstance
+    std::shared_ptr<IGraph> getGraph() override;
+    std::map<size_t, Character>& getCharacters() override;
+
+private:
+    std::shared_ptr<IGraph> graph;
+    std::map<size_t, Character> characters;
+    std::map<size_t, std::unique_ptr<ISequence>> sequences;
+
+    size_t nextEntityId = 1;
+    size_t nextSequenceId = 1;
+
+    const size_t locationSize = 3;
 };
 
 #endif //GAME_GAMEINSTANCE_HPP

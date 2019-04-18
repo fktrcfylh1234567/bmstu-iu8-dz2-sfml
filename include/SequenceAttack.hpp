@@ -5,9 +5,9 @@
 #ifndef GAME_SEQUENCEATTACK_HPP
 #define GAME_SEQUENCEATTACK_HPP
 
-#include "Sequence.hpp"
+#include "ISequence.hpp"
 
-class SequenceAttack : public Sequence {
+class SequenceAttack : public ISequence {
 public:
     void Update() override;
     void Cancel() override;

@@ -23,7 +23,7 @@ void GameSession::run() {
             if (timeUpdate == 0) {
                 break;
             }
-            gameInstance.updateSequences(timeUpdate);
+            gameInstance->update(timeUpdate);
         }
     }).detach();
 }
