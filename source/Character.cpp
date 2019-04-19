@@ -57,7 +57,7 @@ const size_t Character::getId() const {
 void Character::doDamage(size_t damage) {
     if (currentStats.getHp() < damage) {
         currentStats.setHp(0);
-        this->alive = false;
+        kill();
         return;
     }
     currentStats.setHp(currentStats.getHp() - damage);

@@ -8,13 +8,16 @@
 #include <cstdio>
 #include <utility>
 #include <vector>
+#include <memory>
+
+#include "ILocation.hpp"
 
 typedef std::pair<size_t, size_t> Point;
 typedef std::vector<Point> Path;
 
 class IGraph {
 public:
-    virtual void loadLocation(std::vector<std::vector<bool>>& location) = 0;
+    virtual void loadLocation(std::shared_ptr<ILocation> Ilocation) = 0;
     virtual void busyPoint(const Point& point) = 0;
     virtual void releasePoint(const Point& point) = 0;
     virtual bool isFree(const Point& point) = 0;

@@ -9,7 +9,8 @@ Graph::Graph(size_t locationSize) {
     graph = BoostGraph();
 }
 
-void Graph::loadLocation(std::vector<std::vector<bool>>& location) {
+void Graph::loadLocation(std::shared_ptr<ILocation> Ilocation) {
+    auto& location = Ilocation.operator*();
     for (size_t i = 0; i < locationSize; i++) {
         for (size_t j = 0; j < locationSize; j++) {
             if (location[i][j]) {

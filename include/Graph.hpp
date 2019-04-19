@@ -24,7 +24,7 @@ typedef boost::graph_traits<BoostGraph>::vertex_descriptor vertex_descriptor;
 class Graph : public IGraph {
 public:
     explicit Graph(size_t locationSize);
-    void loadLocation(std::vector<std::vector<bool>>& location) override;
+    void loadLocation(std::shared_ptr<ILocation> Ilocation) override;
 
     Path makePath(const Point& origin, const Point& destination) override;
 
