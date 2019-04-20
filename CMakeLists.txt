@@ -28,8 +28,8 @@ add_library(graph STATIC
 
 add_library(instance STATIC
         source/Character.cpp
-        source/SequenceMovement.cpp
-        source/SequenceAttack.cpp
+        source/SequenceCharacterMovement.cpp
+        source/SequenceCharacterAttack.cpp
         source/SequenceGameRulesTDM.cpp
         source/GameInstance.cpp
         )
@@ -50,7 +50,7 @@ target_link_libraries(session instance)
 
 # Tests
 add_executable(graphTest tests/GraphTest.cpp)
-add_executable(instanceTest tests/CharacterTest.cpp tests/SequencesTest.cpp)
+add_executable(instanceTest tests/CharacterTest.cpp tests/SequenceMovementTest.cpp tests/SequenceAttackTest.cpp)
 
 # Tests links
 target_link_libraries(graphTest GTest::main graph)

@@ -55,7 +55,7 @@ const size_t Character::getId() const {
 }
 
 void Character::doDamage(size_t damage) {
-    if (currentStats.getHp() < damage) {
+    if (!(currentStats.getHp() > damage)) {
         currentStats.setHp(0);
         kill();
         return;

@@ -12,11 +12,12 @@
 
 #include "IGameInstance.hpp"
 #include "ILevelInstance.hpp"
+#include "ISequenceCharacter.hpp"
+
 #include "Graph.hpp"
 #include "Character.hpp"
-#include "SequenceMovement.hpp"
-#include "SequenceAttack.hpp"
-#include "ISequenceCharacter.hpp"
+#include "SequenceCharacterMovement.hpp"
+#include "SequenceCharacterAttack.hpp"
 #include "SequenceGameRulesTDM.hpp"
 
 class GameInstance : public IGameInstance, public ILevelInstance {

@@ -1,9 +1,8 @@
 //
-// Created by fktrc on 19.04.19.
+// Created by fktrc on 20.04.19.
 //
 
 #include <gtest/gtest.h>
-#include <algorithm>
 
 #include <GameInstance.hpp>
 #include <LocationInstance.hpp>
@@ -66,10 +65,6 @@ TEST(SequencesTest, SequenceMovement) {
     }
 
     EXPECT_EQ(gameInstance.getCharacters().at(id).getPos(), Point(2, 2));
-
-    gameInstance.addMoveSequence(id, Point(2, 2));
-    gameInstance.update(7);
-    EXPECT_EQ(gameInstance.getCharacters().at(id).getPos(), Point(2, 2));
 }
 
 TEST(SequencesTest, SequenceMovementTwoCharacters) {
@@ -99,7 +94,14 @@ TEST(SequencesTest, SequenceMovementTwoCharacters) {
 
     gameInstance.addMoveSequence(id1, Point(2, 1));
     gameInstance.addMoveSequence(id2, Point(2, 2));
-    for (size_t i = 5; i < 11; i++) {
+    for (size_t i = 5; i < 8; i++) {
+        gameInstance.update(i);
+    }
+
+    EXPECT_EQ(gameInstance.getCharacters().at(id1).getPos(), Point(2, 1));
+    EXPECT_EQ(gameInstance.getCharacters().at(id2).getPos(), Point(1, 0));
+
+    for (size_t i = 8; i < 11; i++) {
         gameInstance.update(i);
     }
 

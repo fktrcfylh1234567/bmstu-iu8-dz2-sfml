@@ -2,15 +2,18 @@
 // Created by fktrc on 18.04.19.
 //
 
-#ifndef GAME_SEQUENCEMOVEMENT_HPP
-#define GAME_SEQUENCEMOVEMENT_HPP
+#ifndef GAME_SEQUENCECHARACTERATTACK_HPP
+#define GAME_SEQUENCECHARACTERATTACK_HPP
+
+#include <algorithm>
+#include <cmath>
 
 #include "ISequenceCharacter.hpp"
 #include "ILevelInstance.hpp"
 
-class SequenceMovement : public ISequenceCharacter {
+class SequenceCharacterAttack : public ISequenceCharacter {
 public:
-    SequenceMovement(size_t characterId, const Point& dest, size_t nextUpdateTime, ILevelInstance* levelInstance);
+    SequenceCharacterAttack(size_t characterId, size_t targetId, size_t nextUpdateTime, ILevelInstance* levelInstance);
 
     void Update() override;
     void Cancel() override;
@@ -21,12 +24,16 @@ public:
 private:
     bool canceled = false;
     size_t characterId = 0;
-    const Point& dest;
+    size_t targetId = 0;
     size_t nextUpdateTime = 0;
     ILevelInstance* levelInstance = nullptr;
     Path path;
 
+    void updatePath();
+    bool canReach();
+    bool isPathActual();
     bool isPathValid();
+    void makePath();
 };
 
-#endif //GAME_SEQUENCEMOVEMENT_HPP
+#endif //GAME_SEQUENCECHARACTERATTACK_HPP

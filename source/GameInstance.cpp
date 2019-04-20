@@ -42,12 +42,14 @@ void GameInstance::removeCharacter(size_t characterId) {
 }
 
 void GameInstance::addMoveSequence(size_t characterId, const Point& point) {
-    sequences[nextSequenceId] = std::make_unique<SequenceMovement>(characterId, point, lastUpdateTime + 1, this);
+    sequences[nextSequenceId] = std::make_unique<SequenceCharacterMovement>(characterId, point, lastUpdateTime + 1,
+                                                                            this);
     nextSequenceId++;
 }
 
 void GameInstance::addAttackSequence(size_t characterId, size_t targetId) {
-    sequences[nextSequenceId] = std::make_unique<SequenceAttack>(characterId, targetId, lastUpdateTime + 1, this);
+    sequences[nextSequenceId] = std::make_unique<SequenceCharacterAttack>(characterId, targetId, lastUpdateTime + 1,
+                                                                          this);
     nextSequenceId++;
 }
 
