@@ -50,8 +50,10 @@ target_link_libraries(session instance)
 
 # Tests
 add_executable(graphTest tests/GraphTest.cpp)
-add_executable(instanceTest tests/CharacterTest.cpp tests/SequenceMovementTest.cpp tests/SequenceAttackTest.cpp tests/InstanceTest.cpp)
+add_executable(characterTest tests/CharacterTest.cpp)
+add_executable(instanceTest tests/SequenceMovementTest.cpp tests/SequenceAttackTest.cpp tests/GameInstanceTest.cpp)
 
 # Tests links
 target_link_libraries(graphTest GTest::main graph)
+target_link_libraries(characterTest GTest::main instance)
 target_link_libraries(instanceTest GTest::main instance)

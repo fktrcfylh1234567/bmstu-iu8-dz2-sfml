@@ -11,6 +11,7 @@ void SequenceGameRulesTDM::Update() {
     for (auto& character : levelInstance->getCharacters()) {
         if (!character.second.isAlive()) {
             character.second.spawn(Point(0, 0));
+            levelInstance->addGameEvent(GAME_EVENT_ENTITY_IS_ALIVE_CHANGED, character.second.getId(), 1);
         }
     }
     nextUpdateTime++;

@@ -3,6 +3,7 @@
 //
 
 #include <SequenceCharacterMovement.hpp>
+#include <GameEventEntityInstance.hpp>
 
 SequenceCharacterMovement::SequenceCharacterMovement(size_t characterId, const Point& dest, size_t nextUpdateTime,
                                                      ILevelInstance* levelInstance) : characterId(characterId),
@@ -19,6 +20,7 @@ void SequenceCharacterMovement::Update() {
     updatePath();
     path.erase(path.begin());
     levelInstance->getCharacters().at(characterId).setPosition(path[0]);
+    levelInstance->addGameEvent(GAME_EVENT_ENTITY_POSITION_CHANGED, characterId, pointToIndex(path[0]));
 
     if (path.size() == 1) {
         Cancel();
@@ -69,4 +71,8 @@ bool SequenceCharacterMovement::isPathValid() {
 
 void SequenceCharacterMovement::makePath() {
     path = levelInstance->getCharacters().at(characterId).makePath(dest);
+}
+
+size_t SequenceCharacterMovement::pointToIndex(const Point& point) {
+    return levelInstance->getLocationSize() * point.first + point.second;
 }

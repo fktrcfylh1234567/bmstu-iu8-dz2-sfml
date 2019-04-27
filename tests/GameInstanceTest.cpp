@@ -39,8 +39,11 @@ TEST(InstanceTest, Characters) {
     EXPECT_EQ(gameInstance.getCharacters().at(id).getCurrentStats().getHp(), 1000);
 }
 
-TEST(InstanceTest, Add) {
+TEST(InstanceTest, EventAdd) {
     GameInstance gameInstance(1);
     gameInstance.addGameEvent(GAME_EVENT_ENTITY_IS_ALIVE_CHANGED, 1, 1);
     EXPECT_EQ(gameInstance.getGameInstanceUpdates().size(), 1);
+
+    auto value = gameInstance.getGameInstanceUpdates().front();
+    EXPECT_EQ(value->getActionId(), GAME_EVENT_ENTITY_IS_ALIVE_CHANGED);
 }

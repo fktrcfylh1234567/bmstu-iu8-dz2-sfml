@@ -16,7 +16,7 @@ public:
     virtual void loadLocation(std::shared_ptr<ILocation> Ilocation) = 0;
     virtual void addGameRules(size_t gameModeId) = 0;
     virtual void update(size_t currentTime) = 0;
-    virtual std::queue<std::unique_ptr<IGameEvent>>& getGameInstanceUpdates() = 0;
+    virtual std::queue<std::shared_ptr<IGameEvent>>& getGameInstanceUpdates() = 0;
 
     virtual size_t addCharacter(std::shared_ptr<ICharacterStats> characterStats) = 0;
     virtual void removeCharacter(size_t characterId) = 0;

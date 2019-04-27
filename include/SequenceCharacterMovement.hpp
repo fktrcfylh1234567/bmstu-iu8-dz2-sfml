@@ -32,6 +32,8 @@ private:
     void updatePath();
     bool isPathValid();
     void makePath();
+
+    size_t pointToIndex(const Point& point);
 };
 
 #endif //GAME_SEQUENCECHARACTERMOVEMENT_HPP

@@ -24,10 +24,15 @@ void SequenceCharacterAttack::Update() {
     if (canReach()) {
         levelInstance->getCharacters().at(targetId).doDamage(
                 levelInstance->getCharacters().at(characterId).getCurrentStats().getAttackDamage());
+        levelInstance->addGameEvent(GAME_EVENT_ENTITY_HP_CHANGED, characterId,
+                                    levelInstance->getCharacters().at(targetId).getCurrentStats().getHp());
+
         if (!levelInstance->getCharacters().at(targetId).isAlive()) {
+            levelInstance->addGameEvent(GAME_EVENT_ENTITY_IS_ALIVE_CHANGED, characterId, 0);
             Cancel();
             return;
         }
+
         nextUpdateTime += levelInstance->getCharacters().at(characterId).getCurrentStats().getAttackSpeed();
         return;
     }
@@ -35,6 +40,7 @@ void SequenceCharacterAttack::Update() {
     updatePath();
     path.erase(path.begin());
     levelInstance->getCharacters().at(characterId).setPosition(path[0]);
+    levelInstance->addGameEvent(GAME_EVENT_ENTITY_POSITION_CHANGED, characterId, pointToIndex(path[0]));
 
     nextUpdateTime += levelInstance->getCharacters().at(characterId).getCurrentStats().getMoveSpeed();
 }
@@ -104,4 +110,8 @@ void SequenceCharacterAttack::makePath() {
     path = levelInstance->getCharacters().at(characterId).makePath(
             levelInstance->getCharacters().at(targetId).getPos());
     levelInstance->getGraph()->busyPoint(levelInstance->getCharacters().at(targetId).getPos());
+}
+
+size_t SequenceCharacterAttack::pointToIndex(const Point& point) {
+    return levelInstance->getLocationSize() * point.first + point.second;
 }

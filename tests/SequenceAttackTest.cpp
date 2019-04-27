@@ -40,6 +40,9 @@ TEST(SequenceAttackTest, SequenceAttackNear) {
 
     gameInstance.update(6);
     EXPECT_FALSE(gameInstance.getCharacters().at(id2).isAlive());
+
+    auto value = gameInstance.getGameInstanceUpdates().back();
+    EXPECT_EQ(value->getActionId(), GAME_EVENT_ENTITY_IS_ALIVE_CHANGED);
 }
 
 TEST(SequenceAttackTest, SequenceAttackDistance) {
@@ -109,17 +112,24 @@ TEST(SequenceAttackTest, SequenceAttackMove) {
 
     gameInstance.addAttackSequence(id1, id2);
     gameInstance.update(5);
+
+    auto value = gameInstance.getGameInstanceUpdates().back();
+    EXPECT_EQ(value->getActionId(), GAME_EVENT_ENTITY_POSITION_CHANGED);
+
     gameInstance.update(6);
     EXPECT_EQ(gameInstance.getCharacters().at(id2).getCurrentStats().getHp(), 500);
+
+    value = gameInstance.getGameInstanceUpdates().back();
+    EXPECT_EQ(value->getActionId(), GAME_EVENT_ENTITY_HP_CHANGED);
 }
 
 TEST(SequenceAttackTest, SequenceAttackFollow) {
-    std::vector <std::vector<bool>> location = {{true, true, true},
-                                                {true, true, true},
-                                                {true, true, true}};
-    std::shared_ptr <ILocation> ilocation = std::make_shared<LocationInstance>(location);
+    std::vector<std::vector<bool>> location = {{true, true, true},
+                                               {true, true, true},
+                                               {true, true, true}};
+    std::shared_ptr<ILocation> ilocation = std::make_shared<LocationInstance>(location);
 
-    std::shared_ptr <CharacterStatsInstance> stats = std::make_shared<CharacterStatsInstance>();
+    std::shared_ptr<CharacterStatsInstance> stats = std::make_shared<CharacterStatsInstance>();
     stats->setMoveSpeed(1);
 
     stats->setHp(1000);

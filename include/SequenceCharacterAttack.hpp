@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <cmath>
 
-#include "ISequenceCharacter.hpp"
+#include <ISequenceCharacter.hpp>
 #include "ILevelInstance.hpp"
 
 class SequenceCharacterAttack : public ISequenceCharacter {
@@ -34,6 +34,8 @@ private:
     bool isPathActual();
     bool isPathValid();
     void makePath();
+
+    size_t pointToIndex(const Point& point);
 };
 
 #endif //GAME_SEQUENCECHARACTERATTACK_HPP
