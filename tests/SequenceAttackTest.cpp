@@ -22,7 +22,7 @@ TEST(SequenceAttackTest, SequenceAttackNear) {
     stats->setAttackDamage(500);
 
     GameInstance gameInstance(3);
-    gameInstance.loadLocation(ilocation);
+    gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
     size_t id1 = gameInstance.addCharacter(stats);
@@ -60,7 +60,7 @@ TEST(SequenceAttackTest, SequenceAttackDistance) {
     stats->setAttackDamage(500);
 
     GameInstance gameInstance(3);
-    gameInstance.loadLocation(ilocation);
+    gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
     size_t id1 = gameInstance.addCharacter(stats);
@@ -97,7 +97,7 @@ TEST(SequenceAttackTest, SequenceAttackMove) {
     stats->setAttackDamage(500);
 
     GameInstance gameInstance(3);
-    gameInstance.loadLocation(ilocation);
+    gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
     size_t id1 = gameInstance.addCharacter(stats);
@@ -138,7 +138,7 @@ TEST(SequenceAttackTest, SequenceAttackFollow) {
     stats->setAttackDamage(500);
 
     GameInstance gameInstance(3);
-    gameInstance.loadLocation(ilocation);
+    gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
     size_t id1 = gameInstance.addCharacter(stats);

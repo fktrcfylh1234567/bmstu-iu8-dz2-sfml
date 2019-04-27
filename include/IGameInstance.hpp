@@ -8,12 +8,13 @@
 #include "ICharacterStats.hpp"
 #include "ILocation.hpp"
 #include "GameEventEntityInstance.hpp"
+#include "ILevel.hpp"
 
 typedef std::pair<size_t, size_t> Point;
 
 class IGameInstance {
 public:
-    virtual void loadLocation(std::shared_ptr<ILocation> Ilocation) = 0;
+    virtual void loadLevel(std::shared_ptr<ILevel> level) = 0;
     virtual void addGameRules(size_t gameModeId) = 0;
     virtual void update(size_t currentTime) = 0;
     virtual std::queue<std::shared_ptr<IGameEvent>>& getGameInstanceUpdates() = 0;

@@ -18,7 +18,7 @@ TEST(SequenceMovementTest, SequenceMovement) {
     stats->setMoveSpeed(1);
 
     GameInstance gameInstance(3);
-    gameInstance.loadLocation(ilocation);
+    gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
     size_t id = gameInstance.addCharacter(stats);
@@ -49,7 +49,7 @@ TEST(SequenceMovementTest, SequenceMovementTwoCharacters) {
     stats->setMoveSpeed(1);
 
     GameInstance gameInstance(3);
-    gameInstance.loadLocation(ilocation);
+    gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
     size_t id1 = gameInstance.addCharacter(stats);
@@ -89,7 +89,7 @@ TEST(SequenceMovementTest, SequenceCancel) {
     stats->setMoveSpeed(1);
 
     GameInstance gameInstance(3);
-    gameInstance.loadLocation(ilocation);
+    gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
     size_t id = gameInstance.addCharacter(stats);
     gameInstance.update(1);

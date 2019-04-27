@@ -7,7 +7,7 @@
 
 #include <IGameEventEntity.hpp>
 
-enum {
+enum gameEventsInstance {
     GAME_EVENT_ENTITY_IS_ALIVE_CHANGED = 0,
     GAME_EVENT_ENTITY_HP_CHANGED = 1,
     GAME_EVENT_ENTITY_POSITION_CHANGED = 2

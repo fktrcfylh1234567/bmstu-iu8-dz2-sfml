@@ -14,6 +14,7 @@
 #include <IGameInstance.hpp>
 #include <ILevelInstance.hpp>
 
+#include "ILevel.hpp"
 #include "Graph.hpp"
 #include "Character.hpp"
 #include "SequenceCharacterMovement.hpp"
@@ -26,7 +27,7 @@ public:
     GameInstance(const size_t locationSize);
 
     // IGameInstance
-    void loadLocation(std::shared_ptr<ILocation> Ilocation) override;
+    void loadLevel(std::shared_ptr<ILevel> level) override;
     void addGameRules(size_t gameModeId) override;
     void update(size_t currentTime) override;
     std::queue<std::shared_ptr<IGameEvent>>& getGameInstanceUpdates() override;
@@ -44,6 +45,7 @@ public:
     const size_t getLocationSize() const override;
 
 private:
+    std::shared_ptr<ILevel> level;
     std::shared_ptr<IGraph> graph;
     std::map<size_t, Character> characters;
     std::vector<std::unique_ptr<ISequence>> sequences;

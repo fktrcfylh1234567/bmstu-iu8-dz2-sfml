@@ -8,8 +8,9 @@ GameInstance::GameInstance(const size_t locationSize) : locationSize(locationSiz
     graph = std::make_shared<Graph>(locationSize);
 }
 
-void GameInstance::loadLocation(std::shared_ptr<ILocation> Ilocation) {
-    graph->loadLocation(Ilocation);
+void GameInstance::loadLevel(std::shared_ptr<ILevel> level) {
+    this->level = level;
+    graph->loadLocation(this->level->getLocation());
 }
 
 void GameInstance::addGameRules(size_t gameModeId) {

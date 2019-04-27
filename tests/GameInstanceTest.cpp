@@ -16,7 +16,7 @@ TEST(InstanceTest, Characters) {
     stats->setMoveSpeed(10);
 
     GameInstance gameInstance(1);
-    gameInstance.loadLocation(ilocation);
+    gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
     size_t id = gameInstance.addCharacter(stats);
     gameInstance.update(1);
