@@ -2,8 +2,6 @@
 // Created by fktrc on 18.04.19.
 //
 
-#include <algorithm>
-
 #include <SequenceCharacterMovement.hpp>
 
 SequenceCharacterMovement::SequenceCharacterMovement(size_t characterId, const Point& dest, size_t nextUpdateTime,

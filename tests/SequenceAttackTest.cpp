@@ -1,8 +1,4 @@
 //
-// Created by fktrc on 20.04.19.
-//
-
-//
 // Created by fktrc on 19.04.19.
 //
 
@@ -11,7 +7,7 @@
 #include <GameInstance.hpp>
 #include <LocationInstance.hpp>
 
-TEST(SequencesTest, SequenceAttackNear) {
+TEST(SequenceAttackTest, SequenceAttackNear) {
     std::vector<std::vector<bool>> location = {{true, true, true},
                                                {true, true, true},
                                                {true, true, true}};
@@ -46,7 +42,7 @@ TEST(SequencesTest, SequenceAttackNear) {
     EXPECT_FALSE(gameInstance.getCharacters().at(id2).isAlive());
 }
 
-TEST(SequencesTest, SequenceAttackDistance) {
+TEST(SequenceAttackTest, SequenceAttackDistance) {
     std::vector<std::vector<bool>> location = {{true, true, true},
                                                {true, true, true},
                                                {true, true, true}};
@@ -83,7 +79,7 @@ TEST(SequencesTest, SequenceAttackDistance) {
     EXPECT_FALSE(gameInstance.getCharacters().at(id2).isAlive());
 }
 
-TEST(SequencesTest, SequenceAttackMove) {
+TEST(SequenceAttackTest, SequenceAttackMove) {
     std::vector<std::vector<bool>> location = {{true, true, true},
                                                {true, true, true},
                                                {true, true, true}};
@@ -117,7 +113,7 @@ TEST(SequencesTest, SequenceAttackMove) {
     EXPECT_EQ(gameInstance.getCharacters().at(id2).getCurrentStats().getHp(), 500);
 }
 
-TEST(SequencesTest, SequenceAttackFollow) {
+TEST(SequenceAttackTest, SequenceAttackFollow) {
     std::vector <std::vector<bool>> location = {{true, true, true},
                                                 {true, true, true},
                                                 {true, true, true}};

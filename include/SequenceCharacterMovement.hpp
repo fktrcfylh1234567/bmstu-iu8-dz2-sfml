@@ -5,6 +5,8 @@
 #ifndef GAME_SEQUENCECHARACTERMOVEMENT_HPP
 #define GAME_SEQUENCECHARACTERMOVEMENT_HPP
 
+#include <algorithm>
+
 #include "ISequenceCharacter.hpp"
 #include "ILevelInstance.hpp"
 

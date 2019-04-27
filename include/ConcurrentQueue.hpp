@@ -12,38 +12,39 @@
 
 template<typename Data>
 class ConcurrentQueue {
-private:
-    std::queue<Data> the_queue;
-    mutable std::mutex the_mutex;
-    std::condition_variable cvar;
 public:
     void push(Data const& data) {
-        std::unique_lock lock(the_mutex);
-        the_queue.push(data);
+        std::unique_lock lock(mutex);
+        queue.push(data);
         lock.unlock();
         cvar.notify_one();
     }
 
     Data wait_and_pop() {
-        std::unique_lock lock(the_mutex);
-        while (the_queue.empty()) {
+        std::unique_lock lock(mutex);
+        while (queue.empty()) {
             cvar.wait(lock);
         }
 
-        Data popped_value = the_queue.front();
-        the_queue.pop();
+        Data popped_value = queue.front();
+        queue.pop();
         return popped_value;
     }
 
     bool empty() const {
-        std::unique_lock lock(the_mutex);
-        return the_queue.empty();
+        std::unique_lock lock(mutex);
+        return queue.empty();
     }
 
     typename std::queue<Data>::size_type size() {
-        std::unique_lock lock(the_mutex);
-        return the_queue.size();
+        std::unique_lock lock(mutex);
+        return queue.size();
     }
+
+private:
+    std::queue<Data> queue;
+    mutable std::mutex mutex;
+    std::condition_variable cvar;
 };
 
 #endif //GAME_CONCURRENTQUEUE_HPP

@@ -15,6 +15,7 @@ class ILevelInstance {
 public:
     virtual std::shared_ptr<IGraph> getGraph() = 0;
     virtual std::map<size_t, Character>& getCharacters() = 0;
+    virtual void addGameEvent(size_t entityId, size_t paramName, size_t newValue) = 0;
 };
 
 #endif //GAME_ILEVELINSTANCE_HPP
