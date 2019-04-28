@@ -5,7 +5,7 @@
 #include "SequenceCharacterAttack.hpp"
 
 SequenceCharacterAttack::SequenceCharacterAttack(size_t characterId, size_t targetId, size_t nextUpdateTime,
-                                                 ILevelInstance* levelInstance) : characterId(characterId),
+                                                 IGameInstance* levelInstance) : characterId(characterId),
                                                                                   targetId(targetId),
                                                                                   nextUpdateTime(nextUpdateTime),
                                                                                   levelInstance(levelInstance) {}

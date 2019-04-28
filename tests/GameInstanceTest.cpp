@@ -7,6 +7,8 @@
 #include <GameInstance.hpp>
 #include <LocationInstance.hpp>
 
+#include <LevelGameModeInfoTDMInstance.hpp>
+
 TEST(InstanceTest, Characters) {
     std::vector<std::vector<bool>> location = {{true}};
     std::shared_ptr<ILocation> ilocation = std::make_shared<LocationInstance>(location);

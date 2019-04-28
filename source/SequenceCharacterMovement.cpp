@@ -6,7 +6,7 @@
 #include <GameEventEntityInstance.hpp>
 
 SequenceCharacterMovement::SequenceCharacterMovement(size_t characterId, const Point& dest, size_t nextUpdateTime,
-                                                     ILevelInstance* levelInstance) : characterId(characterId),
+                                                     IGameInstance* levelInstance) : characterId(characterId),
                                                                                       dest(dest),
                                                                                       nextUpdateTime(nextUpdateTime),
                                                                                       levelInstance(levelInstance) {}

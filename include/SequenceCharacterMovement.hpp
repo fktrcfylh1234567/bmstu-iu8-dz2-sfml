@@ -8,12 +8,12 @@
 #include <algorithm>
 
 #include "ISequenceCharacter.hpp"
-#include "ILevelInstance.hpp"
+#include "IGameInstance.hpp"
 
 class SequenceCharacterMovement : public ISequenceCharacter {
 public:
     SequenceCharacterMovement(size_t characterId, const Point& dest, size_t nextUpdateTime,
-                              ILevelInstance* levelInstance);
+                              IGameInstance* levelInstance);
 
     void Update() override;
     void Cancel() override;
@@ -26,7 +26,7 @@ private:
     const size_t characterId = 0;
     Point dest;
     size_t nextUpdateTime = 0;
-    ILevelInstance* levelInstance = nullptr;
+    IGameInstance* levelInstance = nullptr;
     Path path;
 
     void updatePath();

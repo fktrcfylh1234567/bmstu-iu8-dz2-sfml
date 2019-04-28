@@ -5,12 +5,13 @@
 #ifndef GAME_SEQUENCEGAMERULESTDM_HPP
 #define GAME_SEQUENCEGAMERULESTDM_HPP
 
-#include "ISequence.hpp"
-#include "ILevelInstance.hpp"
+#include <ISequence.hpp>
+#include "IGameInstance.hpp"
+#include <ILevelGameModeInfoTDM.hpp>
 
 class SequenceGameRulesTDM : public ISequence {
 public:
-    SequenceGameRulesTDM(size_t nextUpdateTime, ILevelInstance* levelInstance);
+    SequenceGameRulesTDM(size_t nextUpdateTime, IGameInstance* levelInstance);
 
     void Update() override;
     void Cancel() override;
@@ -20,8 +21,10 @@ public:
 private:
     bool canceled = false;
     size_t nextUpdateTime = 0;
-    ILevelInstance* levelInstance;
-};
+    IGameInstance* levelInstance;
 
+    std::map<size_t, std::vector<size_t>> teams;
+    std::map<size_t, size_t> teamScores;
+};
 
 #endif //GAME_SEQUENCEGAMERULESTDM_HPP

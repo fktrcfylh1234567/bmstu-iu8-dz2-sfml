@@ -4,7 +4,7 @@
 
 #include <SequenceGameRulesTDM.hpp>
 
-SequenceGameRulesTDM::SequenceGameRulesTDM(size_t nextUpdateTime, ILevelInstance* levelInstance) : nextUpdateTime(
+SequenceGameRulesTDM::SequenceGameRulesTDM(size_t nextUpdateTime, IGameInstance* levelInstance) : nextUpdateTime(
         nextUpdateTime), levelInstance(levelInstance) {}
 
 void SequenceGameRulesTDM::Update() {

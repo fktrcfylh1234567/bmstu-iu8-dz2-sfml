@@ -9,12 +9,12 @@
 #include <utility>
 
 #include "ILocation.hpp"
-#include "IGameModeInfo.hpp"
+#include "ILevelGameModeInfo.hpp"
 
 class ILevel {
 public:
     virtual const std::shared_ptr<ILocation>& getLocation() const = 0;
-    virtual const std::map<size_t, std::shared_ptr<IGameModeInfo>>& getGameModesInfo() const = 0;
+    virtual const std::shared_ptr<ILevelGameModeInfo> getGameModesInfo(size_t gameModeId) const = 0;
 };
 
 #endif //GAME_ILEVEL_HPP

@@ -9,11 +9,11 @@
 #include <cmath>
 
 #include <ISequenceCharacter.hpp>
-#include "ILevelInstance.hpp"
+#include "IGameInstance.hpp"
 
 class SequenceCharacterAttack : public ISequenceCharacter {
 public:
-    SequenceCharacterAttack(size_t characterId, size_t targetId, size_t nextUpdateTime, ILevelInstance* levelInstance);
+    SequenceCharacterAttack(size_t characterId, size_t targetId, size_t nextUpdateTime, IGameInstance* levelInstance);
 
     void Update() override;
     void Cancel() override;
@@ -26,7 +26,7 @@ private:
     size_t characterId = 0;
     size_t targetId = 0;
     size_t nextUpdateTime = 0;
-    ILevelInstance* levelInstance = nullptr;
+    IGameInstance* levelInstance = nullptr;
     Path path;
 
     void updatePath();
