@@ -25,13 +25,13 @@ TEST(SequenceAttackTest, SequenceAttackNear) {
     gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
-    size_t id1 = gameInstance.addCharacter(stats);
+    size_t id1 = gameInstance.addCharacter(stats, 0);
     gameInstance.update(1);
 
     gameInstance.addMoveSequence(id1, Point(1, 1));
     gameInstance.update(2);
 
-    size_t id2 = gameInstance.addCharacter(stats);
+    size_t id2 = gameInstance.addCharacter(stats, 0);
     gameInstance.update(3);
 
     gameInstance.addAttackSequence(id1, id2);
@@ -63,7 +63,7 @@ TEST(SequenceAttackTest, SequenceAttackDistance) {
     gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
-    size_t id1 = gameInstance.addCharacter(stats);
+    size_t id1 = gameInstance.addCharacter(stats, 0);
     gameInstance.update(1);
 
     gameInstance.addMoveSequence(id1, Point(1, 2));
@@ -71,7 +71,7 @@ TEST(SequenceAttackTest, SequenceAttackDistance) {
     gameInstance.update(3);
     gameInstance.update(4);
 
-    size_t id2 = gameInstance.addCharacter(stats);
+    size_t id2 = gameInstance.addCharacter(stats, 0);
     gameInstance.update(5);
 
     gameInstance.addAttackSequence(id1, id2);
@@ -100,14 +100,14 @@ TEST(SequenceAttackTest, SequenceAttackMove) {
     gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
-    size_t id1 = gameInstance.addCharacter(stats);
+    size_t id1 = gameInstance.addCharacter(stats, 0);
     gameInstance.update(1);
 
     gameInstance.addMoveSequence(id1, Point(0, 2));
     gameInstance.update(2);
     gameInstance.update(3);
 
-    size_t id2 = gameInstance.addCharacter(stats);
+    size_t id2 = gameInstance.addCharacter(stats, 0);
     gameInstance.update(4);
 
     gameInstance.addAttackSequence(id1, id2);
@@ -141,14 +141,14 @@ TEST(SequenceAttackTest, SequenceAttackFollow) {
     gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
-    size_t id1 = gameInstance.addCharacter(stats);
+    size_t id1 = gameInstance.addCharacter(stats, 0);
     gameInstance.update(1);
 
     gameInstance.addMoveSequence(id1, Point(0, 2));
     gameInstance.update(2);
     gameInstance.update(3);
 
-    size_t id2 = gameInstance.addCharacter(stats);
+    size_t id2 = gameInstance.addCharacter(stats, 0);
     gameInstance.update(4);
 
     gameInstance.addAttackSequence(id2, id1);

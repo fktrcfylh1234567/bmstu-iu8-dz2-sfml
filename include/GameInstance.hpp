@@ -21,6 +21,7 @@
 #include "SequenceCharacterAttack.hpp"
 #include "SequenceGameRulesTDM.hpp"
 #include "GameEventEntityInstance.hpp"
+#include "TeamTDM.hpp"
 
 class GameInstance : public IGameInstance, public ILevelInstance {
 public:
@@ -32,7 +33,7 @@ public:
     void update(size_t currentTime) override;
     std::queue<std::shared_ptr<IGameEvent>>& getGameInstanceUpdates() override;
 
-    size_t addCharacter(std::shared_ptr<ICharacterStats> characterStats) override;
+    size_t addCharacter(std::shared_ptr<ICharacterStats> characterStats, size_t teamId) override;
     void removeCharacter(size_t characterId) override;
     void addMoveSequence(size_t characterId, const Point& point) override;
     void addAttackSequence(size_t characterId, size_t targetId) override;
@@ -43,6 +44,7 @@ public:
     std::map<size_t, Character>& getCharacters() override;
     void addGameEvent(size_t actionId, size_t entityId, size_t value) override;
     const size_t getLocationSize() const override;
+    std::vector<std::unique_ptr<ITeam>>& getTeams() override;
 
 private:
     std::shared_ptr<ILevel> level;
@@ -50,6 +52,8 @@ private:
     std::map<size_t, Character> characters;
     std::vector<std::unique_ptr<ISequence>> sequences;
     std::queue<std::shared_ptr<IGameEvent>> gameInstanceEvents;
+
+    std::vector<std::unique_ptr<ITeam>> teams;
 
     size_t lastUpdateTime = 0;
     size_t nextEntityId = 1;

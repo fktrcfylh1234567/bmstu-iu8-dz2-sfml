@@ -18,7 +18,7 @@ TEST(InstanceTest, Characters) {
     GameInstance gameInstance(1);
     gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
-    size_t id = gameInstance.addCharacter(stats);
+    size_t id = gameInstance.addCharacter(stats, 0);
     gameInstance.update(1);
     EXPECT_EQ(id, 1);
     EXPECT_EQ(gameInstance.getCharacters().size(), 1);

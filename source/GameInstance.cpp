@@ -15,6 +15,8 @@ void GameInstance::loadLevel(std::shared_ptr<ILevel> level) {
 
 void GameInstance::addGameRules(size_t gameModeId) {
     sequences.push_back(std::make_unique<SequenceGameRulesTDM>(lastUpdateTime + 1, this));
+    teams.push_back(std::make_unique<TeamTDM>(0));
+    teams.push_back(std::make_unique<TeamTDM>(1));
 }
 
 void GameInstance::update(size_t currentTime) {
@@ -38,10 +40,11 @@ std::queue<std::shared_ptr<IGameEvent>>& GameInstance::getGameInstanceUpdates() 
     return gameInstanceEvents;
 }
 
-size_t GameInstance::addCharacter(std::shared_ptr<ICharacterStats> characterStats) {
+size_t GameInstance::addCharacter(std::shared_ptr<ICharacterStats> characterStats, size_t teamId) {
     size_t id = nextEntityId;
     nextEntityId++;
     characters.emplace(id, Character(id, graph, characterStats));
+    teams[teamId]->addCharacter(id);
     return id;
 }
 
@@ -92,4 +95,8 @@ void GameInstance::addGameEvent(size_t actionId, size_t entityId, size_t value) 
 
 const size_t GameInstance::getLocationSize() const {
     return locationSize;
+}
+
+std::vector<std::unique_ptr<ITeam>>& GameInstance::getTeams() {
+    return teams;
 }

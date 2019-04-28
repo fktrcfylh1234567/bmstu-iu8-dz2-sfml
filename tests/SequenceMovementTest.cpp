@@ -21,7 +21,7 @@ TEST(SequenceMovementTest, SequenceMovement) {
     gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
-    size_t id = gameInstance.addCharacter(stats);
+    size_t id = gameInstance.addCharacter(stats, 0);
     gameInstance.update(1);
 
     gameInstance.addMoveSequence(id, Point(2, 2));
@@ -52,7 +52,7 @@ TEST(SequenceMovementTest, SequenceMovementTwoCharacters) {
     gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
 
-    size_t id1 = gameInstance.addCharacter(stats);
+    size_t id1 = gameInstance.addCharacter(stats, 0);
     gameInstance.update(1);
 
     gameInstance.addMoveSequence(id1, Point(0, 2));
@@ -60,7 +60,7 @@ TEST(SequenceMovementTest, SequenceMovementTwoCharacters) {
     gameInstance.update(3);
     EXPECT_EQ(gameInstance.getCharacters().at(id1).getPos(), Point(0, 2));
 
-    size_t id2 = gameInstance.addCharacter(stats);
+    size_t id2 = gameInstance.addCharacter(stats, 0);
     gameInstance.update(4);
 
     gameInstance.addMoveSequence(id1, Point(2, 1));
@@ -91,12 +91,12 @@ TEST(SequenceMovementTest, SequenceCancel) {
     GameInstance gameInstance(3);
     gameInstance.loadLevel(ilocation);
     gameInstance.addGameRules(1);
-    size_t id = gameInstance.addCharacter(stats);
+    size_t id = gameInstance.addCharacter(stats, 0);
     gameInstance.update(1);
 
     gameInstance.addMoveSequence(id, Point(2, 2));
     gameInstance.update(2);
-    size_t id2 = gameInstance.addCharacter(stats);
+    size_t id2 = gameInstance.addCharacter(stats, 0);
     gameInstance.update(3);
     gameInstance.addMoveSequence(id2, Point(0, 2));
 
