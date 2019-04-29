@@ -2,20 +2,20 @@
 // Created by fktrc on 12.04.19.
 //
 
-#ifndef GAME_GAMESESSION_HPP
-#define GAME_GAMESESSION_HPP
+#ifndef GAME_GAMEMATCH_HPP
+#define GAME_GAMEMATCH_HPP
 
 #include <atomic>
 #include <chrono>
 #include <thread>
 #include <iostream>
 
-#include "ISession.hpp"
+#include "IMatch.hpp"
 #include "IInstance.hpp"
 #include "ConcurrentQueue.hpp"
 #include "LevelInstance.hpp"
 
-class GameSession : public ISession {
+class GameMatch : public IMatch {
 public:
     void run() override;
     void stop() override;
@@ -31,4 +31,4 @@ private:
     const size_t timeUnitMs = 500;
 };
 
-#endif //GAME_GAMESESSION_HPP
+#endif //GAME_GAMEMATCH_HPP
