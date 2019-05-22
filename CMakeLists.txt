@@ -78,8 +78,8 @@ target_link_libraries(SessionClient client nlohmann_json::nlohmann_json)
 add_executable(runServer main_server.cpp)
 add_executable(runClient main_client.cpp)
 
-target_link_libraries(runServer gameServer)
-target_link_libraries(runClient clientn)
+target_link_libraries(runServer SessionServer)
+target_link_libraries(runClient SessionClient)
 
 
 # Tests

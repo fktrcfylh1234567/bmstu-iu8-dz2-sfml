@@ -61,22 +61,26 @@ void Match::run() {
             instance->update(timeUpdate);
 
             std::queue<std::shared_ptr<IEvent>>& queue = instance->getGameInstanceUpdates();
+            std::vector<std::shared_ptr<IEvent>> events;
+
             while (!queue.empty()) {
-                gameEvents.push(queue.front());
+                events.push_back(queue.front());
                 queue.pop();
             }
+
+            gameEvents.push(events);
         }
     }).detach();
 
-    gameEvents.push(std::make_shared<EventGameMode>(GAME_EVENT_MATCH_START));
+    gameEvents.push({std::make_shared<EventGameMode>(GAME_EVENT_MATCH_START)});
 }
 
 void Match::stop() {
     running = false;
     updateCalls.push(0); // Let wait_and_pop() stop waiting
-    gameEvents.push(nullptr);
+    gameEvents.push({});
     std::cout << "SessionServer was stopped on " << currentTime << std::endl;
-    gameEvents.push(std::make_shared<EventGameMode>(GAME_EVENT_MATCH_STOP));
+    gameEvents.push({std::make_shared<EventGameMode>(GAME_EVENT_MATCH_STOP)});
 }
 
 bool Match::isRunning() {
@@ -99,6 +103,6 @@ void Match::handleAction(std::shared_ptr<IPlayerAction> action) {
     }
 }
 
-ConcurrentQueue<std::shared_ptr<IEvent>>& Match::getGameEvents() {
+ConcurrentQueue<std::vector<std::shared_ptr<IEvent>>>& Match::getGameEvents() {
     return gameEvents;
 }

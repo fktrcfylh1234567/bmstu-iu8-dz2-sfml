@@ -20,7 +20,7 @@ public:
     virtual bool isRunning() = 0;
 
     virtual void handleAction(std::shared_ptr<IPlayerAction> action) = 0;
-    virtual ConcurrentQueue<std::shared_ptr<IEvent>>& getGameEvents() = 0;
+    virtual ConcurrentQueue<std::vector<std::shared_ptr<IEvent>>>& getGameEvents() = 0;
 };
 
 #endif //GAME_IMATCH_HPP

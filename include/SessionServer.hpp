@@ -22,7 +22,7 @@ public:
     bool isGameRunnimg();
 
 private:
-    nlohmann::json eventToJSON(std::shared_ptr<IEvent> event);
+    nlohmann::json eventsToJSON(std::vector<std::shared_ptr<IEvent>> events);
 
     std::unique_ptr<IMatch> match;
     Server server;
