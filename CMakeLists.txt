@@ -22,6 +22,10 @@ find_package(GTest CONFIG REQUIRED)
 hunter_add_package(Boost COMPONENTS graph system thread)
 find_package(Boost CONFIG REQUIRED graph system thread)
 
+# JSON
+hunter_add_package(nlohmann_json)
+find_package(nlohmann_json CONFIG REQUIRED)
+
 
 # Libraries
 add_library(graph STATIC
@@ -68,8 +72,8 @@ target_link_libraries(gameServer match server)
 add_executable(runServer main_server.cpp)
 add_executable(runClient main_client.cpp)
 
-target_link_libraries(runServer gameServer)
-target_link_libraries(runClient client)
+target_link_libraries(runServer gameServer nlohmann_json::nlohmann_json)
+target_link_libraries(runClient client nlohmann_json::nlohmann_json)
 
 
 # Tests
@@ -85,5 +89,6 @@ target_link_libraries(testInstance GTest::main instance)
 target_link_libraries(testSequence GTest::main instance)
 
 include_directories(PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tools/json)
 target_include_directories(match PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/levels)
 target_include_directories(match PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/characters)
