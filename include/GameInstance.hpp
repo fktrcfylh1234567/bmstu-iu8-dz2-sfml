@@ -20,7 +20,7 @@
 #include "SequenceCharacterMovement.hpp"
 #include "SequenceCharacterAttack.hpp"
 #include "SequenceGameRulesTDM.hpp"
-#include "GameEventEntityInstance.hpp"
+#include "EventEntityInstance.hpp"
 
 class GameInstance : public IInstance, public IGameInstance {
 public:
@@ -30,7 +30,7 @@ public:
     void loadLevel(std::shared_ptr<ILevel> level) override;
     void addGameRules(size_t gameModeId) override;
     void update(size_t currentTime) override;
-    std::queue<std::shared_ptr<IGameEvent>>& getGameInstanceUpdates() override;
+    std::queue<std::shared_ptr<IEvent>>& getGameInstanceUpdates() override;
 
     size_t addCharacter(std::shared_ptr<ICharacterStats> characterStats, size_t teamId) override;
     void removeCharacter(size_t characterId) override;
@@ -50,7 +50,7 @@ private:
     std::shared_ptr<IGraph> graph;
     std::map<size_t, Character> characters;
     std::vector<std::unique_ptr<ISequence>> sequences;
-    std::queue<std::shared_ptr<IGameEvent>> gameInstanceEvents;
+    std::queue<std::shared_ptr<IEvent>> gameInstanceEvents;
 
     size_t lastUpdateTime = 0;
     size_t nextEntityId = 1;

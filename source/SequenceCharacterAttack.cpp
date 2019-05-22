@@ -8,41 +8,41 @@ SequenceCharacterAttack::SequenceCharacterAttack(size_t characterId, size_t targ
                                                  IGameInstance* levelInstance) : characterId(characterId),
                                                                                   targetId(targetId),
                                                                                   nextUpdateTime(nextUpdateTime),
-                                                                                  levelInstance(levelInstance) {}
+                                                                                  gameInstance(levelInstance) {}
 
 void SequenceCharacterAttack::Update() {
-    if (!levelInstance->getCharacters().at(characterId).isAlive()) {
+    if (!gameInstance->getCharacters().at(characterId).isAlive()) {
         Cancel();
         return;
     }
 
-    if (!levelInstance->getCharacters().at(targetId).isAlive()) {
+    if (!gameInstance->getCharacters().at(targetId).isAlive()) {
         Cancel();
         return;
     }
 
     if (canReach()) {
-        levelInstance->getCharacters().at(targetId).doDamage(
-                levelInstance->getCharacters().at(characterId).getCurrentStats().getAttackDamage());
-        levelInstance->addGameEvent(GAME_EVENT_ENTITY_HP_CHANGED, characterId,
-                                    levelInstance->getCharacters().at(targetId).getCurrentStats().getHp());
+        gameInstance->getCharacters().at(targetId).doDamage(
+                gameInstance->getCharacters().at(characterId).getCurrentStats().getAttackDamage());
+        gameInstance->addGameEvent(GAME_EVENT_ENTITY_HP_CHANGED, characterId,
+                                    gameInstance->getCharacters().at(targetId).getCurrentStats().getHp());
 
-        if (!levelInstance->getCharacters().at(targetId).isAlive()) {
-            levelInstance->addGameEvent(GAME_EVENT_ENTITY_IS_ALIVE_CHANGED, characterId, 0);
+        if (!gameInstance->getCharacters().at(targetId).isAlive()) {
+            gameInstance->addGameEvent(GAME_EVENT_ENTITY_IS_ALIVE_CHANGED, characterId, 0);
             Cancel();
             return;
         }
 
-        nextUpdateTime += levelInstance->getCharacters().at(characterId).getCurrentStats().getAttackSpeed();
+        nextUpdateTime += gameInstance->getCharacters().at(characterId).getCurrentStats().getAttackSpeed();
         return;
     }
 
     updatePath();
     path.erase(path.begin());
-    levelInstance->getCharacters().at(characterId).setPosition(path[0]);
-    levelInstance->addGameEvent(GAME_EVENT_ENTITY_POSITION_CHANGED, characterId, pointToIndex(path[0]));
+    gameInstance->getCharacters().at(characterId).setPosition(path[0]);
+    gameInstance->addGameEvent(GAME_EVENT_ENTITY_POSITION_CHANGED, characterId, pointToIndex(path[0]));
 
-    nextUpdateTime += levelInstance->getCharacters().at(characterId).getCurrentStats().getMoveSpeed();
+    nextUpdateTime += gameInstance->getCharacters().at(characterId).getCurrentStats().getMoveSpeed();
 }
 
 void SequenceCharacterAttack::Cancel() {
@@ -88,32 +88,32 @@ void SequenceCharacterAttack::updatePath() {
 }
 
 bool SequenceCharacterAttack::canReach() {
-    size_t range = levelInstance->getCharacters().at(characterId).getCurrentStats().getAttackRange();
-    Point attackerPos = levelInstance->getCharacters().at(characterId).getPos();
-    Point targetPos = levelInstance->getCharacters().at(targetId).getPos();
+    size_t range = gameInstance->getCharacters().at(characterId).getCurrentStats().getAttackRange();
+    Point attackerPos = gameInstance->getCharacters().at(characterId).getPos();
+    Point targetPos = gameInstance->getCharacters().at(targetId).getPos();
     return sqrt(pow((int) attackerPos.first - (int) targetPos.first, 2) +
                 pow((int) attackerPos.second - (int) targetPos.second, 2)) < range + 1;
 }
 
 bool SequenceCharacterAttack::isPathActual() {
-    return path[path.size() - 1] == levelInstance->getCharacters().at(targetId).getPos();
+    return path[path.size() - 1] == gameInstance->getCharacters().at(targetId).getPos();
 }
 
 bool SequenceCharacterAttack::isPathValid() {
     return std::all_of(path.begin(), path.end(), [this](const Point& point) {
-        return levelInstance->getGraph()->isFree(point);
+        return gameInstance->getGraph()->isFree(point);
     });
 }
 
 void SequenceCharacterAttack::makePath() {
-    levelInstance->getGraph()->releasePoint(levelInstance->getCharacters().at(targetId).getPos());
-    path = levelInstance->getCharacters().at(characterId).makePath(
-            levelInstance->getCharacters().at(targetId).getPos());
-    levelInstance->getGraph()->busyPoint(levelInstance->getCharacters().at(targetId).getPos());
+    gameInstance->getGraph()->releasePoint(gameInstance->getCharacters().at(targetId).getPos());
+    path = gameInstance->getCharacters().at(characterId).makePath(
+            gameInstance->getCharacters().at(targetId).getPos());
+    gameInstance->getGraph()->busyPoint(gameInstance->getCharacters().at(targetId).getPos());
 }
 
 size_t SequenceCharacterAttack::pointToIndex(const Point& point) {
-    return levelInstance->getLocationSize() * point.first + point.second;
+    return gameInstance->getLocationSize() * point.first + point.second;
 }
 
 size_t SequenceCharacterAttack::getSequenceID() {

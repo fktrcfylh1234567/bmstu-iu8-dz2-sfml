@@ -2,15 +2,15 @@
 // Created by fktrc on 22.05.19.
 //
 
-#ifndef GAME_GAMESERVER_HPP
-#define GAME_GAMESERVER_HPP
+#ifndef GAME_SESSIONSERVER_HPP
+#define GAME_SESSIONSERVER_HPP
 
 #include <Match.hpp>
 #include <Server.hpp>
 
 #include <memory>
 
-class GameServer {
+class SessionServer {
 public:
     void setupMatch(std::string levelName, std::string gameModeName);
     void createLobby();
@@ -28,4 +28,4 @@ private:
     std::atomic_bool gameRunnimg = false;
 };
 
-#endif //GAME_GAMESERVER_HPP
+#endif //GAME_SESSIONSERVER_HPP

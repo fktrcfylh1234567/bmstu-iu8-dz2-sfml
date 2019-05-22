@@ -42,7 +42,6 @@ add_library(client STATIC
         source/Client.cpp
         )
 
-
 add_library(instance STATIC
         source/Character.cpp
         source/SequenceCharacterMovement.cpp
@@ -55,8 +54,12 @@ add_library(match STATIC
         source/Match.cpp
         )
 
-add_library(gameServer STATIC
-        source/GameServer.cpp
+add_library(SessionServer STATIC
+        source/SessionSever.cpp
+        )
+
+add_library(SessionClient STATIC
+        source/SessionClient.cpp
         )
 
 # Libs links
@@ -65,15 +68,16 @@ target_link_libraries(server Boost::system Boost::thread)
 target_link_libraries(client Boost::system Boost::thread)
 target_link_libraries(instance graph)
 target_link_libraries(match instance)
-target_link_libraries(gameServer match server)
+target_link_libraries(SessionServer match server nlohmann_json::nlohmann_json)
+target_link_libraries(SessionClient client nlohmann_json::nlohmann_json)
 
 
 # Executables
 add_executable(runServer main_server.cpp)
 add_executable(runClient main_client.cpp)
 
-target_link_libraries(runServer gameServer nlohmann_json::nlohmann_json)
-target_link_libraries(runClient client nlohmann_json::nlohmann_json)
+target_link_libraries(runServer gameServer)
+target_link_libraries(runClient clientn)
 
 
 # Tests

@@ -27,7 +27,7 @@ private:
     const size_t characterId = 0;
     Point dest;
     size_t nextUpdateTime = 0;
-    IGameInstance* levelInstance = nullptr;
+    IGameInstance* gameInstance = nullptr;
     Path path;
 
     void updatePath();

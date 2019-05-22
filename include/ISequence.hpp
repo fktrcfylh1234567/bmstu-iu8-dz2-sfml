@@ -6,7 +6,7 @@
 #define GAME_ISEQUENCE_HPP
 
 #include <cstdio>
-#include "GameEventEntityInstance.hpp"
+#include "EventEntityInstance.hpp"
 
 class ISequence {
 public:

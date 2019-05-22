@@ -42,6 +42,7 @@ void SequenceGameRulesTDM::respawn(size_t characterId) {
         if (gameInstance->getGraph()->isFree(point)) {
             gameInstance->getCharacters().at(characterId).spawn(point);
             gameInstance->addGameEvent(GAME_EVENT_ENTITY_IS_ALIVE_CHANGED, characterId, 1);
+            gameInstance->addGameEvent(GAME_EVENT_ENTITY_POSITION_CHANGED, characterId, pointToIndex(point));
             return;
         }
     }
@@ -49,4 +50,8 @@ void SequenceGameRulesTDM::respawn(size_t characterId) {
 
 size_t SequenceGameRulesTDM::getSequenceID() {
     return 1;
+}
+
+size_t SequenceGameRulesTDM::pointToIndex(const Point& point) {
+    return gameInstance->getLocationSize() * point.first + point.second;
 }

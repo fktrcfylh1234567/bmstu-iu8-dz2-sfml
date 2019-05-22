@@ -3,29 +3,29 @@
 //
 
 #include <SequenceCharacterMovement.hpp>
-#include <GameEventEntityInstance.hpp>
+#include <EventEntityInstance.hpp>
 
 SequenceCharacterMovement::SequenceCharacterMovement(size_t characterId, const Point& dest, size_t nextUpdateTime,
                                                      IGameInstance* levelInstance) :
-        characterId(characterId), dest(dest), nextUpdateTime(nextUpdateTime), levelInstance(levelInstance) {}
+        characterId(characterId), dest(dest), nextUpdateTime(nextUpdateTime), gameInstance(levelInstance) {}
 
 void SequenceCharacterMovement::Update() {
-    if (!levelInstance->getCharacters().at(characterId).isAlive()) {
+    if (!gameInstance->getCharacters().at(characterId).isAlive()) {
         Cancel();
         return;
     }
 
     updatePath();
     path.erase(path.begin());
-    levelInstance->getCharacters().at(characterId).setPosition(path[0]);
-    levelInstance->addGameEvent(GAME_EVENT_ENTITY_POSITION_CHANGED, characterId, pointToIndex(path[0]));
+    gameInstance->getCharacters().at(characterId).setPosition(path[0]);
+    gameInstance->addGameEvent(GAME_EVENT_ENTITY_POSITION_CHANGED, characterId, pointToIndex(path[0]));
 
     if (path.size() == 1) {
         Cancel();
         return;
     }
 
-    nextUpdateTime += levelInstance->getCharacters().at(characterId).getCurrentStats().getMoveSpeed();
+    nextUpdateTime += gameInstance->getCharacters().at(characterId).getCurrentStats().getMoveSpeed();
 }
 
 void SequenceCharacterMovement::Cancel() {
@@ -63,16 +63,16 @@ void SequenceCharacterMovement::updatePath() {
 
 bool SequenceCharacterMovement::isPathValid() {
     return std::all_of(path.begin(), path.end(), [this](const Point& point) {
-        return levelInstance->getGraph()->isFree(point);
+        return gameInstance->getGraph()->isFree(point);
     });
 }
 
 void SequenceCharacterMovement::makePath() {
-    path = levelInstance->getCharacters().at(characterId).makePath(dest);
+    path = gameInstance->getCharacters().at(characterId).makePath(dest);
 }
 
 size_t SequenceCharacterMovement::pointToIndex(const Point& point) {
-    return levelInstance->getLocationSize() * point.first + point.second;
+    return gameInstance->getLocationSize() * point.first + point.second;
 }
 
 size_t SequenceCharacterMovement::getSequenceID() {

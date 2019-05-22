@@ -24,6 +24,7 @@ public:
 
 private:
     void respawn(size_t characterId);
+    size_t pointToIndex(const Point& point);
 
     bool canceled = false;
     size_t nextUpdateTime = 0;

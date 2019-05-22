@@ -2,10 +2,10 @@
 // Created by fktrc on 22.05.19.
 //
 
-#include "GameServer.hpp"
+#include "SessionServer.hpp"
 
 int main() {
-    GameServer gameServer;
+    SessionServer gameServer;
     gameServer.setupMatch("level_1", "tdm");
     gameServer.createLobby();
 

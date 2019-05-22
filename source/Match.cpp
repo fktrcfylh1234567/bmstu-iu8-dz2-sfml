@@ -42,7 +42,7 @@ void Match::removePlayer(size_t playerId) {
 void Match::run() {
     running = true;
     currentTime = 0;
-    std::cout << "Game was starded" << std::endl;
+    std::cout << "SessionServer was starded" << std::endl;
 
     std::thread([this]() {
         while (running) {
@@ -60,7 +60,7 @@ void Match::run() {
             }
             instance->update(timeUpdate);
 
-            std::queue<std::shared_ptr<IGameEvent>>& queue = instance->getGameInstanceUpdates();
+            std::queue<std::shared_ptr<IEvent>>& queue = instance->getGameInstanceUpdates();
             while (!queue.empty()) {
                 gameEvents.push(queue.front());
                 queue.pop();
@@ -72,7 +72,7 @@ void Match::run() {
 void Match::stop() {
     running = false;
     updateCalls.push(0); // Let wait_and_pop() stop waiting
-    std::cout << "Game was stopped on " << currentTime << std::endl;
+    std::cout << "SessionServer was stopped on " << currentTime << std::endl;
 }
 
 bool Match::isRunning() {
@@ -95,6 +95,6 @@ void Match::handleAction(std::shared_ptr<IPlayerAction> action) {
     }
 }
 
-std::queue<std::shared_ptr<IGameEvent>>& Match::getGameEvents() {
+ConcurrentQueue<std::shared_ptr<IEvent>>& Match::getGameEvents() {
     return gameEvents;
 }

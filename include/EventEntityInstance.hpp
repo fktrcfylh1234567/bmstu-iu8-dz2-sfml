@@ -5,7 +5,7 @@
 #ifndef GAME_IGAMEINSTANCEACTION_HPP
 #define GAME_IGAMEINSTANCEACTION_HPP
 
-#include <IGameEventEntity.hpp>
+#include <IEventEntity.hpp>
 
 enum gameEventsInstance {
     GAME_EVENT_ENTITY_IS_ALIVE_CHANGED = 0,
@@ -13,12 +13,12 @@ enum gameEventsInstance {
     GAME_EVENT_ENTITY_POSITION_CHANGED = 2
 };
 
-class GameEventEntityInstance : public IGameEventEntity {
+class EventEntityInstance : public IEventEntity {
 public:
-    GameEventEntityInstance(size_t actionId, size_t entityId, size_t newValue) :
+    EventEntityInstance(size_t actionId, size_t entityId, size_t newValue) :
             actionId(actionId), entityId(entityId), newValue(newValue) {}
 
-    size_t getActionId() const override {
+    size_t getEventId() const override {
         return actionId;
     }
 

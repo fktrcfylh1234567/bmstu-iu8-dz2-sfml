@@ -44,7 +44,7 @@ TEST(SequenceMovementTest, SequenceMovement) {
     EXPECT_EQ(gameInstance.getCharacters().at(id).getPos(), Point(2, 2));
 
     auto value = gameInstance.getGameInstanceUpdates().back();
-    EXPECT_EQ(value->getActionId(), GAME_EVENT_ENTITY_POSITION_CHANGED);
+    EXPECT_EQ(value->getEventId(), GAME_EVENT_ENTITY_POSITION_CHANGED);
 }
 
 TEST(SequenceMovementTest, SequenceMovementTwoCharacters) {

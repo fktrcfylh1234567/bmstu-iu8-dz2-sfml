@@ -50,7 +50,7 @@ TEST(SequenceAttackTest, SequenceAttackNear) {
     EXPECT_FALSE(gameInstance.getCharacters().at(id2).isAlive());
 
     auto value = gameInstance.getGameInstanceUpdates().back();
-    EXPECT_EQ(value->getActionId(), GAME_EVENT_ENTITY_IS_ALIVE_CHANGED);
+    EXPECT_EQ(value->getEventId(), GAME_EVENT_ENTITY_IS_ALIVE_CHANGED);
 }
 
 TEST(SequenceAttackTest, SequenceAttackDistance) {
@@ -136,13 +136,13 @@ TEST(SequenceAttackTest, SequenceAttackMove) {
     gameInstance.update(5);
 
     auto value = gameInstance.getGameInstanceUpdates().back();
-    EXPECT_EQ(value->getActionId(), GAME_EVENT_ENTITY_POSITION_CHANGED);
+    EXPECT_EQ(value->getEventId(), GAME_EVENT_ENTITY_POSITION_CHANGED);
 
     gameInstance.update(6);
     EXPECT_EQ(gameInstance.getCharacters().at(id2).getCurrentStats().getHp(), 500);
 
     value = gameInstance.getGameInstanceUpdates().back();
-    EXPECT_EQ(value->getActionId(), GAME_EVENT_ENTITY_HP_CHANGED);
+    EXPECT_EQ(value->getEventId(), GAME_EVENT_ENTITY_HP_CHANGED);
 }
 
 TEST(SequenceAttackTest, SequenceAttackFollow) {

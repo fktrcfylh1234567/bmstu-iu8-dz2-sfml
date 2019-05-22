@@ -87,5 +87,5 @@ TEST(InstanceTest, EventAdd) {
     EXPECT_EQ(gameInstance.getGameInstanceUpdates().size(), 1);
 
     auto value = gameInstance.getGameInstanceUpdates().front();
-    EXPECT_EQ(value->getActionId(), GAME_EVENT_ENTITY_IS_ALIVE_CHANGED);
+    EXPECT_EQ(value->getEventId(), GAME_EVENT_ENTITY_IS_ALIVE_CHANGED);
 }

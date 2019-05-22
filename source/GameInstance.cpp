@@ -37,7 +37,7 @@ void GameInstance::update(size_t currentTime) {
     lastUpdateTime = currentTime;
 }
 
-std::queue<std::shared_ptr<IGameEvent>>& GameInstance::getGameInstanceUpdates() {
+std::queue<std::shared_ptr<IEvent>>& GameInstance::getGameInstanceUpdates() {
     return gameInstanceEvents;
 }
 
@@ -99,7 +99,7 @@ std::map<size_t, Character>& GameInstance::getCharacters() {
 }
 
 void GameInstance::addGameEvent(size_t actionId, size_t entityId, size_t value) {
-    gameInstanceEvents.push(std::make_shared<GameEventEntityInstance>(actionId, entityId, value));
+    gameInstanceEvents.push(std::make_shared<EventEntityInstance>(actionId, entityId, value));
 }
 
 const size_t GameInstance::getLocationSize() const {

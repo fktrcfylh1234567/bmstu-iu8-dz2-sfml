@@ -27,7 +27,7 @@ private:
     size_t characterId = 0;
     size_t targetId = 0;
     size_t nextUpdateTime = 0;
-    IGameInstance* levelInstance = nullptr;
+    IGameInstance* gameInstance = nullptr;
     Path path;
 
     void updatePath();

@@ -2,9 +2,9 @@
 // Created by fktrc on 22.05.19.
 //
 
-#include "GameServer.hpp"
+#include "SessionServer.hpp"
 
-void GameServer::setupMatch(std::string levelName, std::string gameModeName) {
+void SessionSever::setupMatch(std::string levelName, std::string gameModeName) {
     match = std::make_unique<Match>();
 
     size_t gameModeId = 1;
@@ -16,12 +16,12 @@ void GameServer::setupMatch(std::string levelName, std::string gameModeName) {
     match->setupGame(levelName, gameModeId);
 }
 
-void GameServer::createLobby() {
+void SessionSever::createLobby() {
     lobbyOpened = true;
     server.start();
 }
 
-void GameServer::startMatch() {
+void SessionSever::startMatch() {
     lobbyOpened = false;
     gameRunnimg = true;
 
@@ -29,17 +29,17 @@ void GameServer::startMatch() {
     server.closeLobby();
 }
 
-void GameServer::stopMatch() {
+void SessionSever::stopMatch() {
     gameRunnimg = false;
 
     match->stop();
     server.stop();
 }
 
-bool GameServer::isLobbyOpened() {
+bool SessionSever::isLobbyOpened() {
     return lobbyOpened;
 }
 
-bool GameServer::isGameRunnimg() {
+bool SessionSever::isGameRunnimg() {
     return gameRunnimg;
 }

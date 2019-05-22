@@ -32,7 +32,7 @@ public:
     bool isRunning() override;
 
     void handleAction(std::shared_ptr<IPlayerAction> action) override;
-    std::queue<std::shared_ptr<IGameEvent>>& getGameEvents() override;
+    ConcurrentQueue<std::shared_ptr<IEvent>>& getGameEvents() override;
 
 private:
     std::unique_ptr<IInstance> instance;
@@ -41,7 +41,7 @@ private:
     std::atomic_size_t currentTime = 0;
 
     std::map<size_t, size_t> players; // playerId -> charId
-    std::queue<std::shared_ptr<IGameEvent>> gameEvents;
+    ConcurrentQueue<std::shared_ptr<IEvent>> gameEvents;
 
     const size_t timeUnitMs = 500;
 };

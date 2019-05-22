@@ -6,7 +6,7 @@
 #define GAME_IMATCH_HPP
 
 #include "IPlayerAction.hpp"
-#include "IGameEvent.hpp"
+#include "IEvent.hpp"
 #include "ConcurrentQueue.hpp"
 
 class IMatch {
@@ -20,7 +20,7 @@ public:
     virtual bool isRunning() = 0;
 
     virtual void handleAction(std::shared_ptr<IPlayerAction> action) = 0;
-    virtual std::queue<std::shared_ptr<IGameEvent>>& getGameEvents() = 0;
+    virtual ConcurrentQueue<std::shared_ptr<IEvent>>& getGameEvents() = 0;
 };
 
 #endif //GAME_IMATCH_HPP
