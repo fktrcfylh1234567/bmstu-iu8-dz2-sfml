@@ -12,6 +12,8 @@ HunterGate(
 
 project(game)
 
+add_subdirectory(tools/sfml)
+
 # GTest
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
