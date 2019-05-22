@@ -35,7 +35,7 @@ add_library(instance STATIC
         )
 
 add_library(match STATIC
-        source/GameMatch.cpp
+        source/Match.cpp
         )
 
 # Libs links
@@ -56,3 +56,5 @@ target_link_libraries(test-instance GTest::main instance)
 target_link_libraries(test-sequence GTest::main instance)
 
 include_directories(PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(match PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/levels)
+target_include_directories(match PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/characters)
