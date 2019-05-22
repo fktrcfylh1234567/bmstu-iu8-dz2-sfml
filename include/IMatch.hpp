@@ -13,6 +13,7 @@ class IMatch {
 public:
     virtual void setupGame(std::string levelName, size_t gameModeId) = 0;
     virtual void addPlayer(size_t playerId, size_t charStatsId, size_t teamId) = 0;
+    virtual void removePlayer(size_t playerId) = 0;
 
     virtual void run() = 0;
     virtual void stop() = 0;

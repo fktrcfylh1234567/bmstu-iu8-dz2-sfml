@@ -35,6 +35,10 @@ void Match::addPlayer(size_t playerId, size_t charStatsId, size_t teamId) {
     }
 }
 
+void Match::removePlayer(size_t playerId) {
+    players.erase(playerId);
+}
+
 void Match::run() {
     running = true;
     currentTime = 0;
@@ -58,8 +62,6 @@ void Match::run() {
 
             std::queue<std::shared_ptr<IGameEvent>>& queue = instance->getGameInstanceUpdates();
             while (!queue.empty()) {
-                std::cout << queue.front()->getActionId() << std::endl;
-
                 gameEvents.push(queue.front());
                 queue.pop();
             }
@@ -96,5 +98,3 @@ void Match::handleAction(std::shared_ptr<IPlayerAction> action) {
 std::queue<std::shared_ptr<IGameEvent>>& Match::getGameEvents() {
     return gameEvents;
 }
-
-

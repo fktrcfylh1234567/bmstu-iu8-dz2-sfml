@@ -25,6 +25,7 @@ class Match : public IMatch {
 public:
     void setupGame(std::string levelName, size_t gameModeId) override;
     void addPlayer(size_t playerId, size_t charStatsId, size_t teamId) override;
+    void removePlayer(size_t playerId) override;
 
     void run() override;
     void stop() override;
