@@ -6,10 +6,8 @@
 #include <GameEventEntityInstance.hpp>
 
 SequenceCharacterMovement::SequenceCharacterMovement(size_t characterId, const Point& dest, size_t nextUpdateTime,
-                                                     IGameInstance* levelInstance) : characterId(characterId),
-                                                                                      dest(dest),
-                                                                                      nextUpdateTime(nextUpdateTime),
-                                                                                      levelInstance(levelInstance) {}
+                                                     IGameInstance* levelInstance) :
+        characterId(characterId), dest(dest), nextUpdateTime(nextUpdateTime), levelInstance(levelInstance) {}
 
 void SequenceCharacterMovement::Update() {
     if (!levelInstance->getCharacters().at(characterId).isAlive()) {

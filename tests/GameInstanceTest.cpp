@@ -32,7 +32,7 @@ TEST(InstanceTest, Level) {
     gameInstance.addGameRules(1);
 
     std::shared_ptr<IGameModeInfo> infoINST = gameInstance.getLevel()->getGameModeInfo(1);
-    IGameModeInfoTDM* tdmInfoINST  = dynamic_cast<IGameModeInfoTDM*>(infoINST.get());
+    IGameModeInfoTDM* tdmInfoINST = dynamic_cast<IGameModeInfoTDM*>(infoINST.get());
     EXPECT_EQ(tdmInfoINST->getTeamSpawnPoints(1).at(0), Point(2, 1));
 }
 

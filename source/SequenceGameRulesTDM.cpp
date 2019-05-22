@@ -5,8 +5,8 @@
 #include <SequenceGameRulesTDM.hpp>
 #include <iostream>
 
-SequenceGameRulesTDM::SequenceGameRulesTDM(size_t nextUpdateTime, IGameInstance* levelInstance) : nextUpdateTime(
-        nextUpdateTime), gameInstance(levelInstance) {}
+SequenceGameRulesTDM::SequenceGameRulesTDM(size_t nextUpdateTime, IGameInstance* levelInstance) :
+        nextUpdateTime(nextUpdateTime), gameInstance(levelInstance) {}
 
 void SequenceGameRulesTDM::Update() {
     for (auto& character : gameInstance->getCharacters()) {

@@ -6,22 +6,31 @@
 
 #include <GameInstance.hpp>
 #include <LocationInstance.hpp>
+#include <GameModeInfoTDMInstance.hpp>
+#include <LevelInstance.hpp>
 
 TEST(SequenceMovementTest, SequenceMovement) {
     std::vector<std::vector<bool>> location = {{true, true, true},
                                                {true, true, true},
                                                {true, true, true}};
     std::shared_ptr<ILocation> ilocation = std::make_shared<LocationInstance>(location);
+    std::vector<Point> points = {Point(0, 0)};
+    std::shared_ptr<GameModeInfoTDMInstance> tdmInfo = std::make_shared<GameModeInfoTDMInstance>();
+    tdmInfo->addTeamSpawnPoints(1, points);
+
+    std::shared_ptr<LevelInstance> level = std::make_shared<LevelInstance>();
+    level->setLocation(ilocation);
+    level->addGameModeInfo(tdmInfo);
 
     std::shared_ptr<CharacterStatsInstance> stats = std::make_shared<CharacterStatsInstance>();
     stats->setHp(1000);
     stats->setMoveSpeed(1);
 
     GameInstance gameInstance(3);
-    gameInstance.loadLevel(ilocation);
+    gameInstance.loadLevel(level);
     gameInstance.addGameRules(1);
 
-    size_t id = gameInstance.addCharacter(stats, 0);
+    size_t id = gameInstance.addCharacter(stats, 1);
     gameInstance.update(1);
 
     gameInstance.addMoveSequence(id, Point(2, 2));
@@ -43,16 +52,23 @@ TEST(SequenceMovementTest, SequenceMovementTwoCharacters) {
                                                {true, true, true},
                                                {true, true, true}};
     std::shared_ptr<ILocation> ilocation = std::make_shared<LocationInstance>(location);
+    std::vector<Point> points = {Point(0, 0)};
+    std::shared_ptr<GameModeInfoTDMInstance> tdmInfo = std::make_shared<GameModeInfoTDMInstance>();
+    tdmInfo->addTeamSpawnPoints(1, points);
+
+    std::shared_ptr<LevelInstance> level = std::make_shared<LevelInstance>();
+    level->setLocation(ilocation);
+    level->addGameModeInfo(tdmInfo);
 
     std::shared_ptr<CharacterStatsInstance> stats = std::make_shared<CharacterStatsInstance>();
     stats->setHp(1000);
     stats->setMoveSpeed(1);
 
     GameInstance gameInstance(3);
-    gameInstance.loadLevel(ilocation);
+    gameInstance.loadLevel(level);
     gameInstance.addGameRules(1);
 
-    size_t id1 = gameInstance.addCharacter(stats, 0);
+    size_t id1 = gameInstance.addCharacter(stats, 1);
     gameInstance.update(1);
 
     gameInstance.addMoveSequence(id1, Point(0, 2));
@@ -60,7 +76,7 @@ TEST(SequenceMovementTest, SequenceMovementTwoCharacters) {
     gameInstance.update(3);
     EXPECT_EQ(gameInstance.getCharacters().at(id1).getPos(), Point(0, 2));
 
-    size_t id2 = gameInstance.addCharacter(stats, 0);
+    size_t id2 = gameInstance.addCharacter(stats, 1);
     gameInstance.update(4);
 
     gameInstance.addMoveSequence(id1, Point(2, 1));
@@ -84,19 +100,26 @@ TEST(SequenceMovementTest, SequenceCancel) {
                                                {true, true, true},
                                                {true, true, true}};
     std::shared_ptr<ILocation> ilocation = std::make_shared<LocationInstance>(location);
+    std::vector<Point> points = {Point(0, 0)};
+    std::shared_ptr<GameModeInfoTDMInstance> tdmInfo = std::make_shared<GameModeInfoTDMInstance>();
+    tdmInfo->addTeamSpawnPoints(1, points);
+
+    std::shared_ptr<LevelInstance> level = std::make_shared<LevelInstance>();
+    level->setLocation(ilocation);
+    level->addGameModeInfo(tdmInfo);
 
     std::shared_ptr<CharacterStatsInstance> stats = std::make_shared<CharacterStatsInstance>();
     stats->setMoveSpeed(1);
 
     GameInstance gameInstance(3);
-    gameInstance.loadLevel(ilocation);
+    gameInstance.loadLevel(level);
     gameInstance.addGameRules(1);
-    size_t id = gameInstance.addCharacter(stats, 0);
+    size_t id = gameInstance.addCharacter(stats, 1);
     gameInstance.update(1);
 
     gameInstance.addMoveSequence(id, Point(2, 2));
     gameInstance.update(2);
-    size_t id2 = gameInstance.addCharacter(stats, 0);
+    size_t id2 = gameInstance.addCharacter(stats, 1);
     gameInstance.update(3);
     gameInstance.addMoveSequence(id2, Point(0, 2));
 
