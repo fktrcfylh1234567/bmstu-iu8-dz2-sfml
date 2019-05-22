@@ -16,8 +16,9 @@ void GameServer::setupMatch(std::string levelName, std::string gameModeName) {
     match->setupGame(levelName, gameModeId);
 }
 
-void GameServer::openLobby() {
+void GameServer::createLobby() {
     lobbyOpened = true;
+    server.start();
 }
 
 void GameServer::startMatch() {
@@ -25,10 +26,20 @@ void GameServer::startMatch() {
     gameRunnimg = true;
 
     match->run();
+    server.closeLobby();
 }
 
 void GameServer::stopMatch() {
     gameRunnimg = false;
 
     match->stop();
+    server.stop();
+}
+
+bool GameServer::isLobbyOpened() {
+    return lobbyOpened;
+}
+
+bool GameServer::isGameRunnimg() {
+    return gameRunnimg;
 }

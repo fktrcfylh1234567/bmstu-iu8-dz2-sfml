@@ -17,14 +17,25 @@ hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
 # Boost
-hunter_add_package(Boost COMPONENTS graph)
-find_package(Boost CONFIG REQUIRED graph)
+hunter_add_package(Boost COMPONENTS graph system thread)
+find_package(Boost CONFIG REQUIRED graph system thread)
 
 
 # Libraries
 add_library(graph STATIC
         source/Graph.cpp
         )
+
+add_library(server STATIC
+        source/ConnectionServer.cpp
+        source/Server.cpp
+        )
+
+add_library(client STATIC
+        source/ConnectionClient.cpp
+        source/Client.cpp
+        )
+
 
 add_library(instance STATIC
         source/Character.cpp
@@ -44,9 +55,20 @@ add_library(gameServer STATIC
 
 # Libs links
 target_link_libraries(graph Boost::graph)
+target_link_libraries(server Boost::system Boost::thread)
+target_link_libraries(client Boost::system Boost::thread)
 target_link_libraries(instance graph)
 target_link_libraries(match instance)
-target_link_libraries(gameServer match)
+target_link_libraries(gameServer match server)
+
+
+# Executables
+add_executable(runServer main_server.cpp)
+add_executable(runClient main_client.cpp)
+
+target_link_libraries(runServer gameServer)
+target_link_libraries(runClient client)
+
 
 # Tests
 add_executable(testGraph tests/GraphTest.cpp)
