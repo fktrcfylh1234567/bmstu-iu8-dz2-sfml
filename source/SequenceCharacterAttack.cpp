@@ -115,3 +115,7 @@ void SequenceCharacterAttack::makePath() {
 size_t SequenceCharacterAttack::pointToIndex(const Point& point) {
     return levelInstance->getLocationSize() * point.first + point.second;
 }
+
+size_t SequenceCharacterAttack::getSequenceID() {
+    return 3;
+}

@@ -14,6 +14,7 @@ public:
     virtual void Cancel() = 0;
     virtual bool isCanceled() = 0;
     virtual size_t getNextUpdateTime() = 0;
+    virtual size_t getSequenceID() = 0;
 };
 
 #endif //GAME_ISEQUENCE_HPP

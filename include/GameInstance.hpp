@@ -24,7 +24,7 @@
 
 class GameInstance : public IInstance, public IGameInstance {
 public:
-    GameInstance(const size_t locationSize);
+    explicit GameInstance(size_t locationSize);
 
     // IInstance
     void loadLevel(std::shared_ptr<ILevel> level) override;
@@ -32,7 +32,7 @@ public:
     void update(size_t currentTime) override;
     std::queue<std::shared_ptr<IGameEvent>>& getGameInstanceUpdates() override;
 
-    size_t addCharacter(std::shared_ptr<ICharacterStats> characterStats) override;
+    size_t addCharacter(std::shared_ptr<ICharacterStats> characterStats, size_t teamId) override;
     void removeCharacter(size_t characterId) override;
     void addMoveSequence(size_t characterId, const Point& point) override;
     void addAttackSequence(size_t characterId, size_t targetId) override;

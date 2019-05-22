@@ -76,3 +76,7 @@ void SequenceCharacterMovement::makePath() {
 size_t SequenceCharacterMovement::pointToIndex(const Point& point) {
     return levelInstance->getLocationSize() * point.first + point.second;
 }
+
+size_t SequenceCharacterMovement::getSequenceID() {
+    return 2;
+}

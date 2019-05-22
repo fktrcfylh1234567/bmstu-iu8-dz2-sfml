@@ -19,6 +19,7 @@ public:
     void Cancel() override;
     bool isCanceled() override;
     size_t getNextUpdateTime() override;
+    size_t getSequenceID() override;
     size_t getCharacterId() override;
 
 private:

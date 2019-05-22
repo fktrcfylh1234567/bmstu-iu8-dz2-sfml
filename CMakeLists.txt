@@ -38,22 +38,21 @@ add_library(match STATIC
         source/GameMatch.cpp
         )
 
-# Libs include
-target_include_directories(graph PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_include_directories(instance PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_include_directories(match PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 # Libs links
 target_link_libraries(graph Boost::graph)
 target_link_libraries(instance graph)
 target_link_libraries(match instance)
 
 # Tests
-add_executable(graphTest tests/GraphTest.cpp)
-add_executable(characterTest tests/CharacterTest.cpp)
-add_executable(instanceTest tests/SequenceMovementTest.cpp tests/SequenceAttackTest.cpp tests/GameInstanceTest.cpp)
+add_executable(test-graph tests/GraphTest.cpp)
+add_executable(test-character tests/CharacterTest.cpp)
+add_executable(test-instance tests/GameInstanceTest.cpp)
+add_executable(test-sequence tests/SequenceMovementTest.cpp tests/SequenceAttackTest.cpp)
 
 # Tests links
-target_link_libraries(graphTest GTest::main graph)
-target_link_libraries(characterTest GTest::main instance)
-target_link_libraries(instanceTest GTest::main instance)
+target_link_libraries(test-graph GTest::main graph)
+target_link_libraries(test-character GTest::main instance)
+target_link_libraries(test-instance GTest::main instance)
+target_link_libraries(test-sequence GTest::main instance)
+
+include_directories(PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

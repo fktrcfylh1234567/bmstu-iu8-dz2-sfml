@@ -15,8 +15,8 @@ enum gameEventsInstance {
 
 class GameEventEntityInstance : public IGameEventEntity {
 public:
-    GameEventEntityInstance(size_t actionId, size_t entityId, size_t newValue) : actionId(actionId), entityId(entityId),
-                                                                                 newValue(newValue) {}
+    GameEventEntityInstance(size_t actionId, size_t entityId, size_t newValue) :
+            actionId(actionId), entityId(entityId), newValue(newValue) {}
 
     size_t getActionId() const override {
         return actionId;

@@ -12,25 +12,25 @@
 
 class LevelInstance : public ILevel {
 public:
-    const std::shared_ptr<ILocation>& getLocation() const override {
+    const std::shared_ptr<ILocation>& getLocation() override {
         return location;
     }
 
-    const std::shared_ptr<ILevelGameModeInfo> getGameModesInfo(size_t gameModeId) const override {
-        return gameModesInfo[gameModeId];
+    std::shared_ptr<IGameModeInfo> getGameModeInfo(size_t gameModeId) override {
+        return gameModesInfo.at(gameModeId);
     }
 
     void setLocation(const std::shared_ptr<ILocation>& location) {
        this->location = location;
     }
 
-    void addGameModeInfo(const std::shared_ptr<ILevelGameModeInfo>& gameModeInfo, size_t gameModeId) {
-        this->gameModesInfo.emplace(gameModeId, gameModeInfo);
+    void addGameModeInfo(std::shared_ptr<IGameModeInfo> gameModeInfo) {
+        this->gameModesInfo.emplace(gameModeInfo->getGameModeId(), gameModeInfo);
     }
 
 private:
     std::shared_ptr<ILocation> location;
-    std::map<size_t, std::shared_ptr<ILevelGameModeInfo>> gameModesInfo;
+    std::map<size_t, std::shared_ptr<IGameModeInfo>> gameModesInfo;
 };
 
 #endif //GAME_LEVELINSTANCE_HPP

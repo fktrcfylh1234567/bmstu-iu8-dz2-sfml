@@ -5,6 +5,8 @@
 #ifndef GAME_ILOCATION_HPP
 #define GAME_ILOCATION_HPP
 
+#include <vector>
+
 class ILocation {
 public:
     virtual const std::vector<bool>& operator[](size_t id) const = 0;

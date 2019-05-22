@@ -7,7 +7,9 @@
 
 #include <ISequence.hpp>
 #include "IGameInstance.hpp"
-#include <ILevelGameModeInfoTDM.hpp>
+#include <IGameModeInfoTDM.hpp>
+
+#include <algorithm>
 
 class SequenceGameRulesTDM : public ISequence {
 public:
@@ -17,14 +19,18 @@ public:
     void Cancel() override;
     bool isCanceled() override;
     size_t getNextUpdateTime() override;
+    size_t getSequenceID() override;
+    void addTeamMember(size_t characterId, size_t teamId);
 
 private:
+    void respawn(size_t characterId);
+
     bool canceled = false;
     size_t nextUpdateTime = 0;
-    IGameInstance* levelInstance;
+    IGameInstance* gameInstance;
 
-    std::map<size_t, std::vector<size_t>> teams;
-    std::map<size_t, size_t> teamScores;
+    // charId -> teamId
+    std::map<size_t, size_t> charactersTeams;
 };
 
 #endif //GAME_SEQUENCEGAMERULESTDM_HPP
