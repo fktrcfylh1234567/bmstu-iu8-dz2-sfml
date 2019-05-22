@@ -17,9 +17,21 @@ void Match::setupGame(std::string levelName, size_t gameModeId) {
     }
 }
 
-void Match::addPlayer(size_t playerId, size_t charStatsId) {
+void Match::addPlayer(size_t playerId, size_t charStatsId, size_t teamId) {
     if (running)
         return;
+
+    if (charStatsId == 1) {
+        std::shared_ptr<character_1> stats = std::make_shared<character_1>();
+        size_t id = instance->addCharacter(stats, teamId);
+        players[playerId] = id;
+    }
+
+    if (charStatsId == 2) {
+        std::shared_ptr<character_2> stats = std::make_shared<character_2>();
+        size_t id = instance->addCharacter(stats, teamId);
+        players[playerId] = id;
+    }
 }
 
 void Match::run() {
@@ -30,25 +42,31 @@ void Match::run() {
     std::thread([this]() {
         while (running) {
             currentTime++;
-            queue.push(currentTime);
+            updateCalls.push(currentTime);
             std::this_thread::sleep_for(std::chrono::milliseconds(timeUnitMs));
         }
     }).detach();
 
     std::thread([this]() {
         while (true) {
-            size_t timeUpdate = queue.wait_and_pop();
+            size_t timeUpdate = updateCalls.wait_and_pop();
             if (timeUpdate == 0) {
                 break;
             }
             instance->update(timeUpdate);
+
+            std::queue<std::shared_ptr<IGameEvent>> queue = instance->getGameInstanceUpdates();
+            while (!queue.empty()) {
+                gameEvents.push(queue.front());
+                queue.pop();
+            }
         }
     }).detach();
 }
 
 void Match::stop() {
     running = false;
-    queue.push(0); // Let wait_and_pop() stop waiting
+    updateCalls.push(0); // Let wait_and_pop() stop waiting
     std::cout << "Game was stopped on " << currentTime << std::endl;
 }
 
@@ -71,3 +89,9 @@ void Match::handleAction(std::shared_ptr<IPlayerAction> action) {
         return;
     }
 }
+
+std::queue<std::shared_ptr<IGameEvent>>& Match::getGameEvents() {
+    return gameEvents;
+}
+
+
