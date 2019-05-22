@@ -50,7 +50,7 @@ private:
     ptime last_ping;
     const size_t timeout = 200;
 
-    std::queue<std::string> queue;
+    std::queue<std::string> sendingQueue;
 };
 
 #endif //NETWORKING_CONNECTIONSERVER_HPP

@@ -67,12 +67,16 @@ void Match::run() {
             }
         }
     }).detach();
+
+    gameEvents.push(std::make_shared<EventGameMode>(GAME_EVENT_MATCH_START));
 }
 
 void Match::stop() {
     running = false;
     updateCalls.push(0); // Let wait_and_pop() stop waiting
+    gameEvents.push(nullptr);
     std::cout << "SessionServer was stopped on " << currentTime << std::endl;
+    gameEvents.push(std::make_shared<EventGameMode>(GAME_EVENT_MATCH_STOP));
 }
 
 bool Match::isRunning() {

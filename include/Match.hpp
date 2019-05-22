@@ -16,6 +16,7 @@
 #include "LevelInstance.hpp"
 #include "PlayerActionMove.hpp"
 #include "PlayerActionAttack.hpp"
+#include "EventGameMode.hpp"
 
 #include "level_1.hpp"
 #include "character_1.hpp"

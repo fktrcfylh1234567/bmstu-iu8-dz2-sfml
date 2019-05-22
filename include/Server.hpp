@@ -7,7 +7,6 @@
 
 #include <ConnectionServer.hpp>
 #include <ThreadPool.hpp>
-#include <nlohmann/json.hpp>
 
 typedef boost::shared_ptr<ConnectionServer> client_ptr;
 

@@ -37,7 +37,7 @@ void ConnectionServer::stop() {
 }
 
 void ConnectionServer::sendMessage(const std::string& msg) {
-    queue.push(msg);
+    sendingQueue.push(msg);
 }
 
 void ConnectionServer::read_request() {
@@ -82,13 +82,13 @@ void ConnectionServer::on_login(const std::string& msg) {
 }
 
 void ConnectionServer::on_ping() {
-    if (queue.empty()) {
+    if (sendingQueue.empty()) {
         write("ping ok\n");
         return;
     }
 
-    write(queue.front() + "\n");
-    queue.pop();
+    write(sendingQueue.front() + "\n");
+    sendingQueue.pop();
 }
 
 void ConnectionServer::write(const std::string& msg) {

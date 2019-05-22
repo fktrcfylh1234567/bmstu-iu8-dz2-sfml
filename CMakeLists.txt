@@ -55,7 +55,7 @@ add_library(match STATIC
         )
 
 add_library(SessionServer STATIC
-        source/SessionSever.cpp
+        source/SessionServer.cpp
         )
 
 add_library(SessionClient STATIC
@@ -66,8 +66,10 @@ add_library(SessionClient STATIC
 target_link_libraries(graph Boost::graph)
 target_link_libraries(server Boost::system Boost::thread)
 target_link_libraries(client Boost::system Boost::thread)
+
 target_link_libraries(instance graph)
 target_link_libraries(match instance)
+
 target_link_libraries(SessionServer match server nlohmann_json::nlohmann_json)
 target_link_libraries(SessionClient client nlohmann_json::nlohmann_json)
 

@@ -5,10 +5,11 @@
 #ifndef GAME_SESSIONSERVER_HPP
 #define GAME_SESSIONSERVER_HPP
 
+#include <memory>
+#include <nlohmann/json.hpp>
+
 #include <Match.hpp>
 #include <Server.hpp>
-
-#include <memory>
 
 class SessionServer {
 public:
@@ -21,6 +22,8 @@ public:
     bool isGameRunnimg();
 
 private:
+    nlohmann::json eventToJSON(std::shared_ptr<IEvent> event);
+
     std::unique_ptr<IMatch> match;
     Server server;
 
