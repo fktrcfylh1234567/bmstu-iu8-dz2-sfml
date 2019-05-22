@@ -2,17 +2,18 @@
 // Created by fktrc on 12.04.19.
 //
 
+
 #include "Match.hpp"
 
 void Match::setupGame(std::string levelName, size_t gameModeId) {
     if (running)
         return;
 
-    instance->addGameRules(gameModeId);
-
     if (levelName == "level_1") {
+        instance = std::make_unique<GameInstance>(5);
         std::shared_ptr<level_1> level = std::make_shared<level_1>();
         instance->loadLevel(level);
+        instance->addGameRules(gameModeId);
         return;
     }
 }
@@ -55,8 +56,10 @@ void Match::run() {
             }
             instance->update(timeUpdate);
 
-            std::queue<std::shared_ptr<IGameEvent>> queue = instance->getGameInstanceUpdates();
+            std::queue<std::shared_ptr<IGameEvent>>& queue = instance->getGameInstanceUpdates();
             while (!queue.empty()) {
+                std::cout << queue.front()->getActionId() << std::endl;
+
                 gameEvents.push(queue.front());
                 queue.pop();
             }

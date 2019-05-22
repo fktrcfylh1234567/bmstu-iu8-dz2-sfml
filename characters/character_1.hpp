@@ -16,7 +16,7 @@ public:
     }
 
     size_t getMoveSpeed() const override {
-        return 5;
+        return 4;
     }
 
     size_t getAttackDamage() const override {
@@ -24,7 +24,7 @@ public:
     }
 
     size_t getAttackSpeed() const override {
-        return 10;
+        return 3;
     }
 
     size_t getAttackRange() const override {

@@ -10,7 +10,6 @@
 class IGameEventEntity : public IGameEvent {
 public:
     virtual size_t getActionId() const override  = 0;
-
     virtual size_t getEntityId() const  = 0;
     virtual size_t getValue() const  = 0;
 };

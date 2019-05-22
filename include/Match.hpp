@@ -11,7 +11,7 @@
 #include <iostream>
 
 #include "IMatch.hpp"
-#include "IInstance.hpp"
+#include "GameInstance.hpp"
 #include "ConcurrentQueue.hpp"
 #include "LevelInstance.hpp"
 #include "PlayerActionMove.hpp"
@@ -34,7 +34,7 @@ public:
     std::queue<std::shared_ptr<IGameEvent>>& getGameEvents() override;
 
 private:
-    std::shared_ptr<IInstance> instance;
+    std::unique_ptr<IInstance> instance;
     ConcurrentQueue<size_t> updateCalls;
     std::atomic_bool running = false;
     std::atomic_size_t currentTime = 0;
