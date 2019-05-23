@@ -7,7 +7,6 @@
 Client::Client(const std::string& username, const std::string& serverIp, size_t port) :
         username(username), serverIP(serverIp), port(port) {}
 
-
 void Client::start() {
     threads.create_thread([this]() {
         connect();

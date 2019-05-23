@@ -42,6 +42,10 @@ add_library(client STATIC
         source/Client.cpp
         )
 
+add_library(scene STATIC
+        source/Scene.cpp
+        )
+
 add_library(instance STATIC
         source/Character.cpp
         source/SequenceCharacterMovement.cpp
@@ -66,12 +70,13 @@ add_library(SessionClient STATIC
 target_link_libraries(graph Boost::graph)
 target_link_libraries(server Boost::system Boost::thread)
 target_link_libraries(client Boost::system Boost::thread)
+target_link_libraries(scene sfml-graphics)
 
 target_link_libraries(instance graph)
 target_link_libraries(match instance)
 
 target_link_libraries(SessionServer match server nlohmann_json::nlohmann_json)
-target_link_libraries(SessionClient client nlohmann_json::nlohmann_json)
+target_link_libraries(SessionClient client scene nlohmann_json::nlohmann_json)
 
 
 # Executables

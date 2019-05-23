@@ -25,6 +25,7 @@ public:
 
 private:
     std::string eventsToJSON(std::vector<std::shared_ptr<IEvent>> events);
+    std::shared_ptr<IPlayerAction> playerActionFromJSON(const std::string& msg);
 
     std::unique_ptr<IMatch> match;
     Server server;

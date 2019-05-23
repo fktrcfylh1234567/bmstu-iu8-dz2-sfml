@@ -9,6 +9,10 @@ SequenceCharacterMovement::SequenceCharacterMovement(size_t characterId, const P
                                                      IGameInstance* levelInstance) :
         characterId(characterId), dest(dest), nextUpdateTime(nextUpdateTime), gameInstance(levelInstance) {}
 
+size_t SequenceCharacterMovement::getSequenceID() {
+    return 2;
+}
+
 void SequenceCharacterMovement::Update() {
     if (!gameInstance->getCharacters().at(characterId).isAlive()) {
         Cancel();
@@ -73,8 +77,4 @@ void SequenceCharacterMovement::makePath() {
 
 size_t SequenceCharacterMovement::pointToIndex(const Point& point) {
     return gameInstance->getLocationSize() * point.first + point.second;
-}
-
-size_t SequenceCharacterMovement::getSequenceID() {
-    return 2;
 }
