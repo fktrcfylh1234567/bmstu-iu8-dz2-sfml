@@ -3,7 +3,52 @@
 //
 
 #include <iostream>
+#include <PlayerActionMove.hpp>
+#include <PlayerActionAttack.hpp>
 #include "Scene.hpp"
+
+void Scene::show() {
+    running = true;
+
+    sf::RenderWindow window(sf::VideoMode(screenSize, screenSize), "SFML works!");
+
+    while (window.isOpen() && running) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+
+            if (!controlsEnabled) {
+                break;
+            }
+
+            if (event.type == sf::Event::MouseButtonPressed) {
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                    sf::Vector2i localPosition = sf::Mouse::getPosition(window);
+                    onMouseClick(localPosition);
+                }
+            }
+        }
+
+        window.clear();
+
+        for (const sf::RectangleShape& rectangle : environment) {
+            window.draw(rectangle);
+        }
+
+        for (const auto& it : entities) {
+            window.draw(it.second.getModel());
+            window.draw(it.second.getHpIcon());
+        }
+
+        window.display();
+    }
+}
+
+void Scene::close() {
+    running = false;
+}
 
 void Scene::loadEnvironment(std::shared_ptr<ILevel> ptr) {
     level = ptr;
@@ -38,43 +83,13 @@ void Scene::addEntity(size_t entityId, bool isFriendly) {
     entities.emplace(entityId, SceneEntity(isFriendly, blockSize));
 }
 
-void Scene::show() {
-    running = true;
-
-    sf::RenderWindow window(sf::VideoMode(screenSize, screenSize), "SFML works!");
-
-    while (window.isOpen() && running) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-
-            if (event.type == sf::Event::MouseButtonPressed) {
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-                    sf::Vector2i localPosition = sf::Mouse::getPosition(window);
-                    onMouseClick(localPosition);
-                }
-            }
-        }
-
-        window.clear();
-
-        for (const sf::RectangleShape& rectangle : environment) {
-            window.draw(rectangle);
-        }
-
-        for (const auto& it : entities) {
-            window.draw(it.second.getModel());
-            window.draw(it.second.getHpIcon());
-        }
-
-        window.display();
-    }
+void Scene::enableControls(size_t playerId) {
+    controlsEnabled = true;
+    this->playerId = playerId;
 }
 
-void Scene::close() {
-    running = false;
+void Scene::disableControls() {
+    controlsEnabled = false;
 }
 
 void Scene::onMouseClick(sf::Vector2i& localPosition) {
@@ -90,10 +105,12 @@ void Scene::onMouseClick(sf::Vector2i& localPosition) {
         if (it.second.getPos() == pos) {
             if (!it.second.isFriendly()) {
                 std::cout << "attack! " << it.first << std::endl;
+                actionsQueue.push(std::make_shared<PlayerActionAttack>(playerId, it.first));
             }
             return;
         }
     }
 
     std::cout << "move " << pos.first << " " << pos.second << std::endl;
+    actionsQueue.push(std::make_shared<PlayerActionMove>(playerId, pos));
 }

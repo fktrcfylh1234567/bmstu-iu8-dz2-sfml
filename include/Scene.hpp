@@ -5,25 +5,33 @@
 #ifndef GAME_SCENE_HPP
 #define GAME_SCENE_HPP
 
-
-#include <atomic>
 #include <SceneEntity.hpp>
 #include "ILevel.hpp"
+#include "IPlayerAction.hpp"
+#include "ConcurrentQueue.hpp"
 
-
+#include <atomic>
 
 class Scene {
 public:
+    void show();
+    void close();
+
     void loadEnvironment(std::shared_ptr<ILevel> ptr);
     void addEntity(size_t entityId, bool isFriendly);
 
-    void show();
-    void close();
+    void enableControls(size_t playerId);
+    void disableControls();
 
 private:
     void onMouseClick(sf::Vector2i& pos);
 
+    ConcurrentQueue<std::shared_ptr<IPlayerAction>> actionsQueue;
+
     std::atomic_bool running = false;
+    std::atomic_bool controlsEnabled = false;
+    size_t playerId;
+
     std::shared_ptr<ILevel> level;
     std::vector<sf::RectangleShape> environment;
     std::map<size_t, SceneEntity> entities;

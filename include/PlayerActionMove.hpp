@@ -5,6 +5,8 @@
 #ifndef GAME_PLAYERACTIONMOVE_H
 #define GAME_PLAYERACTIONMOVE_H
 
+#include <IPlayerAction.hpp>
+
 class PlayerActionMove : public IPlayerAction {
 public:
     PlayerActionMove(size_t playerId, const Point& dest) : playerId(playerId), dest(dest) {}

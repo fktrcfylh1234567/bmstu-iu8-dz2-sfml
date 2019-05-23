@@ -8,7 +8,6 @@
 SessionClient::SessionClient(const std::string& username, const std::string& serverIp, size_t port) :
         client(username, serverIp, port), connected(false) {
     scene.loadEnvironment(std::make_shared<level_1>());
-    renderScene();
 }
 
 void SessionClient::connect() {
@@ -21,14 +20,26 @@ void SessionClient::connect() {
         while (connected) {
             std::string msg = client.waitForMessage();
             std::cout << msg << std::endl;
-            //match->handleAction(playerActionFromJSON(msg));
-
+            handleEvent(msg);
         }
     }).detach();
 }
 
 bool SessionClient::isConnected() {
     return connected;
+}
+
+void SessionClient::handleEvent(std::string msg) {
+    auto j = json::parse(msg);
+
+    for (size_t i = 0; i < j.size(); i++) {
+        std::cout << j.at(i)["eventId"] << std::endl;
+
+        if (j.at(i)["eventId"] == GAME_EVENT_MATCH_START) {
+            renderScene();
+            scene.enableControls(1);
+        }
+    }
 }
 
 void SessionClient::renderScene() {

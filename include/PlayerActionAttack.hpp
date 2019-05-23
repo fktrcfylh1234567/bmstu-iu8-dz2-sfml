@@ -5,6 +5,8 @@
 #ifndef GAME_PLAYERACTIONATTACK_HPP
 #define GAME_PLAYERACTIONATTACK_HPP
 
+#include <IPlayerAction.hpp>
+
 class PlayerActionAttack : public IPlayerAction {
 public:
     PlayerActionAttack(size_t playersId, size_t targetId) : playerId(playersId), targetId(targetId) {}
