@@ -10,6 +10,9 @@
 #include "Client.hpp"
 #include "Scene.hpp"
 #include "IEvent.hpp"
+#include <PlayerActionMove.hpp>
+#include <PlayerActionAttack.hpp>
+#include "level_1.hpp"
 
 #include <string>
 

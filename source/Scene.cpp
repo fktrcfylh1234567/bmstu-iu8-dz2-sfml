@@ -114,3 +114,7 @@ void Scene::onMouseClick(sf::Vector2i& localPosition) {
     std::cout << "move " << pos.first << " " << pos.second << std::endl;
     actionsQueue.push(std::make_shared<PlayerActionMove>(playerId, pos));
 }
+
+ConcurrentQueue<std::shared_ptr<IPlayerAction>>& Scene::getActionsQueue() {
+    return actionsQueue;
+}

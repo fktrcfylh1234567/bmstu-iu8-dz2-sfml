@@ -54,7 +54,7 @@ void SessionServer::startMatch() {
         while (gameRunnimg) {
             std::string msg = server.getReseiveQueue().wait_and_pop();
             std::cout << msg << std::endl;
-            match->handleAction(playerActionFromJSON(msg));
+            //match->handleAction(playerActionFromJSON(msg));
         }
     }).detach();
 }
@@ -103,7 +103,7 @@ std::string SessionServer::eventsToJSON(std::vector<std::shared_ptr<IEvent>> eve
 }
 
 std::shared_ptr<IPlayerAction> SessionServer::playerActionFromJSON(const std::string& msg) {
-    json j(msg);
+    auto j = json::parse(msg);
 
     if (j["actionId"] == IPlayerAction::ActionIdMove) {
         Point dest = {j["dest"][0], j["dest"][1]};

@@ -5,6 +5,11 @@
 #ifndef GAME_IPLAYERACTION_HPP
 #define GAME_IPLAYERACTION_HPP
 
+#include <cstdio>
+#include <utility>
+#include <vector>
+#include <memory>
+
 typedef std::pair<size_t, size_t> Point;
 
 class IPlayerAction {

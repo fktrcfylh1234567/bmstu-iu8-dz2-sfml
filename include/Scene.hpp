@@ -23,6 +23,8 @@ public:
     void enableControls(size_t playerId);
     void disableControls();
 
+    ConcurrentQueue<std::shared_ptr<IPlayerAction>>& getActionsQueue();
+
 private:
     void onMouseClick(sf::Vector2i& pos);
 

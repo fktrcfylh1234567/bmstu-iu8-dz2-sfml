@@ -3,7 +3,6 @@
 //
 
 #include "SessionClient.hpp"
-#include "../levels/level_1.hpp"
 
 SessionClient::SessionClient(const std::string& username, const std::string& serverIp, size_t port) :
         client(username, serverIp, port), connected(false) {
@@ -45,5 +44,28 @@ void SessionClient::handleEvent(std::string msg) {
 void SessionClient::renderScene() {
     std::thread([this]() {
         scene.show();
+    }).detach();
+
+    std::thread([this]() {
+        while (connected) {
+            std::shared_ptr<IPlayerAction> action = scene.getActionsQueue().wait_and_pop();
+
+            json j;
+            j["actionId"] = action->getActionId();
+            j["playerId"] = action->getPlayerId();
+
+            if (action->getActionId() == IPlayerAction::ActionIdMove) {
+                PlayerActionMove* actionMove = dynamic_cast<PlayerActionMove*>(action.get());
+                j["dest"] = actionMove->getDest();
+            }
+
+            if (action->getActionId() == IPlayerAction::ActionIdAttack) {
+                PlayerActionAttack* actionAttack = dynamic_cast<PlayerActionAttack*>(action.get());
+                j["targetId"] = actionAttack->getTargetId();
+            }
+
+            std::cout << j << std::endl;
+            client.sendMessage(j.dump());
+        }
     }).detach();
 }

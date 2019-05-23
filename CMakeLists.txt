@@ -101,5 +101,5 @@ target_link_libraries(testSequence GTest::main instance)
 
 include_directories(PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tools/json)
-target_include_directories(match PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/levels)
-target_include_directories(match PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/characters)
+include_directories(PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/levels)
+include_directories(PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/characters)
