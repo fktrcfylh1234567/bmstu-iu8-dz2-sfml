@@ -42,7 +42,8 @@ void Match::removePlayer(size_t playerId) {
 void Match::run() {
     running = true;
     currentTime = 0;
-    std::cout << "SessionServer was starded" << std::endl;
+    std::cout << "Match was starded" << std::endl;
+    gameEvents.push({std::make_shared<EventGameMode>(GAME_EVENT_MATCH_START)});
 
     std::thread([this]() {
         while (running) {
@@ -61,6 +62,10 @@ void Match::run() {
             instance->update(timeUpdate);
 
             std::queue<std::shared_ptr<IEvent>>& queue = instance->getGameInstanceUpdates();
+            if (queue.empty()) {
+                continue;
+            }
+
             std::vector<std::shared_ptr<IEvent>> events;
 
             while (!queue.empty()) {
@@ -71,15 +76,13 @@ void Match::run() {
             gameEvents.push(events);
         }
     }).detach();
-
-    gameEvents.push({std::make_shared<EventGameMode>(GAME_EVENT_MATCH_START)});
 }
 
 void Match::stop() {
     running = false;
     updateCalls.push(0); // Let wait_and_pop() stop waiting
     gameEvents.push({});
-    std::cout << "SessionServer was stopped on " << currentTime << std::endl;
+    std::cout << "Match was stopped on " << currentTime << std::endl;
     gameEvents.push({std::make_shared<EventGameMode>(GAME_EVENT_MATCH_STOP)});
 }
 

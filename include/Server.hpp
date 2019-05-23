@@ -21,6 +21,7 @@ public:
     bool isLobbyOpened();
 
     void sendMessage(const std::string& msg);
+    ConcurrentQueue<std::string>& getReseiveQueue();
 
 private:
     void accept_thread();
@@ -33,6 +34,7 @@ private:
     boost::thread_group threads;
     std::vector<client_ptr> clients;
     boost::recursive_mutex cs;
+    ConcurrentQueue<std::string> reseiveQueue;
 
     const size_t port = 8001;
 };

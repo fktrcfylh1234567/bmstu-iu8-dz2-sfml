@@ -70,8 +70,8 @@ void ConnectionServer::process_request() {
         return;
     }
 
-    std::cout << msg << std::endl;
     on_ping();
+    reseiveQueue.push(msg);
 }
 
 void ConnectionServer::on_login(const std::string& msg) {
@@ -93,4 +93,8 @@ void ConnectionServer::on_ping() {
 
 void ConnectionServer::write(const std::string& msg) {
     sock_.write_some(buffer(msg));
+}
+
+std::queue<std::string>& ConnectionServer::getReseiveQueue() {
+    return reseiveQueue;
 }

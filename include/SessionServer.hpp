@@ -11,6 +11,8 @@
 #include <Match.hpp>
 #include <Server.hpp>
 
+using nlohmann::json;
+
 class SessionServer {
 public:
     void setupMatch(std::string levelName, std::string gameModeName);
@@ -22,7 +24,7 @@ public:
     bool isGameRunnimg();
 
 private:
-    nlohmann::json eventsToJSON(std::vector<std::shared_ptr<IEvent>> events);
+    std::string eventsToJSON(std::vector<std::shared_ptr<IEvent>> events);
 
     std::unique_ptr<IMatch> match;
     Server server;

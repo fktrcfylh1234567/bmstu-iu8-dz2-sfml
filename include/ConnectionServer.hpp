@@ -14,6 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include "ConcurrentQueue.hpp"
 
 using namespace boost::asio;
 using namespace boost::posix_time;
@@ -31,6 +32,7 @@ public:
     bool timed_out() const;
     void stop();
     void sendMessage(const std::string& msg);
+    std::queue<std::string>& getReseiveQueue();
 
 private:
     void read_request();
@@ -51,6 +53,7 @@ private:
     const size_t timeout = 200;
 
     std::queue<std::string> sendingQueue;
+    std::queue<std::string> reseiveQueue;
 };
 
 #endif //NETWORKING_CONNECTIONSERVER_HPP

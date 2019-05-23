@@ -5,7 +5,6 @@
 #include "Server.hpp"
 
 void Server::start() {
-    std::cout << "started" << std::endl;
     running = true;
     openLobby();
     threads.create_thread([this]() { handle_clients_thread(); })->detach();
@@ -26,7 +25,7 @@ void Server::openLobby() {
         return;
     }
 
-    std::cout << "open Lobby" << std::endl;
+    std::cout << "Lobby was opened" << std::endl;
 
     lobbyOpened = true;
     threads.create_thread([this]() {
@@ -48,6 +47,10 @@ void Server::sendMessage(const std::string& msg) {
         (*b)->sendMessage(msg);
 }
 
+ConcurrentQueue<std::string>& Server::getReseiveQueue() {
+    return reseiveQueue;
+}
+
 void Server::accept_thread() {
     ip::tcp::acceptor acceptor(service, ip::tcp::endpoint(ip::tcp::v4(), port));
 
@@ -67,8 +70,18 @@ void Server::handle_clients_thread() {
         boost::recursive_mutex::scoped_lock lk(cs);
 
         for (std::vector<client_ptr>::iterator b = clients.begin(), e = clients.end(); b != e; ++b) {
-            pool.submit([b]() {
+            pool.submit([b, this]() {
                 (*b)->answer_to_client();
+
+                std::queue<std::string>& queue = (*b)->getReseiveQueue();
+                if (queue.empty()) {
+                    return;
+                }
+
+                while (!queue.empty()) {
+                    reseiveQueue.push(queue.front());
+                    queue.pop();
+                }
             });
         }
 

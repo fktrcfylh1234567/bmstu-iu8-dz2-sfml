@@ -12,7 +12,7 @@ void SessionServer::setupMatch(std::string levelName, std::string gameModeName) 
 
     size_t gameModeId = 1;
 
-    if (gameModeName == "tdm") {
+    if (gameModeName == "TDM") {
         gameModeId = 1;
     }
 
@@ -38,18 +38,24 @@ void SessionServer::startMatch() {
     server.closeLobby();
 
     std::thread([this]() {
-        while (true) {
+        while (gameRunnimg) {
             std::vector<std::shared_ptr<IEvent>> events = match->getGameEvents().wait_and_pop();
             if (events.empty()) {
                 break;
             }
 
             std::string msg = eventsToJSON(events);
+            std::cout << msg << std::endl;
             server.sendMessage(msg);
         }
     }).detach();
 
-    match->getGameEvents().wait_and_pop();
+    std::thread([this]() {
+        while (gameRunnimg) {
+            std::string msg = server.getReseiveQueue().wait_and_pop();
+            std::cout << msg << std::endl;
+        }
+    }).detach();
 }
 
 void SessionServer::stopMatch() {
@@ -70,14 +76,14 @@ bool SessionServer::isGameRunnimg() {
     return gameRunnimg;
 }
 
-nlohmann::json SessionServer::eventsToJSON(std::vector<std::shared_ptr<IEvent>> events) {
-    nlohmann::json json;
+std::string SessionServer::eventsToJSON(std::vector<std::shared_ptr<IEvent>> events) {
+    json j;
 
     for (size_t i = 0; i < events.size(); i++) {
         size_t id = events[i]->getEventId();
 
         if (id == GAME_EVENT_MATCH_START || id == GAME_EVENT_MATCH_STOP) {
-            json[i]["eventId"] = id;
+            j[i]["eventId"] = id;
             continue;
         }
 
@@ -85,12 +91,12 @@ nlohmann::json SessionServer::eventsToJSON(std::vector<std::shared_ptr<IEvent>> 
             id == GAME_EVENT_ENTITY_HP_CHANGED ||
             id == GAME_EVENT_ENTITY_POSITION_CHANGED) {
             IEventEntity* eventEntity = dynamic_cast<IEventEntity*>(events[i].get());
-            json[i]["eventId"] = id;
-            json[i]["entityId"] = eventEntity->getEntityId();
-            json[i]["value"] = eventEntity->getValue();
+            j[i]["eventId"] = id;
+            j[i]["entityId"] = eventEntity->getEntityId();
+            j[i]["value"] = eventEntity->getValue();
             continue;
         }
     }
 
-    return json;
+    return j.dump();
 }

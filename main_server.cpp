@@ -6,9 +6,8 @@
 
 int main() {
     SessionServer gameServer;
-    gameServer.setupMatch("level_1", "tdm");
+    gameServer.setupMatch("level_1", "RDM");
     gameServer.createLobby();
-    //gameServer.startMatch();
 
     while (gameServer.isLobbyOpened()) {
         std::string msg;
@@ -23,8 +22,8 @@ int main() {
         std::string msg;
         std::cin >> msg;
 
-        if (msg == "start") {
-            gameServer.startMatch();
+        if (msg == "stop") {
+            gameServer.stopMatch();
         }
     }
 }
