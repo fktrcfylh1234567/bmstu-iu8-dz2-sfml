@@ -5,12 +5,32 @@
 #include <iostream>
 #include "Scene.hpp"
 
+void Scene::loadEnvironment(std::shared_ptr<ILevel> ptr) {
+    level = ptr;
+    for (int i = 0; i < locationSize; ++i) {
+        for (int j = 0; j < locationSize; ++j) {
+            sf::RectangleShape rectangle;
+            rectangle.setSize(sf::Vector2f(blockSize, blockSize));
+            rectangle.setPosition(blockSize* (i + 1), blockSize * (j + 1));
+
+            rectangle.setOutlineThickness(2.f);
+            rectangle.setOutlineColor(sf::Color(250, 150, 100));
+
+            if (level->getLocation()->operator[](i)[j]) {
+                rectangle.setFillColor(sf::Color::Cyan);
+            } else {
+                rectangle.setFillColor(sf::Color::Red);
+            }
+
+            environment.push_back(rectangle);
+        }
+    }
+}
+
 void Scene::show() {
     running = true;
 
-    sf::RenderWindow window(sf::VideoMode(1200, 720), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    sf::RenderWindow window(sf::VideoMode(screenSize, screenSize), "SFML works!");
 
     while (window.isOpen() && running) {
         sf::Event event;
@@ -22,19 +42,32 @@ void Scene::show() {
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                     sf::Vector2i localPosition = sf::Mouse::getPosition(window);
-                    std::cout << localPosition.x << " " << localPosition.y << std::endl;
+                    size_t x = (localPosition.x / blockSize) - 1;
+                    size_t y = (localPosition.y / blockSize) - 1;
+
+                    onMouseClick({x, y});
                 }
             }
         }
 
-
-
         window.clear();
-        window.draw(shape);
+
+        for (const sf::RectangleShape& rectangle : environment) {
+            window.draw(rectangle);
+        }
+
         window.display();
     }
 }
 
 void Scene::close() {
     running = false;
+}
+
+void Scene::onMouseClick(const Point& pos) {
+    if (!level->getLocation()->operator[](pos.first)[pos.second]) {
+        return;
+    }
+
+    std::cout << pos.first << " " << pos.second << std::endl;
 }
