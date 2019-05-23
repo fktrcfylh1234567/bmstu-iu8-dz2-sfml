@@ -28,7 +28,7 @@ void Scene::loadEnvironment(std::shared_ptr<ILevel> ptr) {
 }
 
 void Scene::addEntity(size_t entityId, bool isFriendly) {
-    entities.push_back(SceneEntity(entityId, blockSize, isFriendly));
+    entities.emplace(entityId, SceneEntity(isFriendly, blockSize));
 }
 
 void Scene::show() {
@@ -46,10 +46,7 @@ void Scene::show() {
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                     sf::Vector2i localPosition = sf::Mouse::getPosition(window);
-                    size_t x = (localPosition.x / blockSize) - 1;
-                    size_t y = (localPosition.y / blockSize) - 1;
-
-                    onMouseClick({x, y});
+                    onMouseClick(localPosition);
                 }
             }
         }
@@ -60,8 +57,8 @@ void Scene::show() {
             window.draw(rectangle);
         }
 
-        for (const SceneEntity& entity : entities) {
-            window.draw(entity.getModel());
+        for (const auto& it : entities) {
+            window.draw(it.second.getModel());
         }
 
         window.display();
@@ -72,10 +69,23 @@ void Scene::close() {
     running = false;
 }
 
-void Scene::onMouseClick(const Point& pos) {
+void Scene::onMouseClick(sf::Vector2i& localPosition) {
+    size_t x = (localPosition.x / blockSize) - 1;
+    size_t y = (localPosition.y / blockSize) - 1;
+    Point pos = {x, y};
+
     if (!level->getLocation()->operator[](pos.first)[pos.second]) {
         return;
     }
 
-    std::cout << pos.first << " " << pos.second << std::endl;
+    for (const auto& it : entities) {
+        if (it.second.getPos() == pos) {
+            if (!it.second.isFriendly()) {
+                std::cout << "attack! " << it.first << std::endl;
+            }
+            return;
+        }
+    }
+
+    std::cout << "move " << pos.first << " " << pos.second << std::endl;
 }
