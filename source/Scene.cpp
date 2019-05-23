@@ -25,6 +25,13 @@ void Scene::loadEnvironment(std::shared_ptr<ILevel> ptr) {
             environment.push_back(rectangle);
         }
     }
+
+    addEntity(1, true);
+    entities.at(1).setPos(Point(0, 0));
+
+    addEntity(2, false);
+    entities.at(2).setPos(Point(3, 4));
+    entities.at(2).setHp(50);
 }
 
 void Scene::addEntity(size_t entityId, bool isFriendly) {
@@ -59,6 +66,7 @@ void Scene::show() {
 
         for (const auto& it : entities) {
             window.draw(it.second.getModel());
+            window.draw(it.second.getHpIcon());
         }
 
         window.display();
