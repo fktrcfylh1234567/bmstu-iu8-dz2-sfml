@@ -11,20 +11,24 @@ void Scene::loadEnvironment(std::shared_ptr<ILevel> ptr) {
         for (int j = 0; j < locationSize; ++j) {
             sf::RectangleShape rectangle;
             rectangle.setSize(sf::Vector2f(blockSize, blockSize));
-            rectangle.setPosition(blockSize* (i + 1), blockSize * (j + 1));
+            rectangle.setPosition(blockSize * (i + 1), blockSize * (j + 1));
 
             rectangle.setOutlineThickness(2.f);
             rectangle.setOutlineColor(sf::Color(250, 150, 100));
 
             if (level->getLocation()->operator[](i)[j]) {
-                rectangle.setFillColor(sf::Color::Cyan);
+                rectangle.setFillColor(sf::Color(145, 166, 255));
             } else {
-                rectangle.setFillColor(sf::Color::Red);
+                rectangle.setFillColor(sf::Color(86, 57, 49));
             }
 
             environment.push_back(rectangle);
         }
     }
+}
+
+void Scene::addEntity(size_t entityId, bool isFriendly) {
+    entities.push_back(SceneEntity(entityId, blockSize, isFriendly));
 }
 
 void Scene::show() {
@@ -54,6 +58,10 @@ void Scene::show() {
 
         for (const sf::RectangleShape& rectangle : environment) {
             window.draw(rectangle);
+        }
+
+        for (const SceneEntity& entity : entities) {
+            window.draw(entity.getModel());
         }
 
         window.display();

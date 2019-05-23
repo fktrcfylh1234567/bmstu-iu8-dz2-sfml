@@ -7,14 +7,16 @@
 
 
 #include <atomic>
-#include <SFML/Graphics.hpp>
+#include <SceneEntity.hpp>
 #include "ILevel.hpp"
 
-typedef std::pair<size_t, size_t> Point;
+
 
 class Scene {
 public:
     void loadEnvironment(std::shared_ptr<ILevel> ptr);
+    void addEntity(size_t entityId, bool isFriendly);
+
     void show();
     void close();
 
@@ -24,9 +26,11 @@ private:
     std::atomic_bool running = false;
     std::shared_ptr<ILevel> level;
     std::vector<sf::RectangleShape> environment;
+    std::vector<SceneEntity> entities;
 
     const size_t locationSize = 5;
     const float blockSize = 200.f;
+    const float characterSize = 50.f;
     const size_t screenSize = 7 * blockSize;
 };
 
