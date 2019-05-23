@@ -16,7 +16,7 @@ void Client::start() {
 }
 
 void Client::stop() {
-    client->stop();
+    connection->stop();
 }
 
 bool Client::isRunning() {
@@ -24,11 +24,15 @@ bool Client::isRunning() {
 }
 
 void Client::sendMessage(const std::string& msg) {
-    client->sendMessage(msg);
+    connection->sendMessage(msg);
+}
+
+std::string Client::waitForMessage() {
+    return connection->getReseiveQueue().wait_and_pop();
 }
 
 void Client::connect() {
     ip::tcp::endpoint ep(ip::address::from_string(serverIP), port);
-    client = ConnectionClient::start(ep, username, service);
+    connection = ConnectionClient::start(ep, username, service);
     service.run();
 }

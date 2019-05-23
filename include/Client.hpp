@@ -15,6 +15,7 @@ public:
     void stop();
     bool isRunning();
     void sendMessage(const std::string& msg);
+    std::string waitForMessage();
 
 private:
     void connect();
@@ -23,7 +24,7 @@ private:
     std::string serverIP;
     size_t port;
 
-    ConnectionClient::ptr client;
+    ConnectionClient::ptr connection;
     std::atomic_bool running;
     io_service service;
     boost::thread_group threads;

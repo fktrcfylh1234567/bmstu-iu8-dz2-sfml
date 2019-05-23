@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <queue>
+#include "ConcurrentQueue.hpp"
 
 using namespace boost::asio;
 
@@ -40,6 +41,7 @@ public:
     void stop();
     bool isStarted();
     void sendMessage(const std::string& msg);
+    ConcurrentQueue<std::string>& getReseiveQueue();
 
 private:
     void on_connect(const error_code& err);
@@ -66,7 +68,8 @@ private:
     deadline_timer timer;
     const size_t pingRate = 10;
 
-    std::queue<std::string> queue;
+    std::queue<std::string> sendingQueue;
+    ConcurrentQueue<std::string> reseiveQueue;
 };
 
 #endif //NETWORKING_CONNECTIONCLIENT_HPP

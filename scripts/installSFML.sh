@@ -17,5 +17,3 @@ sudo add-apt-repository ppa:no1wantdthisname/ppa
 sudo apt update
 sudo apt install libfreetype6
 sudo apt-get install libfreetype6-dev
-
-

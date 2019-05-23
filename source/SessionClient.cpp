@@ -13,7 +13,18 @@ SessionClient::SessionClient(const std::string& username, const std::string& ser
 
 void SessionClient::connect() {
     connected = true;
-    //client.start();
+    client.start();
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+    std::thread([this]() {
+        while (connected) {
+            std::string msg = client.waitForMessage();
+            std::cout << msg << std::endl;
+            //match->handleAction(playerActionFromJSON(msg));
+
+        }
+    }).detach();
 }
 
 bool SessionClient::isConnected() {

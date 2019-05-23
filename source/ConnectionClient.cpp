@@ -16,9 +16,12 @@ bool ConnectionClient::isStarted() {
 }
 
 void ConnectionClient::sendMessage(const std::string& msg) {
-    queue.push(msg);
+    sendingQueue.push(msg);
 }
 
+ConcurrentQueue<std::string>& ConnectionClient::getReseiveQueue() {
+    return reseiveQueue;
+}
 
 void ConnectionClient::on_connect(const ConnectionClient::error_code& err) {
     if (!err) do_write("login " + username + "\n");
@@ -42,7 +45,8 @@ void ConnectionClient::on_read(const ConnectionClient::error_code& err, size_t b
     }
 
     postpone_ping();
-    std::cout << msg << std::endl;
+    //std::cout << msg << std::endl;
+    reseiveQueue.push(msg);
 }
 
 void ConnectionClient::on_login() {
@@ -59,13 +63,13 @@ void ConnectionClient::on_write(const ConnectionClient::error_code& err, size_t 
 }
 
 void ConnectionClient::do_ping() {
-    if (queue.empty()) {
+    if (sendingQueue.empty()) {
         do_write("ping\n");
         return;
     }
 
-    do_write(queue.front() + "\n");
-    queue.pop();
+    do_write(sendingQueue.front() + "\n");
+    sendingQueue.pop();
 }
 
 void ConnectionClient::do_read() {
